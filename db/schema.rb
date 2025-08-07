@@ -10,9 +10,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_07_114044) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_07_122938) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "characters", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.string "class_name"
+    t.string "gender"
+    t.integer "xp"
+    t.integer "coin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_characters_on_user_id"
+  end
+
+  create_table "inventory_items", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "character_id", null: false
+    t.boolean "equipped"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_inventory_items_on_character_id"
+    t.index ["item_id"], name: "index_inventory_items_on_item_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "item_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "journeys", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "purpose"
+    t.string "daily_quests"
+    t.string "main_quest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_journeys_on_user_id"
+  end
+
+  create_table "quest_items", force: :cascade do |t|
+    t.bigint "quest_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_quest_items_on_item_id"
+    t.index ["quest_id"], name: "index_quest_items_on_quest_id"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.string "description"
+    t.string "quest_type"
+    t.boolean "completed"
+    t.date "deadline"
+    t.integer "xp_reward"
+    t.integer "coin_reward"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_quests_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,8 +85,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_07_114044) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.date "birthday"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "characters", "users"
+  add_foreign_key "inventory_items", "characters"
+  add_foreign_key "inventory_items", "items"
+  add_foreign_key "journeys", "users"
+  add_foreign_key "quest_items", "items"
+  add_foreign_key "quest_items", "quests"
+  add_foreign_key "quests", "users"
 end
