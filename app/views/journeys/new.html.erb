@@ -1,0 +1,31 @@
+<h1>Begin Your Journey</h1>
+
+<%= simple_form_for @journey do |f| %>
+
+ <div data-controller="popup-form"> 
+  <div data-action="change->popup-form#fire">
+    <%= f.input :purpose, collection: [
+      ["To create and stick to a daily routine, because I struggle to stay consistent.", "routine"],
+      ["To achieve a long-term goal with multiple deadlines and milestones.", "long_term_goal"],
+      ["Both — I seek to build daily habits and reach my big dreams.", "both"]
+    ], prompt: "Please select one",
+    label: "What brings your heart to this journey today?" %>
+  </div>
+
+  <div data-popup-form-target="dailyQuestsDiv" class="d-none">
+    <%= f.input :daily_quests, as: :text,
+      label: "What daily quests would you like to undertake?",
+      input_html: { placeholder: "Describe what kind of daily routine you would like to implement..." } 
+    %>
+  </div>
+
+  <div data-popup-form-target="mainQuestDiv" class="d-none">
+    <%= f.input :main_quest, as: :text,
+      label: "Do you have a main quest or big goal in mind?",
+      input_html: { placeholder: "Describe your goal in details with all the deadline and tasks..." } 
+    %>
+  </div>
+</div> 
+
+  <%= f.button :submit, "Start My Journey", class: "btn btn-primary" %>
+<% end %>
