@@ -3,10 +3,18 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :birthday])
-    
     devise_parameter_sanitizer.permit(:account_update, keys: [:username, :birthday])
+  end
+
+  def after_sign_up_path_for(resource)
+    new_journey_path
+  end
+
+  def after_sign_in_path_for(resource)
+    new_journey_path #we have to change this
   end
   # include Pundit::Authorization
 
@@ -26,4 +34,5 @@ class ApplicationController < ActionController::Base
   # def skip_pundit?
   #   devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
   # end
+
 end

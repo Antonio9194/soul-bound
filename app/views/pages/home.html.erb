@@ -1,6 +1,6 @@
 <h1>Pages#home</h1>
 <% if current_user.present? %>
- <p>Welcome back <%= current_user.username%></p>
+  <%= link_to "Continue", some_path_you_want, class: "nav-link" %>
 <% else %>
- <p>Hello</p>
-<% end %> 
+  <%= link_to "Begin your Journey", new_user_registration_path, class: "nav-link" %>
+<% end %>
