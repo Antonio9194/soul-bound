@@ -3,6 +3,6 @@ class Character < ApplicationRecord
   has_many :inventory_items
 
   validates :name, presence: true, length: { minimum:1, maximum:100 }
-  validates :character, :class_name, :gender, :apperance, presence: true
+  validates :class_name, :gender, :apperance, presence: true
 
 end

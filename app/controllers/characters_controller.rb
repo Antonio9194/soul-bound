@@ -1,19 +1,23 @@
 class CharactersController < ApplicationController
-  def index
-    @character = Character.find(:user_id)
+  def show
+    @character = Character.find(params[:id])
   end
   def new
-    @character = Character.new
+      @character = Character.new
   end
   def create
     @character = Character.new(new_character_params)
-  end
-  def update
+    @character.user_id = current_user.id
+    @character.xp = 0
+    @character.coin = 0
     if @character.save
-      redirect_to character_path, notice: "Your character was successfully created!"
+      redirect_to character_path(@character), notice: "Your character was successfully created!"
     else
       render :new, status: :unprocessable_entity
     end
+  end
+  def update
+
   end
 
   private
