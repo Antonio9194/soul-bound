@@ -1,0 +1,12 @@
+<% if current_user.quests.any? %>
+  <ul>
+    <% current_user.quests.each do |quest| %>
+      <li>
+        <strong><%= quest.title %></strong> (<em><%= quest.quest_type.capitalize %></em>)<br>
+        <%= quest.description %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have no quests yet. Start your journey!</p>
+<% end %>
