@@ -1,15 +1,9 @@
-<h1 class="text-center">Soul Bound</h1>
 
-<% if @journey && @journey.quests.present? %>
-  <% @journey.quests.each do |quest| %>
-    <p><%= quest.description %></p>
+<h1 class="text-center">Soul Bound</h1>
+<div class="text-center">
+  <% if current_user.present? %>
+    <%= link_to "Continue", dashboard_quests_path, class: "nav-link" %>
+  <% else %>
+    <%= link_to "Begin your Journey", new_user_registration_path, class: "nav-link" %>
   <% end %>
-<% else %>
-  <div class="text-center">
-    <% if current_user.present? %>
-      <%= link_to "Continue", root_path, class: "nav-link" %>
-    <% else %>
-      <%= link_to "Begin your Journey", new_user_registration_path, class: "nav-link" %>
-    <% end %>
-  </div>
-<% end %>
+</div>

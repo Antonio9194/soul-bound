@@ -12,9 +12,9 @@ export default class extends Controller {
     dailyQuestsDiv.classList.add("d-none")
     mainQuestDiv.classList.add("d-none")
 
-    if (selected === "routine") {
+    if (selected === "daily") {
       dailyQuestsDiv.classList.remove("d-none")
-    } else if (selected === "long_term_goal") {
+    } else if (selected === "main") {
       mainQuestDiv.classList.remove("d-none")
     } else if (selected === "both") {
       dailyQuestsDiv.classList.remove("d-none")

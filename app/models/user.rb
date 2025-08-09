@@ -4,5 +4,11 @@ class User < ApplicationRecord
   has_many :characters
 
   devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  has_many :quests
+end
+
           :recoverable, :rememberable, :validatable
 end
+

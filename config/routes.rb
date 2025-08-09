@@ -5,6 +5,15 @@ Rails.application.routes.draw do
 
   resources :characters, only: [:show, :new, :create, :update, :destroy]
 
+  resources :quests, only: [] do
+    collection do
+      get :dashboard
+    end
+  end
+
+  resources :characters, only: [:index, :new, :create, :update, :destroy]
+
+
   root to: "pages#home"
   get "up" => "rails/health#show", as: :rails_health_check
 end

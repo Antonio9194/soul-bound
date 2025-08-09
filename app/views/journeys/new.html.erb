@@ -5,8 +5,8 @@
  <div data-controller="popup-form"> 
   <div data-action="change->popup-form#fire">
     <%= f.input :purpose, collection: [
-      ["To create and stick to a daily routine, because I struggle to stay consistent.", "routine"],
-      ["To achieve a long-term goal with multiple deadlines and milestones.", "long_term_goal"],
+      ["To create and stick to a daily routine, because I struggle to stay consistent.", "daily"],
+      ["To achieve a long-term goal with multiple deadlines and milestones.", "main"],
       ["Both — I seek to build daily habits and reach my big dreams.", "both"]
     ], prompt: "Please select one",
     label: "What brings your heart to this journey today?" %>
