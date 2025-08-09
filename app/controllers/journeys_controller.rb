@@ -7,7 +7,7 @@ class JourneysController < ApplicationController
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
     if @journey.save
-      redirect_to characters_path
+      redirect_to root_path
     else
       flash.now[:alert] = "Oops, something went wrong. Please check your answers."
       render :new
