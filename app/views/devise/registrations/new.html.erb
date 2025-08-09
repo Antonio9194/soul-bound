@@ -15,9 +15,10 @@
                 input_html: { autocomplete: "email" }%>
 
   <%= f.input :birthday,
+      as: :string,
       required: true,
       autofocus: true,
-      input_html: { autocomplete: "birthday", data: { controller: "datepicker" } }
+      input_html: { id: 'birthday', autocomplete: "birthday", data: { controller: "datepicker" } }
   %>
 
     <%= f.input :password,

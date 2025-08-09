@@ -1,5 +1,6 @@
 class Journey < ApplicationRecord
   belongs_to :user
+  has_many :quests, dependent: :destroy
 
   validates :purpose, presence: true
   validate :at_least_one_choice
