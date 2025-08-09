@@ -1,0 +1,10 @@
+
+<% if @character.present? %>
+  <div class="container">
+    <h1><%= @character.name %></h1>
+  </div>
+<% else %>
+  <div class="container">
+    <%= link_to "Create a new character", new_character_path %>
+  </div>
+<% end %>

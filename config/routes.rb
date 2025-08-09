@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :journeys, only: [:new, :create]
 
+  resources :characters, only: [:show, :new, :create, :update, :destroy]
+
   resources :quests, only: [] do
     collection do
       get :dashboard
