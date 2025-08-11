@@ -1,12 +1,47 @@
-<% if current_user.quests.any? %>
-  <ul>
-    <% current_user.quests.each do |quest| %>
-      <li>
-        <strong><%= quest.title %></strong> (<em><%= quest.quest_type.capitalize %></em>)<br>
-        <%= quest.description %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>You have no quests yet. Start your journey!</p>
-<% end %>
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Daily Quests</h4>
+      </div>
+      <div class="card-body">
+        <% if current_user.quests.where(quest_type: 'daily').any? %>
+          <% current_user.quests.where(quest_type: 'daily').each do |quest| %>
+            <div class="mb-3">
+              <h5>
+                <%= quest.title %>
+                <span class="badge bg-primary ms-2 text-capitalize"><%= quest.quest_type %></span>
+              </h5>
+              <p><%= quest.description %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-muted">You have no daily quests yet. Start your journey!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-warning text-dark">
+        <h4 class="mb-0">Main Quests</h4>
+      </div>
+      <div class="card-body">
+        <% if current_user.quests.where(quest_type: 'main').any? %>
+          <% current_user.quests.where(quest_type: 'main').each do |quest| %>
+            <div class="mb-3">
+              <h5>
+                <%= quest.title %>
+                <span class="badge bg-primary ms-2 text-capitalize"><%= quest.quest_type %></span>
+              </h5>
+              <p><%= quest.description %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-muted">You have no main quests yet. Start your journey!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
