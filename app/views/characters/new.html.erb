@@ -6,7 +6,7 @@
     <%= c.input :name, label:"Character name", input_html: { class: "form-control" }%>
     <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input" }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Rogue", "Rogue"]], as: :radio_buttons%>
     <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input" }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons%>
-    <%= c.input :appearance, label:"Appearance", input_html: { class: "form-check-input" }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %>
+    <%# <%= c.input :appearance, label:"Appearance", input_html: { class: "form-check-input" }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %> %>
     <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
   </div>
 <% end %>
