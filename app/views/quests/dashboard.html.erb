@@ -1,45 +1,25 @@
 <div class="row g-4">
   <div class="col-md-6">
-    <div class="card shadow-sm h-100">
-      <div class="card-header bg-info text-white">
-        <h4 class="mb-0">Daily Quests</h4>
-      </div>
-      <div class="card-body">
-        <% if current_user.quests.where(quest_type: 'daily').any? %>
-          <% current_user.quests.where(quest_type: 'daily').each do |quest| %>
-            <div class="mb-3">
-              <h5>
-                <%= quest.title %>
-              </h5>
-              <p><%= quest.description %></p>
-            </div>
+    <div class="card h-100 p-3 mt-3" style="border: none; color: black;">
+      <div class="card-header" style="border-radius: 20px; color: black; border: 1px solid black;">
+        <h4 class="mt-0">Daily Quests</h4>
+        <div class="card-body" style="color: black;">
+          <% if current_user.quests.where(quest_type: 'daily').any? %>
+            <% current_user.quests.where(quest_type: 'daily').each do |quest| %>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                  <h5><%= quest.title %></h5>
+                  <h5><%= quest.time.strftime("%H:%M") %></h5>
+                </div>
+                <div style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+                  <%= quest.description %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No daily quests yet, sweetie!</p>
           <% end %>
-        <% else %>
-          <p class="text-muted">You have no daily quests yet. Start your journey!</p>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="card shadow-sm h-100">
-      <div class="card-header bg-warning text-dark">
-        <h4 class="mb-0">Main Quests</h4>
-      </div>
-      <div class="card-body">
-        <% if current_user.quests.where(quest_type: 'main').any? %>
-          <% current_user.quests.where(quest_type: 'main').each do |quest| %>
-            <div class="mb-3">
-              <h5>
-                <%= quest.title %>
-                <span class="badge bg-primary ms-2 text-capitalize"><%= quest.quest_type %></span>
-              </h5>
-              <p><%= quest.description %></p>
-            </div>
-          <% end %>
-        <% else %>
-          <p class="text-muted">You have no main quests yet. Start your journey!</p>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

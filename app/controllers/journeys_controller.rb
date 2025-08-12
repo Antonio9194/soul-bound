@@ -46,8 +46,8 @@ Output format:
 
 {
   "daily_quests": [
-    {"title": "title 1", "description": "description", "time": "time"},
-    {"title": "title 2", "description": "description", "time": "time"},
+    {"title": "title 1", "time": "quest.time", "description": "description"},
+    {"title": "title 2", "time": "quest.time", "description": "description"},
     ...
   ],
   "main_quest": {
@@ -79,6 +79,7 @@ PROMPT
           current_user.quests.create(
             title: quest["title"],
             description: quest["description"],
+            time: quest["time"],
             quest_type: "daily",
             completed: false,
             xp_reward: 5,
