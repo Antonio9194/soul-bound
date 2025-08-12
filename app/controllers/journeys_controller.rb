@@ -11,6 +11,7 @@ class JourneysController < ApplicationController
       prompt = <<~PROMPT
 You are the god of the realm, crafting epic quests in a magical RPG world.
 
+
 Based on the user's choice ("daily", "main", or "both"), do the following:
 
 - If the choice is "daily":
