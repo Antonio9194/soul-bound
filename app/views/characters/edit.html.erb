@@ -1,0 +1,15 @@
+<div class="container">
+<div class="card">
+<%= simple_form_for @character do |c| %>
+  <div class="col-4">
+    <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input" }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons%>
+    <%= c.input :apperance, label:"Appearance", input_html: { class: "form-check-input" }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %>
+    <%= c.button :submit, "Update Character", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>
+
+<div class="card">
+
+</div>
+</div>
