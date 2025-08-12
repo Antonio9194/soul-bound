@@ -9,66 +9,60 @@ class JourneysController < ApplicationController
 
     if @journey.save
       prompt = <<~PROMPT
-  You are the god of the realm, crafting epic quests in a magical RPG world.
-
-  Based on the user's choice: "daily", "main", or "both", create quests as follows:
-
-  - If "daily", generate exactly 6 daily quests with a "title" and "description". Do NOT include deadlines but add time if the user asks.
-  - If "main", generate 1 main quest consisting of multiple tasks. Each task must have:
-    - a "title"
-    - a vivid "description"
-    - a real and specific "deadline" date that exactly matches the user's date.
-      If multiple tasks add the deadlines if specified.
-  - If "both", generate both the 6 daily quests and the main quest as described.
-  Remember that all this must be in RPG style so for daily make it sounds like they are magical quests but still make it so that its related to what the user asked and the task is clear in real life like this: 
-  Create a list of daily quests that turn normal routine tasks into exciting fantasy adventures. Each quest should have:
-	•	A heroic title (e.g., ‘Slay the Goblin of the Eastern Forest’)
-	•	A clear objective that feels like a mission (e.g., ‘Find the lost treasure hidden beneath the ancient oak’)
-	•	A time or deadline if relevant
-	•	A brief flavorful description that inspires the user to complete the task as if on an epic quest
-Avoid generic or mundane instructions. Make every quest feel magical, adventurous, and rewarding, transforming daily habits into immersive role-playing experiences.”
+You are the god of the realm, crafting epic quests in a magical RPG world.
 
 
-  The user's choice is "#{@journey.purpose}".
-  The user's daily quest input is "#{@journey.daily_quests}".
-  The user's main goal input is "#{@journey.main_quest}".
-  
+Based on the user's choice ("daily", "main", or "both"), do the following:
 
-  Output ONLY the quests relevant to the user's choice in the JSON format below, with no extra text:
+- If the choice is "daily":
+  - Generate ONLY daily quests. Do NOT generate main quests.
+  - Create at least 6 daily quests (or more if appropriate).
+  - Each daily quest must have:
+    - a "title" with NO labels such as "daily" or "main" included.
+    - a vivid "description" that inspires the user.
+      - a **specific "time" or "time range"** that you MUST assign even if the user does NOT explicitly mention it.
+      Use common sense and daily logic to infer fixed times or windows.
+    - NEVER omit the "time" field.
+      Even if the user does not explicitly provide times, assign logical fixed times or windows based on common sense.
+  - Do NOT include any deadlines for daily quests.
 
-  {
-    "daily_quests": [
-      {"title": "title 1", "description": "description", "time": "time"(if needed)},
-      {"title": "title 2", "description": "description", "time": "time"(if needed)},
-      {"title": "title 3", "description": "description", "time": "time"(if needed)},
-      {"title": "title 4", "description": "description", "time": "time"(if needed)},
-      {"title": "title 5", "description": "description", "time": "time"(if needed)},
-      {"title": "title 6", "description": "description", "time": "time"(if needed)}
-    ],
-    "main_quest": {
+- If the choice is "main":
+  - Generate ONLY the main quest as a narrative with tasks, each having titles and deadlines.
+  - Do NOT generate daily quests.
+
+- If the choice is "both":
+  - Generate both daily quests and main quest as above.
+
+Always ensure that:
+- Titles never include the words "daily" or "main" or similar labels.
+- All quests feel like magical, vivid RPG adventures that relate clearly to the user's real-life tasks.
+- Output ONLY the quests relevant to the user’s choice in JSON format as specified, with no extra text or explanations.
+
+The user's choice is "#{@journey.purpose}".
+The user's daily quest input is "#{@journey.daily_quests}".
+The user's main goal input is "#{@journey.main_quest}".
+
+Output format:
+
+{
+  "daily_quests": [
+    {"title": "title 1", "description": "description", "time": "time"},
+    {"title": "title 2", "description": "description", "time": "time"},
+    ...
+  ],
+  "main_quest": {
     "title": "Main Quest Title",
-    "description": "Remember to create a story narrative style rpg connected trhough all the tasks until the last deadline goal",
-    "deadline": "optional main quest deadline if specified",
+    "description": "Story narrative linking all tasks",
+    "deadline": "optional deadline",
     "tasks": [
-      {
-        "title": "Task 1 title",
-        "description": "Optional task 1 description",
-        "deadline": "optional task 1 deadline"
-      },
-      {
-        "title": "Task 2 title",
-        "description": "Optional task 2 description",
-        "deadline": "optional task 2 deadline"
-      }
-      // ...more tasks if specified
+      {"title": "Task 1", "description": "desc", "deadline": "deadline"},
+      ...
     ]
   }
 }
-  }
 
-  If daily quests are not needed, omit "daily_quests". If main quest is not needed, omit "main_quest".
-
-  Remember, every quest should feel like a magical adventure, vivid and inspiring.
+If daily quests are not requested, omit "daily_quests".
+If main quests are not requested, omit "main_quest".
 PROMPT
 
       chat = RubyLLM.chat
