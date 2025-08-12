@@ -9,7 +9,11 @@
               <div class="mb-3">
                 <div class="d-flex justify-content-between">
                   <h5><%= quest.title %></h5>
-                  <h5><%= quest.time.strftime("%H:%M") %></h5>
+
+                  <div data-controller="date-edit">
+                    <h5 data-date-edit-target="clickme" data-action="click->date-edit#fire"><%= quest.time.strftime("%H:%M") %></h5>
+                  </div>
+                  
                 </div>
                 <div style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <%= quest.description %>
