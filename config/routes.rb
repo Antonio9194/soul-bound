@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :journeys, only: [:new, :create]
 
-  resources :characters, only: [:show, :new, :create, :update, :destroy]
+  resources :characters
 
   resources :quests, only: [] do
     collection do
