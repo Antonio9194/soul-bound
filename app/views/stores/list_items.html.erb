@@ -1,0 +1,20 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<h1>The Wandering Satchel</h1>
+
+<% @items.each do |item| %>
+  <div class="store-item">
+    <strong><%= link_to item.name, store_path(item) %></strong>: <%= item.price %> coins
+    <%= button_to "Purchase", purchase_store_path(item), method: :post, class: "btn btn-primary" %>
+  </div>
+<% end %>
