@@ -21,7 +21,7 @@ class Quest < ApplicationRecord
     character.gain_coins(self.coin_reward)
   end
 
-  def quest_completed(character)
+  def quest_marked_completed(character)
     complete!(character)
     give_rewards(character)
   end

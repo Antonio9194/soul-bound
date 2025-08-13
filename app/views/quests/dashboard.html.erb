@@ -22,11 +22,19 @@
                       <input type="time" value="<%= quest.time.strftime("%H:%M") %>" data-action="blur->date-edit#saveInput keydown->date-edit#checkEnter" />
                     </div>
                   </div>
-                  
                 </div>
-                <div style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
-                  <%= quest.description %>
+
+               <div class="d-flex justify-content-between" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+                  <span><%= quest.description %></span>
+                  <div style="border: 1px solid black; border-radius: 10px; background-color: white; padding: 2px; margin-top: 2px;">
+                    <%= link_to "Complete", quest_path(quest), 
+                        data: { turbo_method: :patch, turbo_confirm: "Are you sure?" }, 
+                        params: { quest: { completed: true } }, 
+                        style: "text-decoration: none; color: black;"
+                    %>
+                  </div>
                 </div>
+
               </div>
             <% end %>
           <% else %>
