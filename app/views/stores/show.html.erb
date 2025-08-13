@@ -1,0 +1,17 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<h1><%= @item.name %></h1>
+<p>Price: <%= @item.price %> coins</p>
+
+<%= button_to "Purchase", purchase_store_path(@item), method: :post, class: "btn btn-primary" %>
+<%= link_to "Back to Store", list_items_store_path %>
