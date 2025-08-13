@@ -1,18 +1,21 @@
+<div class="row g-2">
+  <div class="col-md-3">
+    <div class="card h-100 p-3 mt-3" style="border: none; color: black;">
+      <div class="card-header text-center" style="border-radius: 20px; color: black; border: 1px solid black;">
+        <h1><%= @character.name %></h1>
 
+        <div class="d-flex justify-content-center" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+          <h2><%= @character.gender %></h2>
+        </div>
+      
+        <div class="d-flex justify-content-center mt-2 gap-2" style="border-radius: 20px; padding: 10px;">
+            <%= link_to "Edit", edit_character_path(@character), class: "btn", style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
+            <%= link_to "Delete", @character, 
+                  data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this character?' }, 
+                  class: "btn", style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
+        </div>
 
-
-  <div class="container">
-
-  <div class="navbar">
-    <div class="nav-item">
-      <%= link_to "Edit", edit_character_path, class: "nav-link" %>
-    </div>
-    <div class="nav-item">
-      <%= link_to "Delete", @character, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this character?' }, class: "nav-link" %>
+      </div>
     </div>
   </div>
-
-    <h1><%= @character.name %></h1>
-    <h2><%= @character.gender %></h2>
-    <h2><%= @character.apperance %></h2>
-  </div>
+</div>
