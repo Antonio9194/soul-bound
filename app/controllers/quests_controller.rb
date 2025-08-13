@@ -12,7 +12,7 @@ class QuestsController < ApplicationController
     was_incomplete = !@quest.completed?
     if @quest.update(quest_params)
       if was_incomplete && @quest.completed?
-        @quest.give_rewards(current_user.character)
+        @quest.quest_marked_completed(current_user.character)
       end
       redirect_to dashboard_quests_path, notice: "Quest updated!"
     else
