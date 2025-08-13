@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :characters
 
-  resources :quests, only: [] do
+  resources :quests, only: [:edit, :update] do
     collection do
       get :dashboard
     end
