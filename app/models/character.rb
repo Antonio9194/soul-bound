@@ -19,4 +19,9 @@ class Character < ApplicationRecord
     save!
   end
 
+  def gain_coins(amount)
+    self-coin += amount
+    save!
+  end
+
 end
