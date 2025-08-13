@@ -11,7 +11,16 @@
                   <h5><%= quest.title %></h5>
 
                   <div data-controller="date-edit">
-                    <h5 data-date-edit-target="clickme" data-action="click->date-edit#fire"><%= quest.time.strftime("%H:%M") %></h5>
+                    <div data-date-edit-target="display" data-action="click->date-edit#showInput" class="d-flex justify-content-between gap-2">
+                      <h5><%= quest.time.strftime("%H:%M") %></h5>
+                      <div data-controller="date-edit">
+                        <h5 data-date-edit-target="text"></h5>
+                      </div>
+                    </div>
+
+                    <div data-date-edit-target="input" style="display: none;">
+                      <input type="time" value="<%= quest.time.strftime("%H:%M") %>" data-action="blur->date-edit#saveInput keydown->date-edit#checkEnter" />
+                    </div>
                   </div>
                   
                 </div>
