@@ -10,12 +10,14 @@ class QuestsController < ApplicationController
   def update
     @quest = Quest.find(params[:id])
     was_incomplete = !@quest.completed?
+
     if @quest.update(quest_params)
       if was_incomplete && @quest.completed?
         @quest.quest_marked_completed(current_user.character)
       end
-      redirect_to dashboard_quests_path, notice: "Quest updated!"
+      redirect_to dashboard_quests_path, notice: "Quest completed! Thanks from the Guild!"
     else
+      flash[:alert] = "Failed to complete the quest."
       render :edit, status: :unprocessable_entity
     end
   end
