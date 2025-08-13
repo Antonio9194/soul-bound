@@ -26,15 +26,17 @@
 
                <div class="d-flex justify-content-between" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <span><%= quest.description %></span>
-                  <div data-controller="complete" style="border: 1px solid black; border-radius: 10px; background-color: white; padding: 2px; margin-top: 2px;">
-                    <%= link_to "Complete", quest_path(quest), 
-                        data: { turbo_method: :patch, turbo_confirm: "Are you sure?", action: "click->complete#markCompleted" }, 
-                        params: { quest: { completed: true } }, 
-                        style: "text-decoration: none; color: black;"
+                  <div data-controller="complete" style="border: 1px solid black; border-radius: 20px; padding: 2px; background-color: white;">
+                    <%= button_to "Complete", quest_path(quest), 
+                          method: :patch, 
+                          params: { quest: { completed: true } }, 
+                          form: { data: { turbo: true } },
+                          data: { action: "click->complete#markCompleted", complete_target: "button" }, 
+                          class: "btn btn-white-black"
                     %>
                   </div>
-                </div>
 
+                </div>
               </div>
             <% end %>
           <% else %>
