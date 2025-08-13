@@ -4,8 +4,10 @@
       <div class="card-header text-center" style="border-radius: 20px; color: black; border: 1px solid black;">
         <h1><%= @character.name %></h1>
 
-        <div class="d-flex justify-content-center" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
-          <h2><%= @character.gender %></h2>
+        <div class="d-flex flex-column justify-content-center" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+          <h5>Level: <%= @character.level %></h5>
+          <h5>Exp: <%= @character.xp %></h5>
+          <h5>Coins: <%= @character.coin %></h5>
         </div>
       
         <div class="d-flex justify-content-center mt-2 gap-2" style="border-radius: 20px; padding: 10px;">
