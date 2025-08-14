@@ -15,7 +15,7 @@ class CharactersController < ApplicationController
     @character.xp = 0
     @character.coin = 0
     if @character.save
-      redirect_to character_path(@character), notice: "Your character was successfully created!"
+      redirect_to dashboard_quests_path, notice: "Your character was successfully created!"
     else
       render :new, status: :unprocessable_entity
     end

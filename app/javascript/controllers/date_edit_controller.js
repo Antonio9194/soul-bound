@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["display", "input", "text"];
 
    connect() {
-    this.typeAndVanish(this.textTarget, "Rewrite the Threads of Time!", 80, 2000);
+    this.typeAndVanish(this.textTarget, "Click here to changed the threads of time!!", 60, 2000);
   }
 
   showInput() {
