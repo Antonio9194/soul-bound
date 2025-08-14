@@ -43,7 +43,6 @@ The user's daily quest input is "#{@journey.daily_quests}".
 The user's main goal input is "#{@journey.main_quest}".
 
 Output format:
-
 {
   "daily_quests": [
     {"title": "title 1", "time": "quest.time", "description": "description"},

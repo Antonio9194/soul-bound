@@ -9,16 +9,22 @@ class QuestsController < ApplicationController
 
   def update
     @quest = Quest.find(params[:id])
+    was_incomplete = !@quest.completed?
+
     if @quest.update(quest_params)
-      redirect_to dashboard_quests_path, notice: "Quest updated!"
-    else 
+      if was_incomplete && @quest.completed?
+        @quest.quest_marked_completed(current_user.character)
+      end
+      redirect_to dashboard_quests_path, notice: "Quest completed! Thanks from the Guild!"
+    else
+      flash[:alert] = "Failed to complete the quest."
       render :edit, status: :unprocessable_entity
-    end  
+    end
   end
 
   private
 
   def quest_params
-    params.require(:quest).permit(:title, :description, :completed, :time)
+    params.require(:quest).permit(:title, :description, :completed, :time, :xp_reward, :coin_reward)
   end
 end
