@@ -45,7 +45,13 @@
                             data: { action: "click->complete#markCompleted", complete_target: "button" }, 
                             class: "btn btn-white-black"
                       %>
+
+                      <div data-complete-target="popup" style="display: none;">
+                        🎉 The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
+                        <button data-action="click->complete#close">Close</button>
+                      </div>
                     <% end %>  
+
                   </div>
                 </div>
               </div>
@@ -53,16 +59,6 @@
           <% else %>
             <p>No daily quests yet, sweetie!</p>
           <% end %>
-
-          <div data-quest-completed-target="popup" class="quest-popup" style="display: none;">
-            <p>🎉 The Guild awards you with <%= quest.xp_reward %>XP and <%= quest.coin_rewardc%>Coins! </p>
-            <p>XP: <span data-quest-completed-target="xp"></span></p>
-            <p>Coins: <span data-quest-completed-target="coins"></span></p>
-            <button data-action="click->quest-completed#close">Close</button>
-          </div>
-
-
-
         </div>
       </div>
     </div>
