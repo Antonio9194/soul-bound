@@ -1,6 +1,6 @@
 class QuestsController < ApplicationController
   def dashboard
-    @quests = current_user.quests
+    @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
   end
 
   def edit
@@ -15,7 +15,7 @@ class QuestsController < ApplicationController
       if was_incomplete && @quest.completed?
         @quest.quest_marked_completed(current_user.character)
       end
-      redirect_to dashboard_quests_path
+      redirect_to dashboard_quests_path unless quest_params[:completed]
     else
       flash[:alert] = "Failed to complete the quest."
       render :edit, status: :unprocessable_entity

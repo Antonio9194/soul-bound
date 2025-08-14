@@ -5,10 +5,9 @@
         <h4 class="mt-0">Daily Quests</h4>
 
         <div class="card-body" style="color: black;">
-          <% daily_quests = current_user.quests.where(quest_type: 'daily') %>
 
-          <% if daily_quests.any? %>
-            <% daily_quests.each do |quest| %>
+          <% if @daily_quests.any? %>
+            <% @daily_quests.each do |quest| %>
               <div class="mb-3">
                 <div class="d-flex justify-content-between">
                   <h5><%= quest.title %></h5>
