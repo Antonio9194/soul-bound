@@ -26,13 +26,18 @@
 
                <div class="d-flex justify-content-between" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <span><%= quest.description %></span>
-                  <div data-controller="complete" style="border: 1px solid black; border-radius: 20px; padding: 2px; background-color: white;">
-                    <%= link_to "Complete", quest_path(quest), 
-                          method: :patch, 
-                          params: { quest: { completed: true } }, 
-                          data: { action: "click->complete#markCompleted", complete_target: "button" }, 
-                          class: "btn btn-white-black"
-                    %>
+                  
+                  <div data-controller="complete" style="border: 1px solid black; border-radius: 20px; background-color: white; margin: 20px 2px;">
+                    <% if quest.completed?%>
+                     <%= button_to "Completed", "", disabled: true, class: "btn btn-white-black", style:" border: none;" %>
+                    <% else %> 
+                      <%= button_to "Complete", quest_path(quest), 
+                            method: :patch,
+                            params: { quest: { completed: true } },
+                            data: { action: "click->complete#markCompleted", complete_target: "button" }, 
+                            class: "btn btn-white-black"
+                      %>
+                    <% end %>  
                   </div>
 
                 </div>
