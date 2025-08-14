@@ -1,25 +1,16 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["button", "popup"]
 
   markCompleted(event) {
-    
-    // this.buttonTarget.textContent = "Completed";
+    // Change button text
+    if (this.hasButtonTarget) this.buttonTarget.textContent = "Completed"
 
+    // Show Bootstrap modal
     if (this.hasPopupTarget) {
-      this.display();
+      const modal = new bootstrap.Modal(this.popupTarget)
+      modal.show()
     }
-  }
-  
-  display() {
-    this.popupTarget.style.display = "block";
-    setTimeout(() => {
-      this.close();
-    }, 9000); 
-  }
-
-  close() {
-    this.popupTarget.style.display = "none";
   }
 }
