@@ -1,0 +1,9 @@
+<div class="card shadow-sm p-4 rounded">
+  <div class="card-body">
+    <h1 class="card-title"><%= @item.name %></h1>
+    <p class="card-subtitle text-muted mb-2">Item type: <%= @item.item_type %></p>
+    <p class="card-text"><%= @item.description %></p>
+
+    <%= button_to "Purchase", purchase_store_path(@item), method: :post, class: "btn btn-primary mt-3" %>
+  </div>
+</div>
