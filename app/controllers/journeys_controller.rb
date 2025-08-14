@@ -81,8 +81,8 @@ PROMPT
             time: quest["time"],
             quest_type: "daily",
             completed: false,
-            xp_reward: 5,
-            coin_reward: 5
+            xp_reward: 100,
+            coin_reward: 300
           )
         end
       end
@@ -95,14 +95,14 @@ PROMPT
             description: task["description"],
             quest_type: "main",
             completed: false,
-            xp_reward: 10,
-            coin_reward: 10,
+            xp_reward: 300,
+            coin_reward: 700,
             deadline: task["deadline"]
           )
         end
       end
 
-      redirect_to dashboard_quests_path
+      redirect_to new_character_path
     else
       flash.now[:alert] = "Oops, something went wrong. Please check your answers."
       render :new

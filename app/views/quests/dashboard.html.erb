@@ -3,15 +3,20 @@
     <div class="card h-100 p-3 mt-3" style="border: none; color: black;">
       <div class="card-header" style="border-radius: 20px; color: black; border: 1px solid black;">
         <h4 class="mt-0">Daily Quests</h4>
+
         <div class="card-body" style="color: black;">
-          <% if current_user.quests.where(quest_type: 'daily').any? %>
-            <% current_user.quests.where(quest_type: 'daily').each do |quest| %>
+          <% daily_quests = current_user.quests.where(quest_type: 'daily') %>
+
+          <% if daily_quests.any? %>
+            <% daily_quests.each do |quest| %>
               <div class="mb-3">
                 <div class="d-flex justify-content-between">
                   <h5><%= quest.title %></h5>
 
                   <div data-controller="date-edit">
-                    <div data-date-edit-target="display" data-action="click->date-edit#showInput" class="d-flex justify-content-between gap-2">
+                    <div data-date-edit-target="display" 
+                         data-action="click->date-edit#showInput" 
+                         class="d-flex justify-content-between gap-2">
                       <h5><%= quest.time.strftime("%H:%M") %></h5>
                       <div data-controller="date-edit">
                         <h5 data-date-edit-target="text"></h5>
@@ -19,17 +24,20 @@
                     </div>
 
                     <div data-date-edit-target="input" style="display: none;">
-                      <input type="time" value="<%= quest.time.strftime("%H:%M") %>" data-action="blur->date-edit#saveInput keydown->date-edit#checkEnter" />
+                      <input type="time" value="<%= quest.time.strftime("%H:%M") %>" 
+                             data-action="blur->date-edit#saveInput keydown->date-edit#checkEnter" />
                     </div>
                   </div>
                 </div>
 
-               <div class="d-flex justify-content-between" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+                <div class="d-flex justify-content-between" 
+                     style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <span><%= quest.description %></span>
-                  
-                  <div data-controller="complete" style="border: 1px solid black; border-radius: 20px; background-color: white; margin: 20px 2px;">
-                    <% if quest.completed?%>
-                     <%= button_to "Completed", "", disabled: true, class: "btn btn-white-black", style:" border: none;" %>
+
+                  <div data-controller="complete" 
+                       style="border: 1px solid black; border-radius: 20px; background-color: white; margin: 20px 2px;">
+                    <% if quest.completed? %>
+                      <%= button_to "Completed", "#", disabled: true, class: "btn btn-white-black", style:"border: none;" %>
                     <% else %> 
                       <%= button_to "Complete", quest_path(quest), 
                             method: :patch,
@@ -39,13 +47,22 @@
                       %>
                     <% end %>  
                   </div>
-
                 </div>
               </div>
             <% end %>
           <% else %>
             <p>No daily quests yet, sweetie!</p>
           <% end %>
+
+          <div data-quest-completed-target="popup" class="quest-popup" style="display: none;">
+            <p>🎉 The Guild awards you with <%= quest.xp_reward %>XP and <%= quest.coin_rewardc%>Coins! </p>
+            <p>XP: <span data-quest-completed-target="xp"></span></p>
+            <p>Coins: <span data-quest-completed-target="coins"></span></p>
+            <button data-action="click->quest-completed#close">Close</button>
+          </div>
+
+
+
         </div>
       </div>
     </div>
