@@ -3,8 +3,8 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["display", "input", "text"];
 
-   connect() {
-    this.typeAndVanish(this.textTarget, "Click here to changed the threads of time!!", 60, 2000);
+  connect() {
+    this.typeAndVanish(this.textTarget, "Click me to change the threads of time!", 60, 2000);
   }
 
   showInput() {
@@ -13,20 +13,16 @@ export default class extends Controller {
     this.inputTarget.querySelector("input").focus();
   }
 
-  saveInput() {
-    const input = this.inputTarget.querySelector("input");
-    const newTime = input.value;
-    this.displayTarget.querySelector("h5").textContent = newTime;
-    this.inputTarget.style.display = "none";
-    this.displayTarget.style.display = "block";
-  }
 
   checkEnter(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      this.saveInput();
+      this.inputTarget.querySelector("form")?.requestSubmit();
     }
   }
+  
+
+  //vanish text for timec hange
 
   typeAndVanish(element, message, speed, vanishDelay) {
     element.textContent = "";
@@ -43,5 +39,4 @@ export default class extends Controller {
       }
     }, speed);
   }
-
 }

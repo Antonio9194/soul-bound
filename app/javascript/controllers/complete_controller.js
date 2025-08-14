@@ -4,8 +4,8 @@ export default class extends Controller {
   static targets = ["button", "popup"]
 
   markCompleted(event) {
-
-    this.buttonTarget.textContent = "Completed";
+    
+    // this.buttonTarget.textContent = "Completed";
 
     if (this.hasPopupTarget) {
       this.display();

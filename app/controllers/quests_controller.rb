@@ -15,7 +15,7 @@ class QuestsController < ApplicationController
       if was_incomplete && @quest.completed?
         @quest.quest_marked_completed(current_user.character)
       end
-      redirect_to dashboard_quests_path, notice: "Quest completed! Thanks from the Guild!"
+      redirect_to dashboard_quests_path
     else
       flash[:alert] = "Failed to complete the quest."
       render :edit, status: :unprocessable_entity
