@@ -6,6 +6,7 @@ export default class extends Controller {
   markCompleted(event) {
     // Change button text
     if (this.hasButtonTarget) this.buttonTarget.textContent = "Completed"
+    this.buttonTarget.disabled = true
 
     // Show Bootstrap modal
     if (this.hasPopupTarget) {
