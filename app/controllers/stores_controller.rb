@@ -11,9 +11,9 @@ class StoresController < ApplicationController
   end
 
   def purchase
-    if current_user.coins >= @item.price
-      current_user.coins -= @item.price
-      current_user.save
+    if current_user.character.coin >= @item.price
+      current_user.character.coin -= @item.price
+      current_user.character.save
       flash[:notice] = "You've purchased #{@item.name}!"
     else
       flash[:alert] = "You don't have enough coins to buy #{@item.name}."
