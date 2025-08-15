@@ -6,7 +6,7 @@ export default class extends Controller {
   markCompleted(event) {
     // Submit the form to Rails
     const form = this.buttonTarget.closest("form")
-    if (form) form.requestSubmit() // native JS submits the form
+    if (form) form.requestSubmit() 
 
     // Change button text
     if (this.hasButtonTarget) this.buttonTarget.textContent = "Completed"
