@@ -1,6 +1,7 @@
 class QuestsController < ApplicationController
   def dashboard
     @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
+    @main_quests = current_user.quests.where(quest_type: 'main').order(time: :asc)
   end
 
   def edit
@@ -25,6 +26,6 @@ class QuestsController < ApplicationController
   private
 
   def quest_params
-    params.require(:quest).permit(:title, :description, :completed, :time, :xp_reward, :coin_reward)
+    params.require(:quest).permit(:title, :description, :quest_type, :completed, :time, :xp_reward, :coin_reward)
   end
 end
