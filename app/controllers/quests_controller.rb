@@ -9,7 +9,6 @@ class QuestsController < ApplicationController
 
   def update
     @quest = Quest.find(params[:id])
-    puts params.inspect 
     was_incomplete = !@quest.completed?
 
     if @quest.update(quest_params)
