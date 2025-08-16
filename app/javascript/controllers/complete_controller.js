@@ -1,25 +1,21 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["button", "popup"]
 
   markCompleted(event) {
+    // Submit the form to Rails
+    const form = this.buttonTarget.closest("form")
+    if (form) form.requestSubmit() 
 
-    this.buttonTarget.textContent = "Completed";
+    // Change button text
+    if (this.hasButtonTarget) this.buttonTarget.textContent = "Completed"
+    this.buttonTarget.disabled = true
 
+    // Show Bootstrap modal
     if (this.hasPopupTarget) {
-      this.display();
+      const modal = new bootstrap.Modal(this.popupTarget)
+      modal.show()
     }
-  }
-  
-  display() {
-    this.popupTarget.style.display = "block";
-    setTimeout(() => {
-      this.close();
-    }, 9000); 
-  }
-
-  close() {
-    this.popupTarget.style.display = "none";
   }
 }

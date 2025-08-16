@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :items, only: [:show]
+  resources :items, only: [:index, :show]
 
 
   root to: "pages#home"

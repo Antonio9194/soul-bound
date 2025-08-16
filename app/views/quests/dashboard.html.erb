@@ -3,33 +3,33 @@
     <div class="card h-100 p-3 mt-3" style="border: none; color: black;">
       <div class="card-header" style="border-radius: 20px; color: black; border: 1px solid black;">
         <h4 class="mt-0">Daily Quests</h4>
-
         <div class="card-body" style="color: black;">
-          <% daily_quests = current_user.quests.where(quest_type: 'daily') %>
-
-          <% if daily_quests.any? %>
-            <% daily_quests.each do |quest| %>
+          <% if @daily_quests.any? %>
+            <% @daily_quests.each do |quest| %>
               <div class="mb-3">
+
+                <!-- Quest Title & Time -->
                 <div class="d-flex justify-content-between">
                   <h5><%= quest.title %></h5>
-
                   <div data-controller="date-edit">
                     <div data-date-edit-target="display" 
                          data-action="click->date-edit#showInput" 
                          class="d-flex justify-content-between gap-2">
                       <h5><%= quest.time.strftime("%H:%M") %></h5>
-                      <div data-controller="date-edit">
-                        <h5 data-date-edit-target="text"></h5>
-                      </div>
+                      <h5 data-date-edit-target="text"></h5>
                     </div>
 
                     <div data-date-edit-target="input" style="display: none;">
-                      <input type="time" value="<%= quest.time.strftime("%H:%M") %>" 
-                             data-action="blur->date-edit#saveInput keydown->date-edit#checkEnter" />
+                      <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
+                        <%= f.time_field :time, value: quest.time.strftime("%H:%M"), 
+                                        class: "btn btn-sm btn-outline-primary",
+                                        data: { action: "blur->date-edit#submitForm keydown->date-edit#checkEnter" } %>
+                      <% end %>
                     </div>
                   </div>
                 </div>
 
+                <!-- Quest Description & Complete Button -->
                 <div class="d-flex justify-content-between" 
                      style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <span><%= quest.description %></span>
@@ -37,20 +37,32 @@
                   <div data-controller="complete" 
                        style="border: 1px solid black; border-radius: 20px; background-color: white; margin: 20px 2px;">
                     <% if quest.completed? %>
-                      <%= button_to "Completed", "#", disabled: true, class: "btn btn-white-black", style:"border: none;" %>
-                    <% else %> 
+                      <%= button_to "Completed", "#", disabled: true, class: "btn btn-white-black", style: "border: none;", data: { complete_target: "button" } %>
+                    <% else %>
                       <%= button_to "Complete", quest_path(quest), 
                             method: :patch,
                             params: { quest: { completed: true } },
-                            data: { action: "click->complete#markCompleted", complete_target: "button" }, 
-                            class: "btn btn-white-black"
-                      %>
+                            class: "btn btn-white-black",
+                            data: { complete_target: "button", action: "click->complete#markCompleted" } %>
+                    <% end %>
 
-                      <div data-complete-target="popup" style="display: none;">
-                        🎉 The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
-                        <button data-action="click->complete#close">Close</button>
+                    <!-- Modal Inside the same Controller div-->
+                    <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
+                      <div class="modal-dialog">
+                        <div class="modal-content" style="border-radius: 20px;">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Quest Completed!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
+                          </div>
+                        </div>
                       </div>
-                    <% end %>  
+                    </div>
 
                   </div>
                 </div>
