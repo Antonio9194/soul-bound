@@ -4,10 +4,10 @@
     <% if user_signed_in? %>
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <%= link_to dashboard_quests_path, class: "nav-link" do %>
-            <%= image_tag "guild.png", class: "me-1 nav-icon", alt: "Guild icon" %>
-            Guild
-          <% end %>
+       <%= link_to (current_user.quests.present? ? dashboard_quests_path : new_journey_path), class: "nav-link" do %>
+          <%= image_tag "guild.png", class: "me-1 nav-icon", alt: "Guild icon" %>
+          Guild
+        <% end %>
         </li>
             <%# <%= image_tag(
                   current_user.avatar.attached? ? url_for(current_user.avatar) : "default_avatar.png",
