@@ -19,16 +19,16 @@ export default class extends Controller {
     const basePath = this.displayTarget.dataset.baseImagePath
 
     const genderAppearance = `
-      <img 
-        style="position: absolute; width: 180px; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);" 
-        src="${basePath}ph${gender}${appearance}.png" 
+      <img
+        style="position: absolute"
+        src="${basePath}ph${gender}${appearance}.png"
         alt="">
     `
 
     const klassTarget = `
-      <img 
-        style="position: absolute; width: 120px; z-index: 2; top: 50%; left: 50%; transform: translate(-50%, -65%);" 
-        src="${basePath}${klass}.png" 
+      <img
+        style="position: absolute"
+        src="${basePath}${klass}.png"
         alt="">
     `
 
