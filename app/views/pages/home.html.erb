@@ -1,8 +1,8 @@
 <div class="homepage">
   <div class="logo-container">
     <div class="homepage-text">
-      <% if current_user.present? %>
-        <%= link_to "Continue", dashboard_quests_path, class: "nav-link" %>
+     <% if current_user.present? %>
+        <%= link_to "Continue", current_user.quests.present? ? dashboard_quests_path : new_journey_path, class: "nav-link" %>
       <% else %>
         <%= link_to "Begin your Journey", new_user_registration_path, class: "nav-link" %>
       <% end %>
