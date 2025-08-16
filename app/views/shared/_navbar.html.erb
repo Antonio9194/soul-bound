@@ -4,7 +4,11 @@
     <% if user_signed_in? %>
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <%= link_to "Guild", dashboard_quests_path, class: "nav-link" %>
+          <%= link_to dashboard_quests_path, class: "nav-link" do %>
+            <%= image_tag "guild.png", class: "me-1 nav-icon", alt: "Guild icon" %>
+            Guild
+          <% end %>
+        </li>
             <%# <%= image_tag(
                   current_user.avatar.attached? ? url_for(current_user.avatar) : "default_avatar.png",
                   class: "avatar rounded-circle me-2",
@@ -29,13 +33,22 @@
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Character", current_user&.character.present? ? character_path(current_user.character) : new_character_path, class: "nav-link" %>
+            <%= link_to current_user&.character.present? ? character_path(current_user.character) : new_character_path, class: "nav-link" do %>
+              <%= image_tag "character.png", class: "me-1 nav-icon", alt: "Character icon" %>
+              Character
+            <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to "Tavern", root_path, class: "nav-link" %>
+            <%= link_to root_path, class: "nav-link" do %>
+              <%= image_tag "tavern.png", class: "me-1 nav-icon", alt: "Tavern icon" %>
+              Tavern
+            <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to "Store", list_items_store_path, class: "nav-link" %>
+            <%= link_to list_items_store_path, class: "nav-link" do %>
+              <%= image_tag "store.png", class: "me-1 nav-icon", alt: "Store icon" %>
+              Store
+            <% end %>
           </li>
           <li class="nav-item">
             <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "nav-link" %>          </li>
