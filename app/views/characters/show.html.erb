@@ -21,5 +21,13 @@
     </div>
   </div>
 </div>
+<div class="d-flex justify-content-between">
+  <div class="character-card" style="position: relative; width: 288px; height: 288px; overflow: hidden;">
+  <!-- Base character -->
+  <%= image_tag("south.png", style: "width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0;") %>
 
-<div class="card" style="width: 200px; height: 288px"><%= image_tag("ph#{@character.gender}#{@character.apperance}.png", :style => "object-fit: none") %></div>
+  <!-- Torso overlay, slightly nudged -->
+  <%= image_tag("121.png", style: "width: 40%; height: 40%; object-fit: contain; position: absolute; top: 32%; left: 32%;") %>
+</div>
+
+
