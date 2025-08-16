@@ -1,1 +1,53 @@
 // Specific CSS for your home-page
+.homepage {
+  background: url("MainPageBgpix.png") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.logo {
+  width: 450px;
+}
+
+.homepage-text .nav-link {
+  display: inline-block;
+  padding: 10px 25px;
+  background-color: rgba(198, 161, 243, 0.9);
+  color: white !important;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  text-decoration: none !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
+}
+
+.homepage-text .nav-link:hover {
+  background-color: rgb(229, 96, 244);
+  transform: translateY(-2px);
+}
+.logo {
+  width: 450px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-10px); }
+  50%  { transform: translateY(0); }
+  75%  { transform: translateY(10px); }
+  100% { transform: translateY(0); }
+}
