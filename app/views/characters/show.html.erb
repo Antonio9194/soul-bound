@@ -5,9 +5,15 @@
         <h1><%= @character.name %></h1>
 
         <div class="d-flex flex-column justify-content-center" style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
+          <div class="card" style="padding-left: 60px; width: 200px; height: 280px; border: none; position: relative; background-color: white;">
+            <%= image_tag("ph#{@character.gender}#{@character.apperance}.png", style: "position: absolute; width: 160px; height: auto;") %>
+            <%= image_tag("#{@character.class_name}.png", style: "position: absolute; width: 160px; height: auto;") %>
+          </div>
           <h5>Level: <%= @character.level %></h5>
+          <div class="d-flex justify-content-between" style="margin-top: 22px;">
           <h5>Exp: <%= @character.xp %></h5>
           <h5>Coins: <%= @character.coin %></h5>
+          </div>
         </div>
 
         <div class="d-flex justify-content-center mt-2 gap-2" style="border-radius: 20px; padding: 10px;">
@@ -22,8 +28,8 @@
   </div>
 </div>
 
+        
+     
 
-<div class="card" style="width: 200px; height: 280px; border: none; position: relative;">
-  <%= image_tag("ph#{@character.gender}#{@character.apperance}.png", style: "position: absolute; width: 160px; height: auto;") %>
-  <%= image_tag("#{@character.class_name}.png", style: "position: absolute; width: 160px; height: auto;") %>
-</div>
+
+
