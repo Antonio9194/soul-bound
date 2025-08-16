@@ -10,17 +10,28 @@ export default class extends Controller {
 
   render(event){
     console.log(event.target)
+
     const klass = this.klassTargets.find(radio => radio.checked)?.value || null
     const gender = this.genderTargets.find(radio => radio.checked)?.value || null
     const appearance = this.appearanceTargets.find(radio => radio.checked)?.value || null
     console.log(klass, gender, appearance)
+
     const basePath = this.displayTarget.dataset.baseImagePath
-    const klassTarget = `<img style="position: absolute" src="${basePath}${klass}.png" alt=""></img>`
-    const genderAppearance = `<img style="position: absolute" src="${basePath}ph${gender}${appearance}.png" alt="">`
+
+    const genderAppearance = `
+      <img 
+        style="position: absolute; width: 180px; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);" 
+        src="${basePath}ph${gender}${appearance}.png" 
+        alt="">
+    `
+
+    const klassTarget = `
+      <img 
+        style="position: absolute; width: 120px; z-index: 2; top: 50%; left: 50%; transform: translate(-50%, -65%);" 
+        src="${basePath}${klass}.png" 
+        alt="">
+    `
+
     this.displayTarget.innerHTML = `${genderAppearance}${klassTarget}`
-
-
   }
-
-
 }
