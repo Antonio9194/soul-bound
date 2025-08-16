@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    new_journey_path #we have to change this
+    root_path #we have to change this
   end
   # include Pundit::Authorization
 
