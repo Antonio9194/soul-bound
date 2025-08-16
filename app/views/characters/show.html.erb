@@ -22,4 +22,9 @@
   </div>
 </div>
 
-<div class="card" style="width: 200px; height: 288px"><%= image_tag("ph#{@character.gender}#{@character.apperance}.png", :style => "object-fit: none") %></div>
+<div class="card" style="width: 200px; height: 280px">
+  <%= image_tag("ph#{@character.gender}#{@character.apperance}.png", :style => "position: absolute") %>
+  <%= image_tag("#{@character.class_name}", :style => "position: absolute") %>
+  <%= image_tag("swordequip.png", :style => "position: absolute") %>
+
+</div>
