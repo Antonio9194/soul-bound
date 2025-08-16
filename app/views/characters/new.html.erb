@@ -1,13 +1,22 @@
 <p>create new characters</p>
-<div class="container">
+<div class="container" data-controller="new-character">
 
 <%= simple_form_for @character do |c| %>
   <div class="col-4">
     <%= c.input :name, label:"Character name", input_html: { class: "form-control" }%>
+<<<<<<< HEAD
     <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input" }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Priest", "Priest"]], as: :radio_buttons%>
     <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input" }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons%>
     <%= c.input :apperance, label:"Appearance", input_html: { class: "form-check-input" }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %>
+=======
+    <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input ", data: {new_character_target: "klass", action: "new-character#render"} }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Rogue", "Rogue"]], as: :radio_buttons%>
+    <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input", data: {new_character_target: "gender", action: "new-character#render"} }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons%>
+    <%= c.input :apperance, label:"Appearance", input_html: { class: "form-check-input", data: {new_character_target: "appearance", action: "new-character#render"} }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %>
+>>>>>>> e3843a40699acfaf302ed63f401b79da6a7f0db8
     <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
   </div>
 <% end %>
+<div class="card" style="width: 200px; height: 288px" data-new-character-target="display"  data-base-image-path="<%= asset_path("/assets/") %>">
+</div>
+
 </div>

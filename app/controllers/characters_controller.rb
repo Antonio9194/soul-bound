@@ -10,10 +10,12 @@ class CharactersController < ApplicationController
 
   def create
     @character = Character.new(new_character_params)
+
     @character.user_id = current_user.id
     @character.level = 1
     @character.xp = 0
     @character.coin = 0
+
     if @character.save
       redirect_to dashboard_quests_path, notice: "Your character was successfully created!"
     else
