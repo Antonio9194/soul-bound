@@ -2,26 +2,16 @@ export default class NewCharacterController {
   static targets = ["apperance", "gender", "klass", "display"]
 
   render() {
-    const klass = this.klassTargets.find(radio => radio.checked)?.value
-    const gender = this.genderTargets.find(radio => radio.checked)?.value
-    const apperance = this.apperanceTargets.find(radio => radio.checked)?.value
+  const klass = this.klassTargets.find(radio => radio.checked)?.value
+  const gender = this.genderTargets.find(radio => radio.checked)?.value
+  const apperance = this.apperanceTargets.find(radio => radio.checked)?.value
 
-    const basePath = this.displayTarget.dataset.baseImagePath
+  let genderKey = gender && apperance ? `ph${gender.toLowerCase()}${apperance}` : null
+  let klassKey = klass ? klass.toLowerCase() : null
 
-    let genderApperance = ""
-    if (gender && apperance) {
-      genderApperance = `
-        <img style="position: absolute" src="${basePath}ph${gender}${apperance}.png" alt="">
-      `
-    }
+  let genderImg = genderKey ? `<img style="position:absolute" src="${this.displayTarget.dataset[genderKey]}" alt="">` : ""
+  let klassImg = klassKey ? `<img style="position:absolute" src="${this.displayTarget.dataset[klassKey]}" alt="">` : ""
 
-    let klassTarget = ""
-    if (klass) {
-      klassTarget = `
-        <img style="position: absolute" src="${basePath}${klass}.png" alt="">
-      `
-    }
-
-    this.displayTarget.innerHTML = `${genderApperance}${klassTarget}`
-  }
+  this.displayTarget.innerHTML = `${genderImg}${klassImg}`
+}
 }

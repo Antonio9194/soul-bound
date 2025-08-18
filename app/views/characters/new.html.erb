@@ -12,6 +12,17 @@
     <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
   </div>
 <% end %>
-<div class="card" style="border: none; width: 200px; height: 288px" data-new-character-target="display"  data-base-image-path="<%= asset_path("/assets/") %>">
+<div class="card"
+     style="border: none; width: 200px; height: 288px"
+     data-new-character-target="display"
+     data-phmale1="<%= asset_path('phMale1.png') %>"
+     data-phmale2="<%= asset_path('phMale2.png') %>"
+     data-phmale3="<%= asset_path('phMale3.png') %>"
+     data-phfemale1="<%= asset_path('phFemale1.png') %>"
+     data-phfemale2="<%= asset_path('phFemale2.png') %>"
+     data-phfemale3="<%= asset_path('phFemale3.png') %>"
+     data-mage="<%= asset_path('Mage.png') %>"
+     data-warrior="<%= asset_path('Warrior.png') %>"
+     data-rogue="<%= asset_path('Rogue.png') %>">
 </div>
 </div>
