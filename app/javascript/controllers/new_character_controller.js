@@ -9,11 +9,13 @@ export default class extends Controller {
     const klass = this.klassTargets.find(r => r.checked)?.value
     if (!gender || !appearance || !klass) return
 
-    const basePath = this.displayTarget.dataset.baseImagePath
+    // Build the image paths
+    const appearancePath = `/assets/ph${gender}${appearance}.png`
+    const classPath = `/assets/${klass}.png`
 
     this.displayTarget.innerHTML = `
-      <img src="${basePath}ph${gender}${appearance}.png" alt="Character" style="position: absolute; width: 160px; height: auto;" />
-      <img src="${basePath}${klass}.png" alt="${klass}" style="position: absolute; width: 160px; height: auto;" />
+      <img src="${appearancePath}" alt="Character" style="position: absolute; width: 160px; height: auto;" />
+      <img src="${classPath}" alt="${klass}" style="position: absolute; width: 160px; height: auto;" />
     `
   }
 }
