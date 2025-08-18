@@ -1,17 +1,18 @@
-export default class NewCharacterController {
-  static targets = ["apperance", "gender", "klass", "display"]
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["gender", "appearance", "klass", "display"]
 
   render() {
-  const klass = this.klassTargets.find(radio => radio.checked)?.value
-  const gender = this.genderTargets.find(radio => radio.checked)?.value
-  const apperance = this.apperanceTargets.find(radio => radio.checked)?.value
+    const gender = this.genderTargets.find(r => r.checked)?.value
+    const appearance = this.appearanceTargets.find(r => r.checked)?.value
+    const klass = this.klassTargets.find(r => r.checked)?.value
 
-  let genderKey = gender && apperance ? `ph${gender.toLowerCase()}${apperance}` : null
-  let klassKey = klass ? klass.toLowerCase() : null
+    if (!gender || !appearance || !klass) return
 
- let genderImg = genderKey ? `<img style="position:absolute; width:160px; height:auto;" src="${this.displayTarget.dataset[genderKey]}" alt="">` : ""
- let klassImg = klassKey ? `<img style="position:absolute; width:160px; height:auto;" src="${this.displayTarget.dataset[klassKey]}" alt="">` : ""
+    const fileName = `${klass}.png`
+    const imgPath = `/assets/${fileName}`
 
-  this.displayTarget.innerHTML = `${genderImg}${klassImg}`
-}
+    this.displayTarget.innerHTML = `<img src="${imgPath}" alt="${klass}" style="width: 100%; height: auto;" />`
+  }
 }
