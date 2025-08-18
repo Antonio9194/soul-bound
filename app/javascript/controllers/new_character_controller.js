@@ -17,8 +17,8 @@ export default class extends Controller {
     const classPath = `/assets/${klass}.png`
 
     this.displayTarget.innerHTML = `
-      <img src="${appearancePath}" alt="Character Appearance" style="position: absolute; width: 160px; height: auto;" />
-      <img src="${classPath}" alt="${klass}" style="position: absolute; width: 160px; height: auto;" />
+      <img src="${appearancePath}" alt="Character Appearance" style="position:absolute; width:160px; height:auto;" />
+      <img src="${classPath}" alt="${klass}" style="position:absolute; width:160px; height:auto;" />
     `
   }
 }
