@@ -9,8 +9,8 @@ export default class NewCharacterController {
   let genderKey = gender && apperance ? `ph${gender.toLowerCase()}${apperance}` : null
   let klassKey = klass ? klass.toLowerCase() : null
 
-  let genderImg = genderKey ? `<img style="position:absolute" src="${this.displayTarget.dataset[genderKey]}" alt="">` : ""
-  let klassImg = klassKey ? `<img style="position:absolute" src="${this.displayTarget.dataset[klassKey]}" alt="">` : ""
+ let genderImg = genderKey ? `<img style="position:absolute; width:160px; height:auto;" src="${this.displayTarget.dataset[genderKey]}" alt="">` : ""
+ let klassImg = klassKey ? `<img style="position:absolute; width:160px; height:auto;" src="${this.displayTarget.dataset[klassKey]}" alt="">` : ""
 
   this.displayTarget.innerHTML = `${genderImg}${klassImg}`
 }
