@@ -24,7 +24,12 @@
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to (current_user.character.present? ? character_path(current_user.character) : new_journey_path), class: "nav-link" do %>
+            <%= link_to (
+               if current_user.quests.present?
+                current_user.character.present? ? character_path(current_user.character) : new_character_path
+               else
+                new_journey_path
+               end ), class: "nav-link" do %>
               <%= image_tag "character.png", class: "me-1 nav-icon", alt: "Character icon" %>
               Character
             <% end %>
