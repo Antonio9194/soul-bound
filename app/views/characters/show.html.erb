@@ -6,16 +6,28 @@
 
         <div class="d-flex flex-column justify-content-center" 
             style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
-          
-          <!-- Animated sprite canvas -->
-          <div class="card" style="padding-left: 60px; width: 200px; height: 128px; border: none; position: relative; background-color: white;"
-              data-controller="new-character"
-              data-new-character-gender-value="<%= @character.gender %>"
-              data-new-character-klass-value="<%= @character.class_name %>"
-              data-new-character-target="display">
-          </div>
+            <div class="card" style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative; background-color: white;">
+              <%= image_tag(@character.image_path, style: "position: absolute; width: 160px; height: auto;") %>
+
+              <!-- Head slot above the character -->
+              <div id="slot-head" style="position: absolute; bottom: 140px; left: calc(50% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+
+              <!-- Weapon slot top-right of character -->
+              <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+
+              <!-- Accessory slot top-left of character -->
+              <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+
+              <!-- Body / Armor slot below character, left -->
+              <div id="slot-body" style="position: absolute; bottom: 0; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+
+              <!-- Feet / Boots slot below character, right -->
+              <div id="slot-feet" style="position: absolute; bottom: 0; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+
+            </div>
 
           <h5>Level: <%= @character.level %></h5>
+
           <div class="d-flex justify-content-between" style="margin-top: 22px;">
             <h5>Exp: <%= @character.xp %></h5>
             <h5>Coins: <%= @character.coin %></h5>
@@ -31,7 +43,9 @@
                       class: "btn", 
                       style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
         </div>
+
       </div>
     </div>
   </div>
 </div>
+

@@ -6,6 +6,10 @@ class Character < ApplicationRecord
   validates :name, presence: true, length: { minimum:1, maximum:100 }
   validates :class_name, :gender, presence: true
 
+  def image_path
+    gender.downcase + "_" + class_name.downcase + ".png"
+  end
+
 
   def xp_to_next_level
     (100 * (self.level + 1)**1.5).to_i 
