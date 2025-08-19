@@ -4,7 +4,7 @@ class Character < ApplicationRecord
   has_many :quests
 
   validates :name, presence: true, length: { minimum:1, maximum:100 }
-  validates :class_name, :gender, :apperance, presence: true
+  validates :class_name, :gender, presence: true
 
 
   def xp_to_next_level

@@ -23,7 +23,7 @@
                       <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
                         <%= f.time_field :time, value: quest.time.strftime("%H:%M"), 
                                         class: "btn btn-sm btn-outline-primary",
-                                        data: { action: "blur->date-edit#submitForm keydown->date-edit#checkEnter" } %>
+                                        data: { action: "keydown->date-edit#checkEnter" } %>
                       <% end %>
                     </div>
                   </div>
