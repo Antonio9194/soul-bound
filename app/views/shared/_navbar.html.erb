@@ -8,19 +8,10 @@
           <%= image_tag "guild.png", class: "me-1 nav-icon", alt: "Guild icon" %>
           Guild
         <% end %>
-        </li>
-            <%# <%= image_tag(
-                  current_user.avatar.attached? ? url_for(current_user.avatar) : "default_avatar.png",
-                  class: "avatar rounded-circle me-2",
-                  alt: "#{current_user.name}'s avatar"
-                ) %>
-        </li>
       </ul>
     <% else %>
 
-      <%= link_to root_path, class: "navbar-brand" do %>
-        <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
-      <% end %>
+
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,19 +24,19 @@
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to current_user&.character.present? ? character_path(current_user.character) : new_character_path, class: "nav-link" do %>
+            <%= link_to (current_user.quests.present? ? character_path(current_user.character) : new_journey_path), class: "nav-link" do %>
               <%= image_tag "character.png", class: "me-1 nav-icon", alt: "Character icon" %>
               Character
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to root_path, class: "nav-link" do %>
+            <%= link_to (current_user.quests.present? ? dashboard_quests_path : new_journey_path), class: "nav-link" do %>
               <%= image_tag "tavern.png", class: "me-1 nav-icon", alt: "Tavern icon" %>
               Tavern
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to list_items_store_path, class: "nav-link" do %>
+            <%= link_to (current_user.quests.present? ? list_items_store_path : new_journey_path), class: "nav-link" do %>
               <%= image_tag "store.png", class: "me-1 nav-icon", alt: "Store icon" %>
               Store
             <% end %>
