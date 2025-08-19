@@ -51,27 +51,3 @@
   </div>
 </div>
 
-<script>
-  const canvas = document.getElementById("npc-canvas")
-  const ctx = canvas.getContext("2d")
-
-  const sprite = new Image()
-  sprite.src = "<%= asset_path 'Character-walk.png' %>"
-
-  const totalFrames = 8
-  const originalFrameWidth = 96
-  const originalFrameHeight = 64
-  let currentFrame = 0
-
-  sprite.onload = () => {
-    setInterval(() => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.drawImage(
-        sprite,
-        currentFrame * originalFrameWidth, 0, originalFrameWidth, originalFrameHeight, // source
-        0, 0, canvas.width, canvas.height // destination scaled
-      )
-      currentFrame = (currentFrame + 1) % totalFrames
-    }, 200)
-  }
-</script>

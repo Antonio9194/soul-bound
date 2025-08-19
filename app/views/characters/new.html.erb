@@ -7,13 +7,19 @@
 
       <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input", data: { new_character_target: "gender", action: "new-character#render" } }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons %>
 
-      <%= c.input :apperance, label:"Appearance", input_html: { class: "form-check-input", data: { new_character_target: "appearance", action: "new-character#render" } }, collection:[["1", "1"], ["2", "2"], ["3", "3"]], as: :radio_buttons %>
-
-      <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input", data: { new_character_target: "klass", action: "new-character#render" } }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Rogue", "Rogue"]], as: :radio_buttons %>
+      <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input", data: { new_character_target: "klass", action: "new-character#render" } }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Archer", "Archer"]], as: :radio_buttons %>
 
       <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
     </div>
   <% end %>
 
-  <div class="card" style="width:200px; height:288px; border:1px solid black;" data-new-character-target="display"></div>
+  <div class="card" style="width: 200px; height: 288px; border:1px solid black; position: relative;" data-new-character-target="display">
+  <canvas id="preview-canvas" width="192" height="128" style="position: absolute; bottom: 10px; left: 4px;"></canvas>
+
+  <!-- Gear slots -->
+  <div id="slot-head" style="position: absolute; bottom: 140px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border: 1px dashed gray;"></div>
+  <div id="slot-weapon" style="position: absolute; bottom: 120px; right: 0; width: 40px; height: 40px; border: 1px dashed gray;"></div>
+  <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 0; width: 40px; height: 40px; border: 1px dashed gray;"></div>
+  <div id="slot-body" style="position: absolute; bottom: 0; left: 0; width: 40px; height: 40px; border: 1px dashed gray;"></div>
+  <div id="slot-feet" style="position: absolute; bottom: 0; right: 0; width: 40px; height: 40px; border: 1px dashed gray;"></div>
 </div>
