@@ -13,6 +13,13 @@ Rails.application.routes.draw do
 
   resources :characters, only: [:index, :new, :create, :update, :destroy]
 
+  resources :inventory_items, only: [:index, :show] do
+    member do
+      patch :equip
+      patch :unequip
+    end
+  end
+
   resource :store, path: "thewanderingsatchel", only: [:show] do
     collection do
       get :list_items
