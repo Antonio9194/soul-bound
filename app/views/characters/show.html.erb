@@ -4,46 +4,54 @@
       <div class="card-header text-center" style="border-radius: 20px; color: black; border: 1px solid black;">
         <h1><%= @character.name %></h1>
 
-        <div class="d-flex flex-column justify-content-center" 
+        <div class="d-flex flex-column justify-content-center"
              style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
-          
+
+          <!-- Sprite Container + Gear -->
           <div class="card"
-               style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative; background-color: white;">
+               style="position: relative; width: 240px; height: 240px; background: transparent; border: none;">
 
-            <!-- Sprite (CSS-animated) -->
-            <div
-              class="npc-sprite"
-              style="
-                --sprite: url('<%= asset_path @character.image_path %>');
-                --frame-w: 96px;   /* frame width  */
-                --frame-h: 64px;   /* frame height */
-                --frames: 8;       /* total frames */
-              ">
-            </div>
+            <!-- Animated Sprite -->
+            <% sprite_path = "#{@character.gender.downcase}_#{@character.class_name.downcase}.png" %>
+              <img id="npc"
+                  src="<%= asset_path sprite_path %>"
+                  style="
+                    position: absolute;
+                    top: 50%;
+                    left: 60%;
+                    transform: translate(-50%, -50%) scale(2);
+                    transform-origin: center;
+                    width: 86px;
+                    height: 86px;
+                    object-fit: none;
+                    object-position: 0 0;
+                    image-rendering: pixelated;
+                    pointer-events: none;" />
 
-            <!-- Slots (unchanged) -->
-            <div id="slot-head" style="position: absolute; bottom: 140px; left: calc(50% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-            <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-            <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-            <div id="slot-body" style="position: absolute; bottom: 0; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-            <div id="slot-feet" style="position: absolute; bottom: 0; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+            <!-- Equipment Slots INSIDE the container -->
+            <div id="slot-head" style="position: absolute; bottom: 180px; left: calc(42% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+            <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -30px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+            <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 10px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+            <div id="slot-body" style="position: absolute; bottom: 0; left: 10px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
+            <div id="slot-feet" style="position: absolute; bottom: 0; right: -30px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
           </div>
 
+          <!-- Character Info -->
           <h5>Level: <%= @character.level %></h5>
-
           <div class="d-flex justify-content-between" style="margin-top: 22px;">
             <h5>Exp: <%= @character.xp %></h5>
             <h5>Coins: <%= @character.coin %></h5>
           </div>
         </div>
 
+        <!-- Actions -->
         <div class="d-flex justify-content-center mt-2 gap-2" style="border-radius: 20px; padding: 10px;">
-          <%= link_to "Edit", edit_character_path(@character), 
-                      class: "btn", 
+          <%= link_to "Edit", edit_character_path(@character),
+                      class: "btn",
                       style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
           <%= link_to "Delete", @character,
                       data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this character?' },
-                      class: "btn", 
+                      class: "btn",
                       style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
         </div>
       </div>
@@ -51,25 +59,17 @@
   </div>
 </div>
 
-<style>
-/* CSS-only sprite animation */
-.npc-sprite {
-  position: absolute;
-  top: 50%;
-  left: 70%;
-  transform: translate(-50%, -50%) scale(2);  /* <--- doubled in size */
-  transform-origin: center;
-  width:  var(--frame-w);
-  height: var(--frame-h);
-  background-image: var(--sprite);
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  image-rendering: pixelated;  /* keeps it crisp */
-  animation: npc-walk 1s steps(var(--frames)) infinite;
-}
+<!-- Sprite Animation -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const npc = document.getElementById("npc")
+    const totalFrames = 5
+    const frameWidth = 86
+    let currentFrame = 0
 
-@keyframes npc-walk {
-  from { background-position: 0 0; }
-  to   { background-position: calc(-1 * var(--frame-w) * var(--frames)) 0; }
-}
-</style>
+    setInterval(() => {
+      npc.style.objectPosition = `-${currentFrame * frameWidth}px 0px`
+      currentFrame = (currentFrame + 1) % totalFrames
+    }, 170)
+  })
+</script>
