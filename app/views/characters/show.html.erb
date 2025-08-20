@@ -5,31 +5,25 @@
         <h1><%= @character.name %></h1>
 
         <div class="d-flex flex-column justify-content-center" 
-            style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: grey;">
+             style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
           
           <div class="card"
-               data-controller="new-character"
-               data-new-character-target="display"
-               data-new-character-image-path-value="<%= asset_path @character.image_path %>"
-               style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative; background-color: grey;">
-            
-            <canvas id="characterCanvas"
-                    width="200" height="200"
-                    style="position: absolute; top: 0; left: 20px;"></canvas>
+               style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative; background-color: white;">
 
-            <!-- Head slot above the character -->
+            <div
+              class="npc-sprite"
+              style="
+                --sprite: url('<%= asset_path @character.image_path %>');
+                --frame-w: 96px;
+                --frame-h: 64px;
+                --frames: 8;
+              ">
+            </div>
+
             <div id="slot-head" style="position: absolute; bottom: 140px; left: calc(50% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-
-            <!-- Weapon slot top-right of character -->
             <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-
-            <!-- Accessory slot top-left of character -->
             <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-
-            <!-- Body / Armor slot below character, left -->
             <div id="slot-body" style="position: absolute; bottom: 0; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
-
-            <!-- Feet / Boots slot below character, right -->
             <div id="slot-feet" style="position: absolute; bottom: 0; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
           </div>
 
@@ -50,8 +44,29 @@
                       class: "btn", 
                       style: "flex: 1; border-radius: 20px; background-color: white; color: black; border: 1px solid black; text-align: center;" %>
         </div>
-
       </div>
     </div>
   </div>
 </div>
+
+<style>
+.npc-sprite {
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%) scale(2);
+  transform-origin: center;
+  width:  var(--frame-w);
+  height: var(--frame-h);
+  background-image: var(--sprite);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  animation: npc-walk 1s steps(var(--frames)) infinite;
+}
+
+@keyframes npc-walk {
+  from { background-position: 0 0; }
+  to   { background-position: calc(-1 * var(--frame-w) * var(--frames)) 0; }
+}
+</style>

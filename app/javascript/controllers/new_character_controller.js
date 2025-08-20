@@ -3,44 +3,41 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["gender", "klass", "display"]
-  static values  = { imagePath: String, scale: { type: Number, default: 0.9 } }
+  static values  = {
+    imagePath: String,
+    scale:    { type: Number, default: 1.5 },
+    speed:    { type: Number, default: 200 }
+  }
 
   connect() {
-    this.animationInterval = null
+    this.timer = null
     this.currentSpritePath = null
 
-    // use existing canvas if present, otherwise create one
-    this.canvas = this.displayTarget.querySelector("#characterCanvas")
-    if (!this.canvas) {
-      this.canvas = document.createElement("canvas")
-      this.canvas.id = "characterCanvas"
-      this.canvas.width = 256
-      this.canvas.height = 256
-      this.canvas.style.position = "absolute"
-      this.canvas.style.top = "0"
-      this.canvas.style.left = "0"
-      this.displayTarget.appendChild(this.canvas)
+    this.img = this.displayTarget.querySelector("#npc")
+    if (!this.img) {
+      this.img = document.createElement("img")
+      this.img.id = "npc"
+      this.img.alt = "character"
+      Object.assign(this.img.style, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -55%)",
+        objectFit: "none",
+        imageRendering: "pixelated",
+        pointerEvents: "none"
+      })
+      this.displayTarget.appendChild(this.img)
     }
-    this.ctx = this.canvas.getContext("2d")
 
-    // DPR setup (crisp pixels)
-    const dpr = window.devicePixelRatio || 1
-    const cssW = this.canvas.width
-    const cssH = this.canvas.height
-    this.canvas.style.width = cssW + "px"
-    this.canvas.style.height = cssH + "px"
-    this.canvas.width  = Math.round(cssW * dpr)
-    this.canvas.height = Math.round(cssH * dpr)
-    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    this.ctx.imageSmoothingEnabled = false
-
-    if (this.hasImagePathValue) this.show() // for show page
+    if (this.hasImagePathValue) this.show()
   }
 
   render() {
     const gender = this.genderTargets?.find(r => r.checked)?.value
     const klass  = this.klassTargets?.find(r => r.checked)?.value
     if (!gender || !klass) return this.clearAnimation()
+
     const spritePath = `/assets/${gender.toLowerCase()}_${klass.toLowerCase()}.png`
     this.renderSprite(spritePath)
   }
@@ -54,74 +51,49 @@ export default class extends Controller {
   renderSprite(spritePath) {
     if (spritePath === this.currentSpritePath) return
     this.currentSpritePath = spritePath
+    this.clearAnimation()
 
-    if (this.animationInterval) clearInterval(this.animationInterval)
-    if (this._raf) cancelAnimationFrame(this._raf)
+    this.img.onload = () => {
+      const sheetW = this.img.naturalWidth
+      const sheetH = this.img.naturalHeight
 
-    const sprite = new Image()
-    sprite.src = spritePath
-
-    sprite.onload = () => {
-      const imgW = sprite.naturalWidth
-      const imgH = sprite.naturalHeight
-
-      // Infer frames
-      let totalFrames, frameWidth, frameHeight
-      if (imgH > 0 && imgW % imgH === 0) {
-        totalFrames = Math.max(2, Math.min(24, imgW / imgH))
-        frameWidth  = imgH
-        frameHeight = imgH
+      let totalFrames, frameW, frameH
+      if (sheetH > 0 && sheetW % sheetH === 0) {
+        totalFrames = Math.max(2, Math.min(48, sheetW / sheetH))
+        frameW = sheetH
+        frameH = sheetH
       } else {
-        const candidates = [12, 10, 9, 8, 6, 5, 4, 3, 2]
-        totalFrames = candidates.find(n => imgW % n === 0) || 8
-        frameWidth  = Math.floor(imgW / totalFrames)
-        frameHeight = imgH
+        const candidates = [16, 12, 10, 9, 8, 6, 5, 4, 3, 2]
+        totalFrames = candidates.find(n => sheetW % n === 0) || 8
+        frameW = Math.floor(sheetW / totalFrames)
+        frameH = sheetH
       }
 
-      // Center + scale to fit
-      const dpr = window.devicePixelRatio || 1
-      const cssW = this.canvas.width  / dpr
-      const cssH = this.canvas.height / dpr
-      const fitScale = Math.min(cssW / frameWidth, cssH / frameHeight)
-      const scale = fitScale * this.scaleValue
-      const destW = frameWidth  * scale
-      const destH = frameHeight * scale
-      const destX = (cssW - destW) / 2
-      const destY = (cssH - destH) / 2
+      const widthPx  = Math.round(frameW * this.scaleValue)
+      const heightPx = Math.round(frameH * this.scaleValue)
+      this.img.style.width  = `${widthPx}px`
+      this.img.style.height = `${heightPx}px`
 
       let currentFrame = 0
-      let last = 0
-      const msPerFrame = 220
-
-      const tick = (t) => {
-        if (!last) last = t
-        if (t - last >= msPerFrame) {
-          last = t
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-          this.ctx.drawImage(
-            sprite,
-            currentFrame * frameWidth, 0, frameWidth, frameHeight,
-            destX, destY, destW, destH
-          )
-          currentFrame = (currentFrame + 1) % totalFrames
-        }
-        this._raf = requestAnimationFrame(tick)
+      const step = () => {
+        this.img.style.objectPosition = `-${currentFrame * frameW}px 0px`
+        currentFrame = (currentFrame + 1) % totalFrames
       }
-      this._raf = requestAnimationFrame(tick)
+
+      step()
+      this.timer = setInterval(step, this.speedValue)
     }
+
+    this.img.src = spritePath
   }
 
   clearAnimation() {
-    if (this.animationInterval) clearInterval(this.animationInterval)
-    if (this._raf) cancelAnimationFrame(this._raf)
-    if (this.ctx && this.canvas) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    this.animationInterval = null
-    this._raf = null
-    this.currentSpritePath = null
+    if (this.timer) clearInterval(this.timer)
+    this.timer = null
+    if (this.img) this.img.style.objectPosition = "0px 0px"
   }
 
   disconnect() {
-    if (this.animationInterval) clearInterval(this.animationInterval)
-    if (this._raf) cancelAnimationFrame(this._raf)
+    this.clearAnimation()
   }
 }
