@@ -1,4 +1,3 @@
-// app/javascript/controllers/new_character_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
@@ -12,24 +11,7 @@ export default class extends Controller {
   connect() {
     this.timer = null
     this.currentSpritePath = null
-
-    this.img = this.displayTarget.querySelector("#npc")
-    if (!this.img) {
-      this.img = document.createElement("img")
-      this.img.id = "npc"
-      this.img.alt = "character"
-      Object.assign(this.img.style, {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -55%)",
-        objectFit: "none",
-        imageRendering: "pixelated",
-        pointerEvents: "none"
-      })
-      this.displayTarget.appendChild(this.img)
-    }
-
+    this.img = null
     if (this.hasImagePathValue) this.show()
   }
 
@@ -39,7 +21,7 @@ export default class extends Controller {
     if (!gender || !klass) return this.clearAnimation()
 
     const spritePath = `/assets/${gender.toLowerCase()}_${klass.toLowerCase()}.png`
-    this.renderSprite(spritePath)
+    this.show(spritePath)
   }
 
   show(path) {
@@ -53,22 +35,47 @@ export default class extends Controller {
     this.currentSpritePath = spritePath
     this.clearAnimation()
 
+    if (!this.img) {
+      this.img = document.createElement("img")
+      this.img.id = "npc"
+      this.img.alt = "character"
+      Object.assign(this.img.style, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        objectFit: "none",
+        imageRendering: "pixelated",
+        pointerEvents: "none"
+      })
+      this.displayTarget.appendChild(this.img)
+    }
+
     this.img.onload = () => {
       const sheetW = this.img.naturalWidth
       const sheetH = this.img.naturalHeight
 
-      let totalFrames, frameW, frameH
-      if (sheetH > 0 && sheetW % sheetH === 0) {
-        totalFrames = Math.max(2, Math.min(48, sheetW / sheetH))
-        frameW = sheetH
-        frameH = sheetH
+      let totalFrames, frameW, frameH, cols, rows
+
+      // Try to detect frame count
+      const candidates = [16, 12, 10, 9, 8, 6, 5, 4, 3, 2]
+      totalFrames = candidates.find(n => sheetW % n === 0) || 8
+
+      frameW = Math.floor(sheetW / totalFrames)
+      frameH = sheetH
+
+      // ✅ Multi-row support
+      if (frameW < frameH) {
+        cols = Math.floor(sheetW / frameH)
+        rows = Math.floor(sheetH / frameH)
+        totalFrames = cols * rows
+        frameW = frameH // make frames square
       } else {
-        const candidates = [16, 12, 10, 9, 8, 6, 5, 4, 3, 2]
-        totalFrames = candidates.find(n => sheetW % n === 0) || 8
-        frameW = Math.floor(sheetW / totalFrames)
-        frameH = sheetH
+        cols = totalFrames
+        rows = 1
       }
 
+      // Scale
       const widthPx  = Math.round(frameW * this.scaleValue)
       const heightPx = Math.round(frameH * this.scaleValue)
       this.img.style.width  = `${widthPx}px`
@@ -76,7 +83,9 @@ export default class extends Controller {
 
       let currentFrame = 0
       const step = () => {
-        this.img.style.objectPosition = `-${currentFrame * frameW}px 0px`
+        const col = currentFrame % cols
+        const row = Math.floor(currentFrame / cols)
+        this.img.style.objectPosition = `-${col * frameW}px -${row * frameH}px`
         currentFrame = (currentFrame + 1) % totalFrames
       }
 
@@ -90,7 +99,11 @@ export default class extends Controller {
   clearAnimation() {
     if (this.timer) clearInterval(this.timer)
     this.timer = null
-    if (this.img) this.img.style.objectPosition = "0px 0px"
+    if (this.img) {
+      this.img.style.objectPosition = "0px 0px"
+      this.img.src = "" // clear broken image if no selection
+    }
+    this.currentSpritePath = null
   }
 
   disconnect() {

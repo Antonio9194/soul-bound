@@ -10,16 +10,18 @@
           <div class="card"
                style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative; background-color: white;">
 
+            <!-- Sprite (CSS-animated) -->
             <div
               class="npc-sprite"
               style="
                 --sprite: url('<%= asset_path @character.image_path %>');
-                --frame-w: 96px;
-                --frame-h: 64px;
-                --frames: 8;
+                --frame-w: 96px;   /* frame width  */
+                --frame-h: 64px;   /* frame height */
+                --frames: 8;       /* total frames */
               ">
             </div>
 
+            <!-- Slots (unchanged) -->
             <div id="slot-head" style="position: absolute; bottom: 140px; left: calc(50% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
             <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
             <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 40px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
@@ -50,18 +52,19 @@
 </div>
 
 <style>
+/* CSS-only sprite animation */
 .npc-sprite {
   position: absolute;
   top: 50%;
   left: 70%;
-  transform: translate(-50%, -50%) scale(2);
+  transform: translate(-50%, -50%) scale(2);  /* <--- doubled in size */
   transform-origin: center;
   width:  var(--frame-w);
   height: var(--frame-h);
   background-image: var(--sprite);
   background-repeat: no-repeat;
   background-position: 0 0;
-  image-rendering: pixelated;
+  image-rendering: pixelated;  /* keeps it crisp */
   animation: npc-walk 1s steps(var(--frames)) infinite;
 }
 
