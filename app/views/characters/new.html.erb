@@ -5,22 +5,50 @@
     <div class="col-4">
       <%= c.input :name, label:"Character name", input_html: { class: "form-control" } %>
 
-      <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input", data: { new_character_target: "gender", action: "click->new-character#render" } }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons %>
+      <%= c.input :gender,
+                  label:"Gender",
+                  input_html: { class: "form-check-input",
+                                data: { new_character_target: "gender",
+                                        action: "click->new-character#render" } },
+                  collection:[["Male", "Male"], ["Female", "Female"]],
+                  as: :radio_buttons %>
 
-      <%= c.input :class_name, label:"Class", input_html: { class: "form-check-input", data: { new_character_target: "klass", action: "click->new-character#render" } }, collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Archer", "Archer"]], as: :radio_buttons %>
+      <%= c.input :class_name,
+                  label:"Class",
+                  input_html: { class: "form-check-input",
+                                data: { new_character_target: "klass",
+                                        action: "click->new-character#render" } },
+                  collection:[["Mage", "Mage"], ["Warrior", "Warrior"], ["Archer", "Archer"]],
+                  as: :radio_buttons %>
 
       <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
     </div>
   <% end %>
 
-<div data-new-character-target="display" 
-     class="card" 
-     style="padding-left: 60px; width: 200px; height: 200px; border: none; position: relative;">
-
-  <canvas id="characterCanvas" 
-          width="200" height="200" 
-          style="position: absolute; top: 0; left: 0;">
-  </canvas>
-
+  <div data-new-character-target="display"
+       class="card"
+       style=" width: 200px; height: 200px; border: none; position: relative; background: transparent;">
+  </div>
 </div>
-</div>
+
+<style>
+.npc-sprite {
+  position: absolute;
+  top: 50%;
+  left: 50%;  /* <-- was 70%, now centered */
+  transform: translate(-50%, -50%) scale(2);
+  transform-origin: center;
+  width:  var(--frame-w);
+  height: var(--frame-h);
+  background-image: var(--sprite);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  image-rendering: pixelated;
+  animation: npc-walk 0.2s steps(var(--frames)) infinite;
+}
+
+@keyframes npc-walk {
+  from { background-position: 0 0; }
+  to   { background-position: calc(-1 * var(--frame-w) * var(--frames)) 0; }
+}
+</style>

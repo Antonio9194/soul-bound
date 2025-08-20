@@ -2,66 +2,111 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["gender", "klass", "display"]
+  static values  = {
+    imagePath: String,
+    scale:    { type: Number, default: 1.5 },
+    speed:    { type: Number, default: 200 }
+  }
 
   connect() {
-    this.animationInterval = null
+    this.timer = null
+    this.currentSpritePath = null
+    this.img = null
+    if (this.hasImagePathValue) this.show()
   }
 
   render() {
-    const gender = this.genderTargets.find(r => r.checked)?.value
-    const klass = this.klassTargets.find(r => r.checked)?.value
+    const gender = this.genderTargets?.find(r => r.checked)?.value
+    const klass  = this.klassTargets?.find(r => r.checked)?.value
+    if (!gender || !klass) return this.clearAnimation()
 
-    if (!gender || !klass) {
-      this.displayTarget.innerHTML = ""
-      if (this.animationInterval) clearInterval(this.animationInterval)
-      return
+    const spritePath = `/assets/${gender.toLowerCase()}_${klass.toLowerCase()}.png`
+    this.show(spritePath)
+  }
+
+  show(path) {
+    const spritePath = path || this.imagePathValue
+    if (!spritePath) return
+    this.renderSprite(spritePath)
+  }
+
+  renderSprite(spritePath) {
+    if (spritePath === this.currentSpritePath) return
+    this.currentSpritePath = spritePath
+    this.clearAnimation()
+
+    if (!this.img) {
+      this.img = document.createElement("img")
+      this.img.id = "npc"
+      this.img.alt = "character"
+      Object.assign(this.img.style, {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        objectFit: "none",
+        imageRendering: "pixelated",
+        pointerEvents: "none"
+      })
+      this.displayTarget.appendChild(this.img)
     }
 
-    let spritePath = ""
-    if (gender === "Male" && klass === "Warrior") spritePath = "/assets/male_warrior.png"
-    else if (gender === "Female" && klass === "Warrior") spritePath = "/assets/female_warrior.png"
-    else if (gender === "Male" && klass === "Mage") spritePath = "/assets/male_mage.png"
-    else if (gender === "Female" && klass === "Mage") spritePath = "/assets/female_mage.png"
-    else if (gender === "Male" && klass === "Archer") spritePath = "/assets/male_archer.png"
-    else if (gender === "Female" && klass === "Archer") spritePath = "/assets/female_archer.png"
+    this.img.onload = () => {
+      const sheetW = this.img.naturalWidth
+      const sheetH = this.img.naturalHeight
 
-    // Make canvas a bit bigger to comfortably fit scaled sprite
-    const canvasSize = 128
-    this.displayTarget.innerHTML = `<canvas width="${canvasSize}" height="${canvasSize}"></canvas>`
-    const canvas = this.displayTarget.querySelector("canvas")
-    const ctx = canvas.getContext("2d")
+      let totalFrames, frameW, frameH, cols, rows
 
-    const sprite = new Image()
-    sprite.src = spritePath
+      // Try to detect frame count
+      const candidates = [16, 12, 10, 9, 8, 6, 5, 4, 3, 2]
+      totalFrames = candidates.find(n => sheetW % n === 0) || 8
 
-    const totalFrames = 12
-    const frameWidth = 64
-    const frameHeight = 64
-    let currentFrame = 0
+      frameW = Math.floor(sheetW / totalFrames)
+      frameH = sheetH
 
-    sprite.onload = () => {
-      if (this.animationInterval) clearInterval(this.animationInterval)
+      // ✅ Multi-row support
+      if (frameW < frameH) {
+        cols = Math.floor(sheetW / frameH)
+        rows = Math.floor(sheetH / frameH)
+        totalFrames = cols * rows
+        frameW = frameH // make frames square
+      } else {
+        cols = totalFrames
+        rows = 1
+      }
 
-      const scale = 1.3  // double size
-      const destWidth = frameWidth * scale
-      const destHeight = frameHeight * scale
-      const destX = (canvas.width - destWidth) / 2
-      const destY = (canvas.height - destHeight) / 2
+      // Scale
+      const widthPx  = Math.round(frameW * this.scaleValue)
+      const heightPx = Math.round(frameH * this.scaleValue)
+      this.img.style.width  = `${widthPx}px`
+      this.img.style.height = `${heightPx}px`
 
-      // Slower, smoother animation
-      this.animationInterval = setInterval(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        ctx.drawImage(
-          sprite,
-          currentFrame * frameWidth, 0, frameWidth, frameHeight,
-          destX, destY, destWidth, destHeight
-        )
+      let currentFrame = 0
+      const step = () => {
+        const col = currentFrame % cols
+        const row = Math.floor(currentFrame / cols)
+        this.img.style.objectPosition = `-${col * frameW}px -${row * frameH}px`
         currentFrame = (currentFrame + 1) % totalFrames
-      }, 260) // 180ms per frame = slower, more visible
+      }
+
+      step()
+      this.timer = setInterval(step, this.speedValue)
     }
+
+    this.img.src = spritePath
+  }
+
+  clearAnimation() {
+    if (this.timer) clearInterval(this.timer)
+    this.timer = null
+    if (this.img) {
+      this.img.style.objectPosition = "0px 0px"
+      this.img.src = "" // clear broken image if no selection
+    }
+    this.currentSpritePath = null
   }
 
   disconnect() {
-    if (this.animationInterval) clearInterval(this.animationInterval)
+    this.clearAnimation()
   }
 }
