@@ -113,7 +113,7 @@ length.times do |i|
     name: item_name[i],
     description: item_description[i],
     item_type: item_type[i],
-    price: rand(10000..500000),
+    price: rand(5000..50000),
     img: item_img[i]
   )
 end
