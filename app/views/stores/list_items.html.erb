@@ -1,36 +1,28 @@
-<% if flash[:alert] %>
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <%= flash[:alert] %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
-
-<% if flash[:notice] %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= flash[:notice] %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
-
-<h1 class="text-center mt-5 mb-4 display-5">👜 The Wandering Satchel 👜</h1>
+<h1 class="text-center mt-5 mb-5 display-4 d-flex justify-content-center align-items-center gap-3">
+  <%= image_tag "wand.png", alt: "wand", style: "height: 50px; width: 50px;" %>
+  The Wandering Satchel
+  <%= image_tag "wand.png", alt: "wand", style: "height: 50px; width: 50px;" %>
+</h1>
 
 <div class="container">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
-    <% @items.each do |item| %>
+    <% @rotating_items.each do |item| %>
       <div class="col">
-        <div class="card h-100 text-center shadow-sm rounded-4"> <!-- rounded-4 ≈ 20px radius -->
-          <div class="card-img-top p-3" style="height: 120px;">
+        <div class="card h-100 text-center shadow rounded-4 border border-3 border-warning" style="background: #fff3e0;">
+          <div class="card-img-top p-3" style="height: 140px; background-color: #f9f1e7; border-radius: 15px;">
             <%= image_tag item.img, alt: item.name, class: "img-fluid", style: "image-rendering: pixelated; max-height: 100%; object-fit: contain;" %>
           </div>
           <div class="card-body">
-            <h5 class="card-title"><%= link_to item.name, store_path(item), class: "text-decoration-none text-dark" %></h5>
-            <p class="card-text"><%= item.description %></p>
+            <h5 class="card-title text-primary fw-bold">
+              <%= link_to item.name, store_path(item), class: "text-decoration-none" %>
+            </h5>
+            <p class="card-text text-muted fst-italic"><%= item.description %></p>
           </div>
-          <div class="card-footer d-flex justify-content-between align-items-center bg-light">
-            <span class="fw-bold">
+          <div class="card-footer d-flex justify-content-between align-items-center bg-warning bg-opacity-25 rounded-bottom">
+            <span class="fw-bold text-dark">
               Coins: <%= sprintf("%.3f", item.price / 1000.0) %> 💰
             </span>
-            <%= button_to "Purchase", purchase_items_store_path(item), method: :post, class: "btn btn-sm btn-primary" %>
+            <%= button_to "Purchase", purchase_items_store_path(item), method: :post, class: "btn btn-sm btn-primary fw-bold" %>
           </div>
         </div>
       </div>
