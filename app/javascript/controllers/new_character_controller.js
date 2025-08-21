@@ -2,6 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["preview", "gender"]
+  static values = {
+    maleWarrior: String
+  }
 
   connect() {
     this.interval = null
@@ -50,7 +53,7 @@ export default class extends Controller {
   get spriteData() {
     return {
       "male_warrior": {
-        path: "/assets/male_warrior.png",
+        path: this.maleWarriorValue,
         frames: 5,
         frameWidth: 86,
         frameHeight: 86,
