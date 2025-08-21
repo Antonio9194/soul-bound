@@ -1,6 +1,7 @@
 class Character < ApplicationRecord
   belongs_to :user
   has_many :inventory_items
+  has_many :items, through: :inventory_items
   has_many :quests
 
   validates :name, presence: true, length: { minimum:1, maximum:100 }

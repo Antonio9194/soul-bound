@@ -1,4 +1,7 @@
 class Item < ApplicationRecord
+  has_many :inventory_items
+  has_many :characters, through: :inventory_items
+  
   validates :name, presence: true
   validates :description, presence: true
   validates :item_type, presence: true
