@@ -10,33 +10,10 @@
           <div class="card"
                style="position: relative; width: 240px; height: 240px; background: transparent; border: none;">
 
-            <% sprite_path = "#{@character.gender.downcase}_#{@character.class_name.downcase}.png" %>
-            <% frame_counts = {
-              "male_mage"    => 15,
-              "female_mage"  => 12,
-              "male_archer"  => 20,
-              "female_archer"=> 3,
-              "male_warrior" => 5,
-              "female_warrior" => 12,
-            } %>
-            <% key = "#{@character.gender.downcase}_#{@character.class_name.downcase}" %>
-            <% total_frames = frame_counts[key] || 5 %>
-
-            <img id="npc"
-                 src="<%= asset_path sprite_path %>"
-                 data-total-frames="<%= total_frames %>"
-                 style="
-                   position: absolute;
-                   top: 50%;
-                   left: 60%;
-                   transform: translate(-50%, -50%) scale(2);
-                   transform-origin: center;
-                   width: 86px;
-                   height: 86px;
-                   object-fit: none;
-                   object-position: 0 0;
-                   image-rendering: pixelated;
-                   pointer-events: none;" />
+              <div class="card" 
+                  id="character-preview"
+                  style="width: 500px; height: 600px; top: 100px; left: calc(42% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px">
+              </div>
 
             <div id="slot-head" style="position: absolute; bottom: 180px; left: calc(42% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
             <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -30px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
@@ -68,14 +45,92 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const npc = document.getElementById("npc")
-    const totalFrames = parseInt(npc.dataset.totalFrames, 10)
-    const frameWidth = 86
-    let currentFrame = 0
+    const preview = document.getElementById("character-preview");
 
+    // Get stored character data from Rails
+    const klass = "<%= @character.class_name.downcase %>";
+    const gender = "<%= @character.gender.downcase %>";
+
+    // Sprite data
+    const spriteData = {
+      "male_warrior": {
+        path: "<%= asset_path('male_warrior.png') %>",
+        frames: 5,
+        frameWidth: 86,
+        frameHeight: 118,
+        offsetX: [0, 0, 0, 0, 0],
+        speed: 170
+      },
+      "female_warrior": {
+        path: "<%= asset_path('female_warrior.png') %>",
+        frames: 9,
+        frameWidth: 100,
+        frameHeight: 118,
+        offsetX: [0, 0, 0, 0, 0],
+        speed: 170
+      },
+      "male_mage": {
+        path: "<%= asset_path('male_mage.png') %>",
+        frames: 16,
+        frameWidth: 128,
+        frameHeight: 138,
+        offsetX: [0,0,0,0,0],
+        speed: 150
+      },
+      "female_mage": {
+        path: "<%= asset_path('female_mage.png') %>",
+        frames: 10,
+        frameWidth: 128,
+        frameHeight: 138,
+        offsetX: [0,0,0,0,0],
+        speed: 120
+      },
+      "male_warewolf": {
+        path: "<%= asset_path('male_warewolf.png') %>",
+        frames: 7,
+        frameWidth: 128,
+        frameHeight: 138,
+        offsetX: [0,0,0,0,0],
+        speed: 110
+      },
+      "female_warewolf": {
+        path: "<%= asset_path('female_warewolf.png') %>",
+        frames: 11,
+        frameWidth: 128,
+        frameHeight: 138,
+        offsetX: [0,0,0,0,0],
+        speed: 110
+      },
+      "gorgon": {
+        path: "<%= asset_path('gorgon_1.png') %>",
+        frames: 16,
+        frameWidth: 128,
+        frameHeight: 138,
+        offsetX: [0,0,0,0,0],
+        speed: 160
+      }
+    };
+
+    const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;
+    const sprite = spriteData[key];
+
+    if (!sprite) return;
+
+    let currentFrame = 0;
+
+    // Set up preview div
+    preview.style.width = sprite.frameWidth + "px";
+    preview.style.height = sprite.frameHeight + "px";
+    preview.style.backgroundImage = `url(${sprite.path})`;
+    preview.style.backgroundRepeat = "no-repeat";
+    preview.style.backgroundPosition = "0 0";
+    preview.style.imageRendering = "pixelated";
+
+    // Animate frames
     setInterval(() => {
-      npc.style.objectPosition = `-${currentFrame * frameWidth}px 0px`
-      currentFrame = (currentFrame + 1) % totalFrames
-    }, 170)
-  })
+      const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
+      preview.style.backgroundPosition = `-${xOffset}px 0px`;
+      currentFrame = (currentFrame + 1) % sprite.frames;
+    }, sprite.speed || 170);
+  });
 </script>
