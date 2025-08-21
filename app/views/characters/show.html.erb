@@ -7,28 +7,37 @@
         <div class="d-flex flex-column justify-content-center"
              style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
 
-          <!-- Sprite Container + Gear -->
           <div class="card"
                style="position: relative; width: 240px; height: 240px; background: transparent; border: none;">
 
-            <!-- Animated Sprite -->
             <% sprite_path = "#{@character.gender.downcase}_#{@character.class_name.downcase}.png" %>
-              <img id="npc"
-                  src="<%= asset_path sprite_path %>"
-                  style="
-                    position: absolute;
-                    top: 50%;
-                    left: 60%;
-                    transform: translate(-50%, -50%) scale(2);
-                    transform-origin: center;
-                    width: 86px;
-                    height: 86px;
-                    object-fit: none;
-                    object-position: 0 0;
-                    image-rendering: pixelated;
-                    pointer-events: none;" />
+            <% frame_counts = {
+              "male_mage"    => 15,
+              "female_mage"  => 12,
+              "male_archer"  => 20,
+              "female_archer"=> 3,
+              "male_warrior" => 5,
+              "female_warrior" => 12,
+            } %>
+            <% key = "#{@character.gender.downcase}_#{@character.class_name.downcase}" %>
+            <% total_frames = frame_counts[key] || 5 %>
 
-            <!-- Equipment Slots INSIDE the container -->
+            <img id="npc"
+                 src="<%= asset_path sprite_path %>"
+                 data-total-frames="<%= total_frames %>"
+                 style="
+                   position: absolute;
+                   top: 50%;
+                   left: 60%;
+                   transform: translate(-50%, -50%) scale(2);
+                   transform-origin: center;
+                   width: 86px;
+                   height: 86px;
+                   object-fit: none;
+                   object-position: 0 0;
+                   image-rendering: pixelated;
+                   pointer-events: none;" />
+
             <div id="slot-head" style="position: absolute; bottom: 180px; left: calc(42% + 40px); transform: translateX(-50%); width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
             <div id="slot-weapon" style="position: absolute; bottom: 120px; right: -30px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
             <div id="slot-accessory" style="position: absolute; bottom: 120px; left: 10px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
@@ -36,7 +45,6 @@
             <div id="slot-feet" style="position: absolute; bottom: 0; right: -30px; width: 40px; height: 40px; border: 1px solid gray; border-radius: 5px"></div>
           </div>
 
-          <!-- Character Info -->
           <h5>Level: <%= @character.level %></h5>
           <div class="d-flex justify-content-between" style="margin-top: 22px;">
             <h5>Exp: <%= @character.xp %></h5>
@@ -44,7 +52,6 @@
           </div>
         </div>
 
-        <!-- Actions -->
         <div class="d-flex justify-content-center mt-2 gap-2" style="border-radius: 20px; padding: 10px;">
           <%= link_to "Edit", edit_character_path(@character),
                       class: "btn",
@@ -59,11 +66,10 @@
   </div>
 </div>
 
-<!-- Sprite Animation -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const npc = document.getElementById("npc")
-    const totalFrames = 5
+    const totalFrames = parseInt(npc.dataset.totalFrames, 10)
     const frameWidth = 86
     let currentFrame = 0
 
