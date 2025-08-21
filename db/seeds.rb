@@ -1,55 +1,21 @@
+require 'faker'
+
+# --- Items ---
 item_img = [
-  "items/archer1.png",
-  "items/archer2.png",
-  "items/archer3.png",
-  "items/bkn.png",
-  "items/book.png",
-  "items/bow1.png",
-  "items/bow2.png",
-  "items/bow3.png",
-  "items/feather.png",
-  "items/mage1.png",
-  "items/mage2.png",
-  "items/mage3.png",
-  "items/potion.png",
-  "items/ring1.png",
-  "items/ring2.png",
-  "items/staff1.png",
-  "items/staff2.png",
-  "items/staff3.png",
-  "items/sword1.png",
-  "items/sword2.png",
-  "items/sword3.png",
-  "items/warrior1.png",
-  "items/warrior2.png",
-  "items/warrior3.png"
+  "items/archer1.png", "items/archer2.png", "items/archer3.png", "items/bkn.png",
+  "items/book.png", "items/bow1.png", "items/bow2.png", "items/bow3.png",
+  "items/feather.png", "items/mage1.png", "items/mage2.png", "items/mage3.png",
+  "items/potion.png", "items/ring1.png", "items/ring2.png", "items/staff1.png",
+  "items/staff2.png", "items/staff3.png", "items/sword1.png", "items/sword2.png",
+  "items/sword3.png", "items/warrior1.png", "items/warrior2.png", "items/warrior3.png"
 ]
 
 item_name = [
-  "Light Vest",
-  "Leather Coat",
-  "Heavy Vest",
-  "Summer Equipment",
-  "Book of Knowledge",
-  "Training Bow",
-  "Longbow",
-  "Enchanted Bow",
-  "Magic Feather",
-  "Arcane Scarf",
-  "Mage Robe",
-  "Mantle of Knowledge",
-  "Healing Potion",
-  "Power Ring",
-  "Ring of Protection",
-  "Wooden Staff",
-  "Moon Staff",
-  "Pointy Staff",
-  "Training Sword",
-  "Long Sword",
-  "Crystal Sword",
-  "Bronze Armor",
-  "Heavy Plate",
-  "Runed Plate"
+  "Light Vest", "Leather Coat", "Heavy Vest", "Summer Equipment", "Book of Knowledge",
+  "Training Bow", "Longbow", "Enchanted Bow", "Magic Feather", "Arcane Scarf",
+  "Mage Robe", "Mantle of Knowledge", "Healing Potion", "Power Ring", "Ring of Protection",
+  "Wooden Staff", "Moon Staff", "Pointy Staff", "Training Sword", "Long Sword",
+  "Crystal Sword", "Bronze Armor", "Heavy Plate", "Runed Plate"
 ]
 
 item_description = [
@@ -80,30 +46,9 @@ item_description = [
 ]
 
 item_type = [
-  "Light Armor",
-  "Light Armor",
-  "Heavy Armor",
-  "Clothing",
-  "Book",
-  "Bow",
-  "Bow",
-  "Bow",
-  "Accessory",
-  "Clothing",
-  "Clothing",
-  "Clothing",
-  "Potion",
-  "Accessory",
-  "Accessory",
-  "Staff",
-  "Staff",
-  "Staff",
-  "Sword",
-  "Sword",
-  "Sword",
-  "Armor",
-  "Armor",
-  "Armor"
+  "Light Armor", "Light Armor", "Heavy Armor", "Clothing", "Book", "Bow", "Bow", "Bow",
+  "Accessory", "Clothing", "Clothing", "Clothing", "Potion", "Accessory", "Accessory",
+  "Staff", "Staff", "Staff", "Sword", "Sword", "Sword", "Armor", "Armor", "Armor"
 ]
 
 length = item_img.length
@@ -119,3 +64,52 @@ length.times do |i|
 end
 
 puts "#{length} items created"
+
+# --- Your personal user ---
+User.create!(
+  email: "anto.vinciguerra@hotmail.com",
+  password: "password",
+  username: "antonio",
+  birthday: Faker::Date.birthday(min_age: 20, max_age: 40)
+)
+
+# --- 1000 random users ---
+500.times do
+  u = User.create!(
+    email: Faker::Internet.unique.email,
+    password: "password",
+    username: Faker::Internet.username(specifier: 5..10),
+    birthday: Faker::Date.birthday(min_age: 18, max_age: 50)
+  )
+
+  # Character for each user
+  c = Character.create!(
+    user: u,
+    name: Faker::Fantasy::Tolkien.character,
+    class_name: ["Mage", "Warrior"].sample,
+    gender: ["Male", "Female", "Other"].sample,
+    xp: rand(0..1000),
+    coin: rand(0..5000),
+    apperance: "default",
+    level: rand(1..10)
+  )
+
+  # Journey for each user
+  Journey.create!(
+    user: u,
+    purpose: Faker::Lorem.sentence(word_count: 5),
+    daily_quests: Faker::Lorem.sentence(word_count: 10),
+    main_quest: Faker::Lorem.sentence(word_count: 7)
+  )
+
+  # Assign random items to character
+  Item.all.sample(rand(3..8)).each do |item|
+    InventoryItem.create!(
+      character: c,
+      item: item,
+      equipped: [true, false].sample
+    )
+  end
+end
+
+puts "Seeded 500 users with characters, journeys, and items, plus your personal account."
