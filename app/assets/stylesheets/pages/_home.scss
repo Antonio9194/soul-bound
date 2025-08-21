@@ -41,7 +41,10 @@
 }
 .logo {
   width: 450px;
-  animation: float 4s ease-in-out infinite;
+}
+
+.wave {
+    animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {

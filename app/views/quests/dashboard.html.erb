@@ -12,8 +12,8 @@
                 <div class="d-flex justify-content-between">
                   <h5><%= quest.title %></h5>
                   <div data-controller="date-edit">
-                    <div data-date-edit-target="display" 
-                         data-action="click->date-edit#showInput" 
+                    <div data-date-edit-target="display"
+                         data-action="click->date-edit#showInput"
                          class="d-flex justify-content-between gap-2">
                       <h5><%= quest.time.strftime("%H:%M") %></h5>
                       <h5 data-date-edit-target="text"></h5>
@@ -21,7 +21,7 @@
 
                     <div data-date-edit-target="input" style="display: none;">
                       <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
-                        <%= f.time_field :time, value: quest.time.strftime("%H:%M"), 
+                        <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
                                         class: "btn btn-sm btn-outline-primary",
                                         data: { action: "keydown->date-edit#checkEnter" } %>
                       <% end %>
@@ -30,16 +30,16 @@
                 </div>
 
                 <!-- Quest Description & Complete Button -->
-                <div class="d-flex justify-content-between" 
+                <div class="d-flex justify-content-between"
                      style="border: 1px solid black; border-radius: 20px; padding: 10px; background-color: white;">
                   <span><%= quest.description %></span>
 
-                  <div data-controller="complete" 
+                  <div data-controller="complete"
                        style="border: 1px solid black; border-radius: 20px; background-color: white; margin: 20px 2px;">
                     <% if quest.completed? %>
                       <%= button_to "Completed", "#", disabled: true, class: "btn btn-white-black", style: "border: none;", data: { complete_target: "button" } %>
                     <% else %>
-                      <%= button_to "Complete", quest_path(quest), 
+                      <%= button_to "Complete", quest_path(quest),
                             method: :patch,
                             params: { quest: { completed: true } },
                             class: "btn btn-white-black",
