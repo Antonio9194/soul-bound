@@ -14,6 +14,7 @@
 
 <% @items.each do |item| %>
   <div class="store-item">
+    <img src="<%= asset_path(item.img) %>" alt="item">
     <strong><%= link_to item.name, store_path(item) %></strong>: <%= item.price %> coins
     <%= button_to "Purchase", purchase_items_store_path(item), method: :post, class: "btn btn-primary" %>
   </div>
