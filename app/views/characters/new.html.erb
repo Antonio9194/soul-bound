@@ -1,75 +1,58 @@
 <p>Create new characters</p>
-<div class="container">
-  <%= simple_form_for @character do |c| %>
-    <div class="col-4">
-      <%= c.input :name, label: "Character name", input_html: { class: "form-control" } %>
 
-      <%= c.input :gender,
-                  label: "Gender",
-                  collection: [["Male", "Male"], ["Female", "Female"]],
-                  as: :radio_buttons,
-                  input_html: { class: "form-check-input", onchange: "updatePreview()" } %>
+<div class="container" data-controller="new-character">
+  <div class="row d-flex align-items-start">
+    <!-- Left Column: Form -->
+    <div class="col-md-6">
+      <%= simple_form_for @character do |c| %>
+        <%= c.input :name, label: "Character name", input_html: { class: "form-control" } %>
 
-      <%= c.input :class_name,
-                  label: "Klass",
-                  collection: [["Mage", "Mage"], ["Warrior", "Warrior"], ["Archer", "Archer"]],
-                  as: :radio_buttons,
-                  input_html: { class: "form-check-input", onchange: "updatePreview()" } %>
+        <%= c.input :class_name,
+                    label: "Klass",
+                    collection: [["Mage", "Mage"], ["Warrior", "Warrior"], ["Gorgon", "Gorgon"], ["Warewolf", "Warewolf"]],
+                    as: :radio_buttons,
+                    input_html: {
+                      class: "form-check-input",
+                      data: { action: "change->new-character#render" }
+                    } %>
 
-      <%= c.button :submit, "Create Character", class: "btn btn-primary" %>
+        <%= c.input :gender,
+                    label: "Gender",
+                    collection: [["Male", "Male"], ["Female", "Female"]],
+                    as: :radio_buttons,
+                    input_html: {
+                      class: "form-check-input",
+                      data: {
+                        action: "change->new-character#render",
+                        new_character_target: "gender"
+                      }
+                    } %>
+
+        <%= c.button :submit, "Create Character", class: "btn btn-primary mt-3" %>
+      <% end %>
     </div>
-  <% end %>
 
-  <!-- Sprite Preview -->
-  <div class="card" style="width: 200px; height: 200px; border: none; position: relative; background: transparent;">
-    <img id="npc-preview"
-         src=""
-         style="
-           position: absolute;
-           top: 50%;
-           left: 50%;
-           transform: translate(-50%, -50%) scale(2);
-           transform-origin: center;
-           width: 86px;
-           height: 86px;
-           object-fit: none;
-           object-position: 0 0;
-           image-rendering: pixelated;
-           pointer-events: none;
-           display: none;" />
+    <!-- Right Column: Preview -->
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+      <div class="card"
+           style="width: 200px; height: 200px; border: none; background: transparent;">
+        <div id="npc-preview"
+             data-new-character-target="preview"
+             style="
+               position: absolute;
+               top: 50%;
+               left: 50%;
+               transform: translate(-50%, -50%) scale(2);
+               transform-origin: center;
+               width: 106px;
+               height: 128px;
+               background-repeat: no-repeat;
+               background-position: 0 0;
+               image-rendering: pixelated;
+               pointer-events: none;
+               display: none;">
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- JavaScript Preview Logic -->
-<script>
-  let previewInterval = null
-
-  function updatePreview() {
-    const gender = document.querySelector('input[name="character[gender]"]:checked')?.value?.toLowerCase()
-    const klass  = document.querySelector('input[name="character[class_name]"]:checked')?.value?.toLowerCase()
-    const img    = document.getElementById("npc-preview")
-
-    if (!gender || !klass) {
-      img.style.display = "none"
-      clearInterval(previewInterval)
-      return
-    }
-
-    const path = `/assets/${gender}_${klass}.png`
-    const totalFrames = 5
-    const frameWidth = 86
-    let currentFrame = 0
-
-    img.src = path
-    img.style.display = "block"
-
-    if (previewInterval) clearInterval(previewInterval)
-
-    previewInterval = setInterval(() => {
-      img.style.objectPosition = `-${currentFrame * frameWidth}px 0px`
-      currentFrame = (currentFrame + 1) % totalFrames
-    }, 170)
-  }
-
-  window.addEventListener("beforeunload", () => clearInterval(previewInterval))
-</script>
