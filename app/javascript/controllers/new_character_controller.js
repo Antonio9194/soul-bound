@@ -3,7 +3,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["preview", "gender"]
   static values = {
-    maleWarrior: String
+    maleWarrior: String,
+    femaleWarrior: String,
+    maleMage: String,
+    femaleMage: String,
+    maleWarewolf: String,
+    femaleWarewolf: String,
+    gorgon: String
   }
 
   connect() {
@@ -61,7 +67,7 @@ export default class extends Controller {
         speed: 170
       },
       "female_warrior": {
-        path: "/assets/female_warrior.png",
+        path: this.femaleWarriorValue,
         frames: 9,
         frameWidth: 100,
         frameHeight: 64,
@@ -69,7 +75,7 @@ export default class extends Controller {
         speed: 170
       },
       "female_mage": {
-        path: "/assets/female_mage.png",
+        path: this.femaleMageValue,
         frames: 10,
         frameWidth: 128,
         frameHeight: 128,
@@ -77,7 +83,7 @@ export default class extends Controller {
         speed: 120
       },
       "male_mage": {
-        path: "/assets/male_mage.png",
+        path: this.maleMageValue,
         frames: 16,
         frameWidth: 128,
         frameHeight: 128,
@@ -85,7 +91,7 @@ export default class extends Controller {
         speed: 150
       },
       "male_warewolf": {
-        path: "/assets/male_warewolf.png",
+        path: this.maleWarewolfValue,
         frames: 7,
         frameWidth: 128,
         frameHeight: 128,
@@ -93,7 +99,7 @@ export default class extends Controller {
         speed: 110
       },
       "female_warewolf": {
-        path: "/assets/female_warewolf.png",
+        path: this.femaleWarewolfValue,
         frames: 11,
         frameWidth: 128,
         frameHeight: 128,
@@ -101,7 +107,7 @@ export default class extends Controller {
         speed: 110
       },
       "gorgon": {
-        path: "/assets/gorgon_1.png",
+        path: this.gorgonValue,
         frames: 16,
         frameWidth: 128,
         frameHeight: 128,
