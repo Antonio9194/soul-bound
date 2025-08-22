@@ -8,7 +8,9 @@ item_img = [
   "items/potion.png", "items/ring1.png", "items/ring2.png", "items/staff1.png",
   "items/staff2.png", "items/staff3.png", "items/sword1.png", "items/sword2.png",
   "items/sword3.png", "items/warrior1.png", "items/warrior2.png", "items/warrior3.png",
-  "items/arthur_blade_of_secret.png", "items/large_alien_of_utility.png"
+  "items/arthur_blade_of_secret.png", "items/large_alien_of_utility.png",
+  "items/dust_of_electricity.png", "items/hectors_displacer_of_ending.png",
+
 ]
 
 item_name = [
@@ -16,7 +18,8 @@ item_name = [
   "Training Bow", "Longbow", "Enchanted Bow", "Magic Feather", "Arcane Scarf",
   "Mage Robe", "Mantle of Knowledge", "Healing Potion", "Power Ring", "Ring of Protection",
   "Wooden Staff", "Moon Staff", "Pointy Staff", "Training Sword", "Long Sword",
-  "Crystal Sword", "Bronze Armor", "Heavy Plate", "Runed Plate", "Arthur Blade Of Secret", "Large Alien Of Utility"
+  "Crystal Sword", "Bronze Armor", "Heavy Plate", "Runed Plate", "Arthur Blade Of Secret", "Large Alien Of Utility",
+  "Dust Of Electricity", "Hector's Displacer of Ending"
 ]
 
 item_description = [
@@ -45,14 +48,16 @@ item_description = [
   "Heavy plate armor for warriors who face the toughest battles.",
   "A plate armor etched with runes, providing both defense and mystical resistance.",
   "A sleek blade that reveals hidden truths, striking with precision and silent power.",
-  "A strange, versatile weapon of otherworldly origin, built for both offense and utility."
+  "A strange, versatile weapon of otherworldly origin, built for both offense and utility.",
+  "A staff crackling with electrical energy, channeling lightning with every strike. ⚡",
+  "A sword that severs fate itself with every strike, leaving nothing but finality in its wake."
 ]
 
 item_type = [
   "Light Armor", "Light Armor", "Heavy Armor", "Clothing", "Book", "Bow", "Bow", "Bow",
   "Accessory", "Clothing", "Clothing", "Clothing", "Potion", "Accessory", "Accessory",
   "Staff", "Staff", "Staff", "Sword", "Sword", "Sword", "Armor", "Armor", "Armor",
-  "Sword", "Staff"
+  "Sword", "Staff", "Staff", "Sword"
 ]
 
 item_prices = [
@@ -81,10 +86,19 @@ item_prices = [
   25000,   # Heavy Plate – strong armor
   35000,   # Runed Plate – rare/epic armor
   50000,    # Arthur Blade Of Secret – legendary weapon
-  65000    # Large Alien Of Utility – legendary weapon
+  65000,    # Large Alien Of Utility – legendary weapon
+  45000, # Dust Of Electricity – legendary weapon
+  37000, #Hector's Displacer
 ]
 
-length = item_img.length
+item_rarity = [
+  "Common", "Common", "Uncommon", "Common", "Rare",
+  "Common", "Uncommon", "Rare", "Uncommon", "Uncommon",
+  "Uncommon", "Rare", "Common", "Uncommon", "Rare",
+  "Common", "Rare", "Uncommon", "Common", "Uncommon",
+  "Epic", "Common", "Uncommon", "Rare", "Legendary",
+   "Legendary", "Legendary", "Epic"
+]
 
 item_name.each_with_index do |name, i|
   Item.find_or_create_by!(name: name) do |item|
@@ -92,6 +106,7 @@ item_name.each_with_index do |name, i|
     item.item_type   = item_type[i]
     item.price       = item_prices[i]
     item.img         = item_img[i]
+    item.rarity      = item_rarity[i]
   end
 end
 
