@@ -4,6 +4,7 @@ class StoresController < ApplicationController
 
   def list_items
     @items = Item.all
+    @rotating_items = @items.sample(8)
   end
 
   def show

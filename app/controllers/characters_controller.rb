@@ -2,6 +2,8 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
+    @inventory_items = @character.items
+    @equipped_items = @character.inventory_items.where(equipped: true).map(&:item)
   end
 
   def new
