@@ -13,6 +13,9 @@ class Character < ApplicationRecord
     "#{gender.downcase}_#{class_name.downcase}.png"
   end
 
+  def slots
+    10
+  end
 
   def xp_to_next_level
     (100 * (self.level + 1)**1.5).to_i 
