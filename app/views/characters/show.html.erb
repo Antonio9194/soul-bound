@@ -51,7 +51,7 @@
     </div>
 
 
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 50px 10px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 3px 10px;">
       
       <% slots = @character.slots || 10 %>
       <% inventory_items = @character.inventory_items.includes(:item).to_a %>
@@ -90,9 +90,7 @@
                 <% if inventory_items[i] %>
                   <%= button_to "Sell", sell_inventory_item_path(inventory_items[i]),
                    method: :delete,
-                  data: {confirm: "Are you sure?"} %>
-                <% else %>
-                  Empty
+                   data: {confirm: "Are you sure?"} %>
                 <% end %>
           </div>      
         </div>

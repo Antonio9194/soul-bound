@@ -7,7 +7,8 @@ item_img = [
   "items/feather.png", "items/mage1.png", "items/mage2.png", "items/mage3.png",
   "items/potion.png", "items/ring1.png", "items/ring2.png", "items/staff1.png",
   "items/staff2.png", "items/staff3.png", "items/sword1.png", "items/sword2.png",
-  "items/sword3.png", "items/warrior1.png", "items/warrior2.png", "items/warrior3.png"
+  "items/sword3.png", "items/warrior1.png", "items/warrior2.png", "items/warrior3.png",
+  "items/arthur_blade_of_secret.png", "items/large_alien_of_utility.png"
 ]
 
 item_name = [
@@ -15,7 +16,7 @@ item_name = [
   "Training Bow", "Longbow", "Enchanted Bow", "Magic Feather", "Arcane Scarf",
   "Mage Robe", "Mantle of Knowledge", "Healing Potion", "Power Ring", "Ring of Protection",
   "Wooden Staff", "Moon Staff", "Pointy Staff", "Training Sword", "Long Sword",
-  "Crystal Sword", "Bronze Armor", "Heavy Plate", "Runed Plate"
+  "Crystal Sword", "Bronze Armor", "Heavy Plate", "Runed Plate", "Arthur Blade Of Secret", "Large Alien Of Utility"
 ]
 
 item_description = [
@@ -42,13 +43,45 @@ item_description = [
   "A crystal sword that shimmers with magical energy.",
   "Bronze armor offering decent protection without slowing you down.",
   "Heavy plate armor for warriors who face the toughest battles.",
-  "A plate armor etched with runes, providing both defense and mystical resistance."
+  "A plate armor etched with runes, providing both defense and mystical resistance.",
+  "A sleek blade that reveals hidden truths, striking with precision and silent power.",
+  "A strange, versatile weapon of otherworldly origin, built for both offense and utility."
 ]
 
 item_type = [
   "Light Armor", "Light Armor", "Heavy Armor", "Clothing", "Book", "Bow", "Bow", "Bow",
   "Accessory", "Clothing", "Clothing", "Clothing", "Potion", "Accessory", "Accessory",
-  "Staff", "Staff", "Staff", "Sword", "Sword", "Sword", "Armor", "Armor", "Armor"
+  "Staff", "Staff", "Staff", "Sword", "Sword", "Sword", "Armor", "Armor", "Armor",
+  "Sword", "Staff"
+]
+
+item_prices = [
+  5000,    # Light Vest – basic armor
+  7000,    # Leather Coat – slightly better
+  12000,   # Heavy Vest – heavy protection
+  5000,    # Summer Equipment – light clothing
+  15000,   # Book of Knowledge – rare magic
+  6000,    # Training Bow – beginner
+  10000,   # Longbow – better bow
+  18000,   # Enchanted Bow – magical/risky
+  8000,    # Magic Feather – accessory
+  12000,   # Arcane Scarf – magic clothing
+  13000,   # Mage Robe – mage starter
+  18000,   # Mantle of Knowledge – rare magical clothing
+  5000,    # Healing Potion – consumable
+  16000,   # Power Ring – uncommon accessory
+  20000,   # Ring of Protection – rare magical accessory
+  7000,    # Wooden Staff – basic
+  22000,   # Moon Staff – rare magical staff
+  18000,   # Pointy Staff – uncommon magical staff
+  8000,    # Training Sword – beginner sword
+  15000,   # Long Sword – standard weapon
+  30000,   # Crystal Sword – epic sword
+  12000,   # Bronze Armor – common armor
+  25000,   # Heavy Plate – strong armor
+  35000,   # Runed Plate – rare/epic armor
+  50000,    # Arthur Blade Of Secret – legendary weapon
+  65000    # Large Alien Of Utility – legendary weapon
 ]
 
 length = item_img.length
@@ -58,54 +91,12 @@ length.times do |i|
     name: item_name[i],
     description: item_description[i],
     item_type: item_type[i],
-    price: rand(5000..50000),
+    price: item_prices[i],
     img: item_img[i]
   )
 end
 
 puts "#{length} items created"
-
-# Create a user
-user = User.create!(
-  email: "anto.vinciguerra@hotmail.com",
-  username: "antoshka",
-  password: "password",
-  password_confirmation: "password",
-  birthday: Date.new(1991, 9, 14)
-)
-
-# Create some daily quests for the user
-daily_quests = [
-  { title: "Practice Ruby Basics", description: "Work on arrays, hashes, loops, and methods.", time: "08:00" },
-  { title: "Solve 3 Ruby Exercises", description: "Pick 3 exercises from your Ruby exercise list and complete them.", time: "10:00" },
-  { title: "Refactor Old Code", description: "Take a piece of old Ruby code and improve its readability and performance.", time: "14:00" },
-  { title: "Read Ruby Documentation", description: "Go through Ruby docs on classes and modules.", time: "16:00" },
-  { title: "Work on Mini Project", description: "Add a new feature to your portfolio CMS project.", time: "18:00" },
-  { title: "Review & Plan", description: "Review what you learned today and plan tomorrow's Ruby goals.", time: "20:00" }
-]
-
-daily_quests.each do |q|
-  user.quests.create!(
-    title: q[:title],
-    description: q[:description],
-    time: q[:time],
-    quest_type: "daily",
-    completed: false,
-    xp_reward: 100,
-    coin_reward: 300
-  )
-end
-
-
-# Create a character for the user
-character = user.create_character!(
-  name: "Alastor",
-  class_name: "Mage",
-  gender: "Male",          
-  level: 55,
-  xp: 4500,
-  coin: 300_000
-)
 
 puts "User and quests created"
 
