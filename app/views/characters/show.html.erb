@@ -27,7 +27,7 @@
         <h5 class="fw-bold mb-2" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Level: <%= @character.level %></h5>
         <div class="d-flex justify-content-between w-100" style="margin-top: 10px;">
           <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Exp: <%= @character.xp %></h5>
-          <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Coins: <%= sprintf("%.3f", @character.coin / 1000.0) %> 💰</h5>
+          <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Coins: <%= number_with_delimiter(@character.coin, delimiter: ".") %> 💰</h5>
         </div>
       </div>
 

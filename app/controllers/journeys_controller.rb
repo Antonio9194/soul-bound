@@ -3,7 +3,7 @@ class JourneysController < ApplicationController
     @journey = Journey.new
   end
 
-  def create
+    def create
     @journey = Journey.new(journey_params)
     @journey.user_id = current_user.id
 
@@ -64,63 +64,50 @@ If daily quests are not requested, omit "daily_quests".
 If main quests are not requested, omit "main_quest".
 PROMPT
 
-      begin
-        chat = RubyLLM.chat
-        response = chat.ask(prompt)
-        quests_text = response.content.to_s
-        puts "Raw LLM response:"
-        puts quests_text
+      chat = RubyLLM.chat
+      response = chat.ask(prompt)
 
-        # Extract JSON safely
-        json_start = quests_text.index("{")
-        json_end = quests_text.rindex("}")
-        raise "No JSON found in response" unless json_start && json_end
-        parsed_quests = JSON.parse(quests_text[json_start..json_end])
+      quests_text = response.content
+      puts quests_text
 
-        # Create daily quests if present
-        if parsed_quests["daily_quests"]
-          parsed_quests["daily_quests"].each do |quest|
-            current_user.quests.create(
-              title: quest["title"],
-              description: quest["description"],
-              time: quest["time"],
-              quest_type: "daily",
-              completed: false,
-              xp_reward: 100,
-              coin_reward: 300
-            )
-          end
+      parsed_quests = JSON.parse(quests_text)
+
+      # Create daily quests if present
+      if parsed_quests["daily_quests"]
+        parsed_quests["daily_quests"].each do |quest|
+          current_user.quests.create(
+            title: quest["title"],
+            description: quest["description"],
+            time: quest["time"],
+            quest_type: "daily",
+            completed: false,
+            xp_reward: 100,
+            coin_reward: 300
+          )
         end
-
-        # Create main quests if present
-        if parsed_quests["main_quest"] && parsed_quests["main_quest"]["tasks"]
-          parsed_quests["main_quest"]["tasks"].each do |task|
-            current_user.quests.create(
-              title: task["title"],
-              description: task["description"],
-              quest_type: "main",
-              completed: false,
-              xp_reward: 300,
-              coin_reward: 700,
-              deadline: task["deadline"]
-            )
-          end
-        end
-      rescue RubyLLM::RateLimitError => e
-        Rails.logger.warn "LLM rate limit exceeded: #{e.message}"
-        flash[:alert] = "The AI service is busy. Your journey was saved, but quests could not be generated. Try again shortly."
-      rescue => e
-        Rails.logger.error "Error generating quests: #{e.message}"
-        flash[:alert] = "An error occurred while generating quests. Your journey was saved."
       end
 
-      # Always redirect after saving the journey
+      # Create main quests if present
+      if parsed_quests["main_quest"] && parsed_quests["main_quest"]["tasks"]
+        parsed_quests["main_quest"]["tasks"].each do |task|
+          current_user.quests.create(
+            title: task["title"],
+            description: task["description"],
+            quest_type: "main",
+            completed: false,
+            xp_reward: 300,
+            coin_reward: 700,
+            deadline: task["deadline"]
+          )
+        end
+      end
+
       redirect_to new_character_path
     else
       flash.now[:alert] = "Oops, something went wrong. Please check your answers."
       render :new
     end
-  end
+end
 
   private
 
