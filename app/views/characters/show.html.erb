@@ -45,26 +45,51 @@
 
   <!-- Inventory Card -->
   <div class="col-md-6 col-lg-5">
-    <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
-      <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
-        <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Inventory</h4>
-      </div>
+  <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
+    <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
+      <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Inventory</h4>
+    </div>
 
-      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 30px 10px; padding: 50px;">
-        <% slots = 10 %>
-        <% items = @character.inventory_items.to_a %>
-        <% slots.times do |i| %>
-          <div style="border: 2px solid black; border-radius: 10px; background-color: white; display: flex; align-items: center; justify-content: center; height: 100px;">
-            <% if items[i] %>
-              <%= image_tag items[i].item.img, alt: items[i].item.name, class: "img-fluid", style: "image-rendering: pixelated; max-height: 90%; object-fit: contain;" %>
-            <% else %>
-              <span style="color: black; font-size: 0.8rem;">Empty</span>
-            <% end %>
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 50px 10px;">
+      
+      <% slots = @character.slots || 10 %>
+      <% inventory_items = @character.inventory_items.includes(:item).to_a %>
+
+      <% slots = @character.slots || 10 %>
+      <% inventory_items = @character.inventory_items.includes(:item).where(equipped: false).to_a %>
+
+      <% slots.times do |i| %>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+
+    <!-- Name / Placeholder -->
+    <div style="width: 80px; text-align: center; font-size: 0.7rem; font-weight: bold; 
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333;">
+      <% if inventory_items[i] %>
+        <%= inventory_items[i].item.name %>
+      <% else %>
+        Empty
+      <% end %>
+    </div>
+
+    <!-- Image Box -->
+    <div style="width: 80px; height: 80px; border: 2px solid black; border-radius: 10px; 
+                background-color: white; display: flex; align-items: center; justify-content: center;">
+      <% if inventory_items[i] %>
+        <%= image_tag asset_path(inventory_items[i].item.img), 
+              alt: inventory_items[i].item.name, 
+              class: "img-fluid", 
+              style: "image-rendering: pixelated; max-height: 90%; object-fit: contain;" %>
+      <% else %>
+        <span style="color: #aaa; font-size: 1.2rem;">—</span>
+      <% end %>
           </div>
-        <% end %>
-      </div>
+
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 
 </div>
 
