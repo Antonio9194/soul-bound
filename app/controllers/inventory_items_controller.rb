@@ -22,18 +22,21 @@ class InventoryItemsController < ApplicationController
   end
 
   def equip
+    @inventory_item = InventoryItem.find(params[:id])
     @inventory_item.update(equipped: true)
-    redirect_to inventory_items_path, notice: "#{@inventory_item.item.name} equipped!"
+    redirect_to character_path, notice: "#{@inventory_item.item.name} equipped!"
   end
 
   def unequip
+    @inventory_item = InventoryItem.find(params[:id])
     @inventory_item.update(equipped: false)
-    redirect_to inventory_items_path, notice: "#{@inventory_item.item.name} unequipped!"
+    redirect_to character_path, notice: "#{@inventory_item.item.name} unequipped!"
   end
+
 
   private
 
   def set_inventory_item
-    @inventory_item = current_user.character.inventory_item.find(params[:id])
+    @inventory_item = current_user.character.inventory_items.find(params[:id])
   end
 end
