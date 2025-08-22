@@ -1,7 +1,8 @@
-<div class="row justify-content-center g-2">
-  <div class="col-md-6 col-lg-5"> <!-- Smaller column -->
-    <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
+<div class="row justify-content-center g-4">
 
+  <!-- Character Card -->
+  <div class="col-md-6 col-lg-5">
+    <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
       <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
         <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;"><%= @character.name %></h1>
       </div>
@@ -41,103 +42,100 @@
       </div>
     </div>
   </div>
+
+  <!-- Inventory Card -->
+  <div class="col-md-6 col-lg-5">
+  <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
+    <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
+      <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Inventory</h4>
+    </div>
+
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 50px 10px;">
+      
+      <% slots = @character.slots || 10 %>
+      <% inventory_items = @character.inventory_items.includes(:item).to_a %>
+
+      <% slots = @character.slots || 10 %>
+      <% inventory_items = @character.inventory_items.includes(:item).where(equipped: false).to_a %>
+
+      <% slots.times do |i| %>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+
+    <!-- Name / Placeholder -->
+    <div style="width: 80px; text-align: center; font-size: 0.7rem; font-weight: bold; 
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333;">
+      <% if inventory_items[i] %>
+        <%= inventory_items[i].item.name %>
+      <% else %>
+        Empty
+      <% end %>
+    </div>
+
+    <!-- Image Box -->
+    <div style="width: 80px; height: 80px; border: 2px solid black; border-radius: 10px; 
+                background-color: white; display: flex; align-items: center; justify-content: center;">
+      <% if inventory_items[i] %>
+        <%= image_tag asset_path(inventory_items[i].item.img), 
+              alt: inventory_items[i].item.name, 
+              class: "img-fluid", 
+              style: "image-rendering: pixelated; max-height: 90%; object-fit: contain;" %>
+      <% else %>
+        <span style="color: #aaa; font-size: 1.2rem;">—</span>
+      <% end %>
+          </div>
+          <!--Sell Items -->
+          <div style="width: 80px; text-align: center; font-size: 0.7rem; font-weight: bold; 
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333;">
+                <% if inventory_items[i] %>
+                  <%= button_to "Sell", sell_inventory_item_path(inventory_items[i]),
+                   method: :delete,
+                  data: {confirm: "Are you sure?"} %>
+                <% else %>
+                  Empty
+                <% end %>
+          </div>      
+        </div>
+      <% end %>
+    </div>
+    
+  </div>
 </div>
 
-
-    <div style="width: 600px; height: 600px">
-  <% @character.inventory_items.each do |inv_item| %>
-    <%= image_tag inv_item.item.img, alt: inv_item.item.name, class: "img-fluid", style: "image-rendering: pixelated; max-height: 100%; object-fit: contain;" %>
-  <% end %>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const preview = document.getElementById("character-preview");
+document.addEventListener("DOMContentLoaded", () => {
+  const preview = document.getElementById("character-preview");
+  const klass = "<%= @character.class_name.downcase %>";
+  const gender = "<%= @character.gender.downcase %>";
 
-    // Get stored character data from Rails
-    const klass = "<%= @character.class_name.downcase %>";
-    const gender = "<%= @character.gender.downcase %>";
+  const spriteData = {
+    "male_warrior": { path: "<%= asset_path('male_warrior.png') %>", frames: 5, frameWidth: 86, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
+    "female_warrior": { path: "<%= asset_path('female_warrior.png') %>", frames: 9, frameWidth: 100, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
+    "male_mage": { path: "<%= asset_path('male_mage.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
+    "female_mage": { path: "<%= asset_path('female_mage.png') %>", frames: 10, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
+    "male_warewolf": { path: "<%= asset_path('male_warewolf.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_warewolf": { path: "<%= asset_path('female_warewolf.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "gorgon": { path: "<%= asset_path('gorgon_1.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 160 }
+  };
 
-    // Sprite data
-    const spriteData = {
-      "male_warrior": {
-        path: "<%= asset_path('male_warrior.png') %>",
-        frames: 5,
-        frameWidth: 86,
-        frameHeight: 118,
-        offsetX: [0, 0, 0, 0, 0],
-        speed: 170
-      },
-      "female_warrior": {
-        path: "<%= asset_path('female_warrior.png') %>",
-        frames: 9,
-        frameWidth: 100,
-        frameHeight: 118,
-        offsetX: [0, 0, 0, 0, 0],
-        speed: 170
-      },
-      "male_mage": {
-        path: "<%= asset_path('male_mage.png') %>",
-        frames: 16,
-        frameWidth: 128,
-        frameHeight: 138,
-        offsetX: [0,0,0,0,0],
-        speed: 150
-      },
-      "female_mage": {
-        path: "<%= asset_path('female_mage.png') %>",
-        frames: 10,
-        frameWidth: 128,
-        frameHeight: 138,
-        offsetX: [0,0,0,0,0],
-        speed: 120
-      },
-      "male_warewolf": {
-        path: "<%= asset_path('male_warewolf.png') %>",
-        frames: 7,
-        frameWidth: 128,
-        frameHeight: 138,
-        offsetX: [0,0,0,0,0],
-        speed: 110
-      },
-      "female_warewolf": {
-        path: "<%= asset_path('female_warewolf.png') %>",
-        frames: 11,
-        frameWidth: 128,
-        frameHeight: 138,
-        offsetX: [0,0,0,0,0],
-        speed: 110
-      },
-      "gorgon": {
-        path: "<%= asset_path('gorgon_1.png') %>",
-        frames: 16,
-        frameWidth: 128,
-        frameHeight: 138,
-        offsetX: [0,0,0,0,0],
-        speed: 160
-      }
-    };
+  const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;
+  const sprite = spriteData[key];
+  if (!sprite) return;
 
-    const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;
-    const sprite = spriteData[key];
+  let currentFrame = 0;
+  preview.style.width = sprite.frameWidth + "px";
+  preview.style.height = sprite.frameHeight + "px";
+  preview.style.backgroundImage = `url(${sprite.path})`;
+  preview.style.backgroundRepeat = "no-repeat";
+  preview.style.backgroundPosition = "0 0";
+  preview.style.imageRendering = "pixelated";
 
-    if (!sprite) return;
-
-    let currentFrame = 0;
-
-    // Set up preview div
-    preview.style.width = sprite.frameWidth + "px";
-    preview.style.height = sprite.frameHeight + "px";
-    preview.style.backgroundImage = `url(${sprite.path})`;
-    preview.style.backgroundRepeat = "no-repeat";
-    preview.style.backgroundPosition = "0 0";
-    preview.style.imageRendering = "pixelated";
-
-    // Animate frames
-    setInterval(() => {
-      const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
-      preview.style.backgroundPosition = `-${xOffset}px 0px`;
-      currentFrame = (currentFrame + 1) % sprite.frames;
-    }, sprite.speed || 170);
-  });
+  setInterval(() => {
+    const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
+    preview.style.backgroundPosition = `-${xOffset}px 0px`;
+    currentFrame = (currentFrame + 1) % sprite.frames;
+  }, sprite.speed || 170);
+});
 </script>

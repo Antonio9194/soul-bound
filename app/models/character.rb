@@ -8,10 +8,16 @@ class Character < ApplicationRecord
   validates :class_name, presence: true
   validates :gender, presence: true, unless: -> { class_name&.downcase == "gorgon" }
 
-def image_path
-  return "default.png" if gender.blank? || class_name.blank?
-  "#{gender.downcase}_#{class_name.downcase}.png"
-end
+  def inventory_limit
+    if inventory_items.size > slots
+      errors.add(:inventory_items, "cannot have more than #{slots} items")
+    end
+  end
+
+  def image_path
+    return "default.png" if gender.blank? || class_name.blank?
+    "#{gender.downcase}_#{class_name.downcase}.png"
+  end
 
 
   def xp_to_next_level

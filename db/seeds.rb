@@ -65,6 +65,50 @@ end
 
 puts "#{length} items created"
 
+# Create a user
+user = User.create!(
+  email: "anto.vinciguerra@hotmail.com",
+  username: "antoshka",
+  password: "password",
+  password_confirmation: "password",
+  birthday: Date.new(1991, 9, 14)
+)
+
+# Create some daily quests for the user
+daily_quests = [
+  { title: "Practice Ruby Basics", description: "Work on arrays, hashes, loops, and methods.", time: "08:00" },
+  { title: "Solve 3 Ruby Exercises", description: "Pick 3 exercises from your Ruby exercise list and complete them.", time: "10:00" },
+  { title: "Refactor Old Code", description: "Take a piece of old Ruby code and improve its readability and performance.", time: "14:00" },
+  { title: "Read Ruby Documentation", description: "Go through Ruby docs on classes and modules.", time: "16:00" },
+  { title: "Work on Mini Project", description: "Add a new feature to your portfolio CMS project.", time: "18:00" },
+  { title: "Review & Plan", description: "Review what you learned today and plan tomorrow's Ruby goals.", time: "20:00" }
+]
+
+daily_quests.each do |q|
+  user.quests.create!(
+    title: q[:title],
+    description: q[:description],
+    time: q[:time],
+    quest_type: "daily",
+    completed: false,
+    xp_reward: 100,
+    coin_reward: 300
+  )
+end
+
+
+# Create a character for the user
+character = user.create_character!(
+  name: "Alastor",
+  class_name: "Mage",
+  gender: "Male",          
+  level: 55,
+  xp: 4500,
+  coin: 300_000
+)
+
+puts "User and quests created"
+
 # # --- 500 random users ---
 # 500.times do
 #   u = User.create!(

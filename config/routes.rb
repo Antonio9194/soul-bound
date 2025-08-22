@@ -17,15 +17,16 @@ Rails.application.routes.draw do
     member do
       patch :equip
       patch :unequip
+      delete :sell
     end
   end
 
-  resource :store, path: "thewanderingsatchel", only: [:show] do
+  resources :stores, path: "thewanderingsatchel", only: [:show] do
     collection do
       get :list_items
     end
     member do
-      post :purchase_items
+      post :purchase
     end
   end
 
