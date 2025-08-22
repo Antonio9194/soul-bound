@@ -111,8 +111,6 @@ item_name.each_with_index do |name, i|
 end
 
 
-puts "#{length} items created"
-
 
 
 # # --- 500 random users ---

@@ -17,6 +17,18 @@
               <%= link_to item.name, store_path(item), class: "text-decoration-none" %>
             </h5>
             <p class="card-text text-muted fst-italic"><%= item.description %></p>
+            <h5>
+              <% rarity_class = case item.rarity.downcase
+                when "legendary" then "text-warning"      # golden
+                when "epic"      then "text-primary"      # blue
+                when "rare"      then "text-success"      # green
+                when "uncommon"  then "text-info"         # teal
+                else "text-secondary"                     # default gray
+                end %>
+              <span class="<%= rarity_class %> fw-bold shadow-sm">
+                <%= item.rarity.upcase %>
+              </span>
+            </h5>
           </div>
           <div class="card-footer d-flex justify-content-between align-items-center bg-warning bg-opacity-25 rounded-bottom">
             <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive;">
