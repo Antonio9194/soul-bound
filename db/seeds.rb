@@ -86,19 +86,19 @@ item_prices = [
 
 length = item_img.length
 
-length.times do |i|
-  Item.create!(
-    name: item_name[i],
-    description: item_description[i],
-    item_type: item_type[i],
-    price: item_prices[i],
-    img: item_img[i]
-  )
+item_name.each_with_index do |name, i|
+  Item.find_or_create_by!(name: name) do |item|
+    item.description = item_description[i]
+    item.item_type   = item_type[i]
+    item.price       = item_prices[i]
+    item.img         = item_img[i]
+  end
 end
+
 
 puts "#{length} items created"
 
-puts "User and quests created"
+
 
 # # --- 500 random users ---
 # 500.times do
