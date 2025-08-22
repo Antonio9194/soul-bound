@@ -22,7 +22,7 @@
             <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive;">
               Coins: <%= sprintf("%.3f", item.price / 1000.0) %> 💰
             </span>
-            <%= button_to "Purchase", purchase_items_store_path(item), method: :post, class: "btn btn-sm btn-primary fw-bold" %>
+            <%= button_to "Purchase", purchase_store_path(item), method: :post, class: "btn btn-sm btn-primary fw-bold" %>
           </div>
         </div>
       </div>
