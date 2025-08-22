@@ -84,10 +84,21 @@
         <span style="color: #aaa; font-size: 1.2rem;">—</span>
       <% end %>
           </div>
-
+          <!--Sell Items -->
+          <div style="width: 80px; text-align: center; font-size: 0.7rem; font-weight: bold; 
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #333;">
+                <% if inventory_items[i] %>
+                  <%= button_to "Sell", sell_inventory_item_path(inventory_items[i]),
+                   method: :delete,
+                  data: {confirm: "Are you sure?"} %>
+                <% else %>
+                  Empty
+                <% end %>
+          </div>      
         </div>
       <% end %>
     </div>
+    
   </div>
 </div>
 

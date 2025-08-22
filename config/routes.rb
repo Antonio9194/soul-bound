@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       patch :equip
       patch :unequip
+      delete :sell
     end
   end
 
