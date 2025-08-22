@@ -17,7 +17,7 @@ class CharactersController < ApplicationController
     @character.level = 1
     @character.xp = 0
     @character.coin = 0
-
+    @character.slots = 10
     if @character.save
       redirect_to dashboard_quests_path, notice: "Your character was successfully created!"
     else
