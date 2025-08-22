@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :journeys, only: [:new, :create]
+  resources :journeys, only: [:new, :create, :show]
 
   resources :characters
 
