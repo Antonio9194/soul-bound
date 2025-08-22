@@ -6,6 +6,18 @@ class InventoryItemsController < ApplicationController
     @inventory_items = current_user.character.inventory_items
   end
 
+  def sell 
+    @inventory_item = current_user.character.inventory_items.find(params[:id])
+    item = @inventory_item.item
+    sell_price = item.price / 2
+    current_user.character.coin += sell_price
+    current_user.character.save
+    @inventory_item.destroy
+
+    flash[:notice] = "You sold #{item.name} for #{sell_price} coins!"
+   redirect_to character_path
+  end
+
   def show
   end
 
