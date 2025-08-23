@@ -1,6 +1,7 @@
 class QuestsController < ApplicationController
   def dashboard
     @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
+
   end
 
   def edit
@@ -14,6 +15,11 @@ class QuestsController < ApplicationController
     if @quest.update(quest_params)
       if was_incomplete && @quest.completed?
         @quest.quest_marked_completed(current_user.character)
+        @rarity = reward_rarity
+        @items = Item.where(rarity: @rarity)
+        @random = rand(@items.length)
+        @reward = @items[@random]
+        current_user.character.inventory_items.create!(item: @reward, equipped: false)
       end
       redirect_to dashboard_quests_path unless quest_params[:completed]
     else
@@ -24,7 +30,25 @@ class QuestsController < ApplicationController
 
   private
 
+  def reward_rarity
+    roll = rand(1000)
+    case
+    when roll < 333
+      return nil
+    when roll >= 333 && roll < 777
+      return "Common"
+    when roll >= 777 && roll < 888
+      return "Uncommon"
+    when roll >= 888 && roll < 950
+      return "Rare"
+    when roll >= 950 && roll < 995
+      return "Epic"
+    when roll >= 995
+      return "Legendary"
+    end
+  end
+
   def quest_params
     params.require(:quest).permit(:title, :description, :completed, :time, :xp_reward, :coin_reward)
   end
-end 
+end

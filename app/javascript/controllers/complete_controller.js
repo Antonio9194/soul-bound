@@ -20,6 +20,7 @@ export default class extends Controller {
       const modal = new bootstrap.Modal(this.popupTarget)
       modal.show()
       audio.play()
+
     }
   }
 }
