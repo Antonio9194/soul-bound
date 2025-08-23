@@ -19,6 +19,9 @@ class CharactersController < ApplicationController
     @character.coin = 2000
     @character.slots = 10
     if @character.save
+      @items = Item.where(rarity: "Common", item_type: ["Book","Sword", "Staff"])
+      @random = rand(@items.length)
+      current_user.character.inventory_items.create!(item: @items[@random], equipped: false)
       redirect_to dashboard_quests_path, notice: "Your character was successfully created!"
     else
       render :new, status: :unprocessable_entity
