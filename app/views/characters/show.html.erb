@@ -111,7 +111,13 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
+  initSprite();
+  });
+
+  function initSprite() {
+
+
   const preview = document.getElementById("character-preview");
   const klass = "<%= @character.class_name.downcase %>";
   const gender = "<%= @character.gender.downcase %>";
@@ -130,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sprite = spriteData[key];
   if (!sprite) return;
 
-  let currentFrame = 0;
+    let currentFrame = 0;
   preview.style.width = sprite.frameWidth + "px";
   preview.style.height = sprite.frameHeight + "px";
   preview.style.backgroundImage = `url(${sprite.path})`;
@@ -143,5 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
     preview.style.backgroundPosition = `-${xOffset}px 0px`;
     currentFrame = (currentFrame + 1) % sprite.frames;
   }, sprite.speed || 170);
-});
+
+
+};
+
 </script>
