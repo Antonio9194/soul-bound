@@ -58,7 +58,9 @@
                             The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
                           </div>
                           <div>
-                            <%= image_tag @reward.img %>
+                            <% if quest.recently_completed? && quest.reward_item.present? %>
+                              <%= image_tag @reward.img %>
+                            <% end %>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>

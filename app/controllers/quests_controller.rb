@@ -20,6 +20,8 @@ class QuestsController < ApplicationController
         @random = rand(@items.length)
         @reward = @items[@random]
         current_user.character.inventory_items.create!(item: @reward, equipped: false)
+        @quest.mark_recently_completed!
+        @quest.set_reward_item(@reward)
       end
       redirect_to dashboard_quests_path unless quest_params[:completed]
     else
