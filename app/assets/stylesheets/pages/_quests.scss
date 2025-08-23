@@ -1,12 +1,64 @@
-.guild-board {
-  background-image: image-url('guild_message_board2.jpg');
+.quest-background {
+  background: url('quest_background.png') no-repeat center top;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 20px;
-  font-family: "VT323", monospace;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+.quest-container {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.guild-board {
+  // background-image: url('dashboard_scroll.png');
+  background-color: transparent !important;
+  border: none;
+  padding: 0;
+  width: 40vw;
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.0rem;
+}
+
+.quest-header {
+  font-family: "Press Start 2P", cursive;
   font-weight: 400;
   font-style: normal;
+  font-size: 2.0rem;
+  color: #9b6b11;
+}
+
+.quest-body {
+  font-family: "Press Start 2P", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  color: #886320;
+}
+
+.quest-box {
+  border: 1px solid #b4914f;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #f2e6c9;
+  margin-bottom: 15px;
+  background: #f2e6c9 url('quest_subtle_paper_texture.png') repeat;
+  color: #6c4908
+}
+
+.quest-desc-box {
+  border: 1px solid #b4914f;
+  border-radius: 20px;
+  background-color: #f2e6c9;
+  margin: 20px 2px;
+  padding: 5px 10px;
+}
+
+.btn-complete-text {
+   color: #6f4e0f
 }
 
 // .guild-board {
