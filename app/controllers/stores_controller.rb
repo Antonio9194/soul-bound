@@ -5,6 +5,7 @@ class StoresController < ApplicationController
   def list_items
     @items = Item.all
     @rotating_items = @items.sample(8)
+    @character = Character.find_by(user_id: current_user.id)
   end
 
   def show

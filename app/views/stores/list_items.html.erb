@@ -4,6 +4,11 @@
   <%= image_tag "wand.png", alt: "wand", style: "height: 50px; width: 50px;" %>
 </h1>
 
+  <!-- player gold amount -->
+  <div class="container">
+    <%= @character.coin %>
+  </div>
+
 <div class="container">
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
     <% @rotating_items.each do |item| %>
@@ -18,7 +23,7 @@
             </h5>
             <p class="card-text text-muted fst-italic"><%= item.description %></p>
             <h5>
-              <% rarity_class = case item.rarity.downcase
+              <% rarity_class = case item.rarity&.downcase
                 when "legendary" then "text-warning"      # golden
                 when "epic"      then "text-primary"      # blue
                 when "rare"      then "text-success"      # green
@@ -26,7 +31,7 @@
                 else "text-secondary"                     # default gray
                 end %>
               <span class="<%= rarity_class %> fw-bold shadow-sm">
-                <%= item.rarity.upcase %>
+                <%= item.rarity&.upcase %>
               </span>
             </h5>
           </div>
@@ -40,4 +45,5 @@
       </div>
     <% end %>
   </div>
+
 </div>

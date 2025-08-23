@@ -97,7 +97,7 @@ item_rarity = [
   "Uncommon", "Rare", "Common", "Uncommon", "Rare",
   "Common", "Rare", "Uncommon", "Common", "Uncommon",
   "Epic", "Common", "Uncommon", "Rare", "Legendary",
-   "Legendary", "Legendary", "Epic"
+  "Legendary", "Legendary", "Epic"
 ]
 
 item_name.each_with_index do |name, i|
