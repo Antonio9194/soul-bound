@@ -8,8 +8,8 @@ item_img = [
   "items/potion.png", "items/ring1.png", "items/ring2.png", "items/staff1.png",
   "items/staff2.png", "items/staff3.png", "items/sword1.png", "items/sword2.png",
   "items/sword3.png", "items/warrior1.png", "items/warrior2.png", "items/warrior3.png",
-  "items/arthur_blade_of_secret.png", "items/large_alien_of_utility.png",
-  "items/dust_of_electricity.png", "items/hectors_displacer_of_ending.png",
+  "items/arthur_blade_of_secret_sword.png", "items/large_alien_of_utility_staff.png",
+  "items/dust_of_electricity_staff.png", "items/hectors_displacer_of_ending_sword.png",
 
 ]
 
@@ -97,7 +97,7 @@ item_rarity = [
   "Uncommon", "Rare", "Common", "Uncommon", "Rare",
   "Common", "Rare", "Uncommon", "Common", "Uncommon",
   "Epic", "Common", "Uncommon", "Rare", "Legendary",
-   "Legendary", "Legendary", "Epic"
+  "Legendary", "Legendary", "Epic"
 ]
 
 item_name.each_with_index do |name, i|
