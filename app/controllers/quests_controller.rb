@@ -19,7 +19,7 @@ class QuestsController < ApplicationController
         @items = Item.where(rarity: @rarity)
         @random = rand(@items.length)
         @reward = @items[@random]
-        current_user.character.inventory_items.create!(item: @reward, equipped: false)
+        @last_reward = current_user.character.inventory_items.create!(item: @reward, equipped: false)
         @quest.mark_recently_completed!
         @quest.set_reward_item(@reward)
       end
@@ -35,9 +35,9 @@ class QuestsController < ApplicationController
   def reward_rarity
     roll = rand(1000)
     case
-    when roll < 333
+    when roll < 1
       return nil
-    when roll >= 333 && roll < 777
+    when roll >= 1 && roll < 777
       return "Common"
     when roll >= 777 && roll < 888
       return "Uncommon"
