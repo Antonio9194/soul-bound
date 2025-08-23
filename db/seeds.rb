@@ -8,7 +8,7 @@ Journey.destroy_all
 User.destroy_all
 
 item_img = [
-  "books/book.png", "accessories/feather.png", "accessories/potion.png",
+  "books/book.png", "accessories/feather_amulet.png", "accessories/potion.png",
   "accessories/ring1.png", "accessories/ring2.png", "staves/staff1.png",
   "staves/staff2.png", "staves/staff3.png", "swords/sword1.png",
   "swords/sword2.png", "swords/sword3.png", "swords/arthur_blade_of_secret_sword.png",
