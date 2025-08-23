@@ -1,5 +1,6 @@
 require 'faker'
 
+InventoryItem.destroy_all
 Item.destroy_all
 Quest.destroy_all
 Character.destroy_all
