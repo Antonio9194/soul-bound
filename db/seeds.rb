@@ -1,5 +1,11 @@
 require 'faker'
 
+Item.destroy_all
+Quest.destroy_all
+Character.destroy_all
+Journey.destroy_all
+User.destroy_all
+
 item_img = [
   "books/book.png", "accessories/feather.png", "accessories/potion.png",
   "accessories/ring1.png", "accessories/ring2.png", "staves/staff1.png",
