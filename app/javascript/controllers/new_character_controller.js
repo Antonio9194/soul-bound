@@ -7,8 +7,8 @@ export default class extends Controller {
     femaleWarrior: String,
     maleMage: String,
     femaleMage: String,
-    maleWarewolf: String,
-    femaleWarewolf: String,
+    maleWerewolf: String,
+    femaleWerewolf: String,
     gorgon: String
   }
 
@@ -90,16 +90,16 @@ export default class extends Controller {
         offsetX: [0, 0, 0, 0, 0],
         speed: 150
       },
-      "male_warewolf": {
-        path: this.maleWarewolfValue,
+      "male_werewolf": {
+        path: this.maleWerewolfValue,
         frames: 7,
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
         speed: 110
       },
-      "female_warewolf": {
-        path: this.femaleWarewolfValue,
+      "female_werewolf": {
+        path: this.femaleWerewolfValue,
         frames: 11,
         frameWidth: 128,
         frameHeight: 128,

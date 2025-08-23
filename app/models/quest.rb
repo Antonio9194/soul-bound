@@ -11,7 +11,7 @@ class Quest < ApplicationRecord
   validates :deadline, presence: true, if: -> { quest_type == "main" }
 
   def complete!(character)
-    return if self.completed 
+    return if self.completed
     self.completed = true
     save!
   end
@@ -25,7 +25,20 @@ class Quest < ApplicationRecord
     complete!(character)
     give_rewards(character)
   end
+
+  def recently_completed?
+    @recently_completed ||= false
+  end
+
+  def mark_recently_completed!
+    @recently_completed = true
+  end
+
+  def reward_item
+    @reward_item
+  end
+
+  def set_reward_item(item)
+    @reward_item = item
+  end
 end
-
-
-

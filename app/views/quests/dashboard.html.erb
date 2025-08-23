@@ -55,6 +55,13 @@
                           <div class="modal-body">
                             The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
                           </div>
+                          <div>
+                            <%# <% if quest.recently_completed? && quest.reward_item.present? %>
+                              <% if @last_reward %>
+                                <%= image_tag @last_reward.img %>
+                              <% end %>
+                            <%# <% end %>
+                          </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
                           </div>
@@ -74,3 +81,4 @@
     </div>
   </div>
 </div>
+<%= audio_tag "fanfare.mp3", id: "complete-audio" %>
