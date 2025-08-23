@@ -13,6 +13,7 @@ gem "pg", "~> 1.1"
 gem "ruby-openai"
 gem "ruby_llm", git: 'https://github.com/SuzukiRyuichiro/ruby_llm.git'
 gem "faker"
+gem "solid_queue"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
