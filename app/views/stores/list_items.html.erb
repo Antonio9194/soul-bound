@@ -9,14 +9,14 @@
     <% @rotating_items.each do |item| %>
       <div class="col">
         <div class="card h-100 text-center shadow rounded-4 border border-3 border-warning" style="background: #fff3e0;">
-          <div class="card-img-top p-3" style="height: 140px; background-color: #f9f1e7; border-radius: 15px;">
-            <%= image_tag item.img, alt: item.name, class: "img-fluid", style: "image-rendering: pixelated; max-height: 100%; object-fit: contain;" %>
+          <div class="card-img-top p-3" style="height: 150px; background-color: #f9f1e7; border-radius: 15px;">
+            <%= image_tag item.img, alt: item.name, class: "img-fluid", style: "image-rendering: pixelated; width: 100%; max-height: 100%; object-fit: contain;" %>
           </div>
           <div class="card-body">
             <h5 class="card-title text-primary fw-bold" style="font-family: 'Press Start 2P', cursive;">
-              <%= link_to item.name, store_path(item), class: "text-decoration-none" %>
+              <%= item.name %>
             </h5>
-            <p class="card-text text-muted fst-italic"><%= item.description %></p>
+            <p class="card-text text-muted fst-italic" style="height: 80px;"><%= item.description %></p>
             <h5>
               <% rarity_class = case item.rarity.downcase
                 when "legendary" then "text-warning"      # golden
