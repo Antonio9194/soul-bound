@@ -35,9 +35,9 @@ class QuestsController < ApplicationController
   def reward_rarity
     roll = rand(1000)
     case
-    when roll < 1
+    when roll < 300
       return nil
-    when roll >= 1 && roll < 777
+    when roll >= 300 && roll < 777
       return "Common"
     when roll >= 777 && roll < 888
       return "Uncommon"
