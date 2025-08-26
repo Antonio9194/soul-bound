@@ -1,84 +1,172 @@
-<div class="row g-4 quest-background">
-  <div class="col-md-10">
-    <div class="card h-100 p-3 mt-4 guild-board">
-      <div class="card-header quest-container">
-        <h4 class="mt-4 quest-header">Daily Quests</h4>
-        <div class="card-body">
-          <% if @daily_quests.any? %>
-            <% @daily_quests.each do |quest| %>
-              <div class="mb-0">
+<div class="row g-4">
+  <div class="d-flex justify-content-between">
+      <div class="col-md-6 quest-background">
+        <div class="card h-100 p-3 mt-4 guild-board">
+          <div class="card-header quest-container">
+            <h4 class="mt-4 quest-header">Daily Quests</h4>
+            <div class="card-body">
+              <% if @daily_quests.any? %>
+                <% @daily_quests.each do |quest| %>
+                  <div class="mb-0">
 
-                <!-- Quest Title & Time -->
-                <div class="d-flex justify-content-between quest-details">
-                  <h5 class="quest-body"><%= quest.title %></h5>
-                  <div data-controller="date-edit">
-                    <div data-date-edit-target="display"
-                         data-action="click->date-edit#showInput"
-                         class="d-flex justify-content-between gap-2">
-                      <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
-                      <h5 data-date-edit-target="text"></h5>
-                    </div>
+                    <!-- Quest Title & Time -->
+                    <div class="d-flex justify-content-between quest-details">
+                      <h5 class="quest-body"><%= quest.title %></h5>
+                      <div data-controller="date-edit">
+                        <div data-date-edit-target="display"
+                            data-action="click->date-edit#showInput"
+                            class="d-flex justify-content-between gap-2">
+                          <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
+                          <h5 data-date-edit-target="text"></h5>
+                        </div>
 
-                    <div data-date-edit-target="input" style="display: none;">
-                      <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
-                        <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
-                                        class: "btn btn-sm btn-outline-primary",
-                                        data: { action: "keydown->date-edit#checkEnter" } %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Quest Description & Complete Button -->
-                <div class="quest-box d-flex justify-content-between">
-                  <span><%= quest.description %></span>
-
-                  <div data-controller="complete" class="quest-desc-box">
-                    <% if quest.completed? %>
-                      <%= button_to "Completed", "#", disabled: true, class: "btn btn-white-black", data: { complete_target: "button" } %>
-                    <% else %>
-                      <%= button_to "Complete", quest_path(quest),
-                            method: :patch,
-                            params: { quest: { completed: true } },
-                            class: "btn btn-white-black btn-complete-text",
-                            data: { complete_target: "button", action: "click->complete#markCompleted" } %>
-                    <% end %>
-
-                    <!-- Modal Inside the same Controller div-->
-                    <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
-                      <div class="modal-dialog">
-                        <div class="modal-content" style="border-radius: 20px;">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Quest Completed!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
-                          </div>
-                          <div>
-                            <%# <% if quest.recently_completed? && quest.reward_item.present? %>
-                              <% if @last_reward %>
-                                <%= image_tag @last_reward.img %>
-                              <% end %>
-                            <%# <% end %>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
-                          </div>
+                        <div data-date-edit-target="input" style="display: none;">
+                          <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
+                            <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
+                                            class: "btn btn-sm btn-outline-primary",
+                                            data: { action: "keydown->date-edit#checkEnter" } %>
+                          <% end %>
                         </div>
                       </div>
                     </div>
 
+                    <!-- Quest Description & Complete Button -->
+                    <div class="quest-box d-flex justify-content-between">
+                      <span><%= quest.description %></span>
+
+                      <div data-controller="complete" class="quest-desc-box">
+                        <% if quest.completed? %>
+                          <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
+                        <% else %>
+                          <%= button_to "Complete", quest_path(quest),
+                                method: :patch,
+                                params: { quest: { completed: true } },
+                                class: "link-button text-active",
+                                data: { complete_target: "button", action: "click->complete#markCompleted" } %>
+                        <% end %>
+
+                        <!-- Modal Inside the same Controller div-->
+                        <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius: 20px;">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Quest Completed!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
+                              </div>
+                              <div>
+                                <%# <% if quest.recently_completed? && quest.reward_item.present? %>
+                                  <% if @last_reward %>
+                                    <%= image_tag @last_reward.img %>
+                                  <% end %>
+                                <%# <% end %>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <p>No daily quests yet, pick up some at the Guild!!</p>
-          <% end %>
+                <% end %>
+              <% else %>
+                <p>No daily quests yet, pick up some at the Guild!!</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6 quest-background">
+        <div class="card h-100 p-3 mt-4 guild-board">
+          <div class="card-header quest-container">
+            <h4 class="mt-4 quest-header">Daily Quests</h4>
+            <div class="card-body">
+              <% if @daily_quests.any? %>
+                <% @daily_quests.each do |quest| %>
+                  <div class="mb-0">
+
+                    <!-- Quest Title & Time -->
+                    <div class="d-flex justify-content-between quest-details">
+                      <h5 class="quest-body"><%= quest.title %></h5>
+                      <div data-controller="date-edit">
+                        <div data-date-edit-target="display"
+                            data-action="click->date-edit#showInput"
+                            class="d-flex justify-content-between gap-2">
+                          <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
+                          <h5 data-date-edit-target="text"></h5>
+                        </div>
+
+                        <div data-date-edit-target="input" style="display: none;">
+                          <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
+                            <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
+                                            class: "btn btn-sm btn-outline-primary",
+                                            data: { action: "keydown->date-edit#checkEnter" } %>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Quest Description & Complete Button -->
+                    <div class="quest-box d-flex justify-content-between">
+                      <span><%= quest.description %></span>
+
+                      <div data-controller="complete" class="quest-desc-box">
+                        <% if quest.completed? %>
+                          <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
+                        <% else %>
+                          <%= button_to "Complete", quest_path(quest),
+                                method: :patch,
+                                params: { quest: { completed: true } },
+                                class: "link-button text-active",
+                                data: { complete_target: "button", action: "click->complete#markCompleted" } %>
+                        <% end %>
+
+                        <!-- Modal Inside the same Controller div-->
+                        <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius: 20px;">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Quest Completed!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
+                              </div>
+                              <div>
+                                <%# <% if quest.recently_completed? && quest.reward_item.present? %>
+                                  <% if @last_reward %>
+                                    <%= image_tag @last_reward.img %>
+                                  <% end %>
+                                <%# <% end %>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <p>No daily quests yet, pick up some at the Guild!!</p>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+
+
 <%= audio_tag "fanfare.mp3", id: "complete-audio" %>
