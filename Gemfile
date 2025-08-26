@@ -11,7 +11,7 @@ gem "sprockets-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 gem "ruby-openai"
-gem "ruby_llm", git: 'https://github.com/SuzukiRyuichiro/ruby_llm.git'
+gem "ruby_llm"
 gem "faker"
 gem "solid_queue"
 
