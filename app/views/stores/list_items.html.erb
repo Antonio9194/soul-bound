@@ -1,16 +1,32 @@
-<h1 class="text-center mt-5 mb-5 display-4 d-flex justify-content-center align-items-center gap-3" style="font-family: 'Press Start 2P', cursive;">
-  <%= image_tag "wand.png", alt: "wand", style: "height: 50px; width: 50px;" %>
-  The Wandering Satchel
-  <%= image_tag "wand.png", alt: "wand", style: "height: 50px; width: 50px;" %>
-</h1>
+<div class="d-flex justify-content-between align-items-start" style="margin: 20px 30px 0 30px; gap: 20px;">
 
-  <!-- player gold amount -->
-  <div class="container">
-    <%= @character.coin %>
+  <!-- Store Sign -->
+  <div>
+    <%= image_tag "thewanderingsatchel.png",
+      alt: "store sign",
+      style: "position: relative; top: 20px; left: 130px;height: 480px; width: 620px; margin: 0; padding: 0; display: block;"
+    %>
   </div>
 
+  <!-- Player Gold Card -->
+  <div class="card text-center shadow rounded-4 border border-2 border-warning"
+       style="postion: absolute; top:120px; right: 260px; background: #fff3e0; height: 100%; width: 220px; display: flex;
+       flex-direction: column; justify-content: center; align-items: center;" >
+       
+       <div class="d-flex flex-column">
+        <div class="card-title text-primary fw-bold fs-4 pt-4" style="font-family: 'Press Start 2P', cursive;"><%= @character.name %></div>
+        <div id="character-preview"></div>
+       </div>
+
+    <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+      <h6 class="card-text text-muted fst-italic mb-4 mt-4">💰 Coins: <%= number_with_delimiter(@character.coin, delimiter: ".")  %> </h6> 
+    </span>
+  </div>
+
+</div>
+
 <div class="container">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5" style="margin-top: 0px;">
     <% @rotating_items.each do |item| %>
       <div class="col">
         <div class="card h-100 text-center shadow rounded-4 border border-3 border-warning" style="background: #fff3e0;">
@@ -47,3 +63,49 @@
   </div>
 
 </div>
+
+<script>
+document.addEventListener("turbo:load", () => {
+  initSprite();
+  });
+
+  function initSprite() {
+
+
+  const preview = document.getElementById("character-preview");
+  const klass = "<%= @character.class_name.downcase %>";
+  const gender = "<%= @character.gender.downcase %>";
+
+  const spriteData = {
+    "male_warrior": { path: "<%= asset_path('male_warrior.png') %>", frames: 5, frameWidth: 86, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
+    "female_warrior": { path: "<%= asset_path('female_warrior.png') %>", frames: 9, frameWidth: 100, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
+    "male_mage": { path: "<%= asset_path('male_mage.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
+    "female_mage": { path: "<%= asset_path('female_mage.png') %>", frames: 10, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
+    "male_werewolf": { path: "<%= asset_path('male_werewolf.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_werewolf": { path: "<%= asset_path('female_werewolf.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "gorgon": { path: "<%= asset_path('gorgon_1.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 160 }
+  };
+
+  const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;
+  const sprite = spriteData[key];
+  if (!sprite) return;
+
+    let currentFrame = 0;
+  preview.style.width = sprite.frameWidth + "px";
+  preview.style.height = sprite.frameHeight + "px";
+  preview.style.backgroundImage = `url(${sprite.path})`;
+  preview.style.backgroundRepeat = "no-repeat";
+  preview.style.backgroundPosition = "0 0";
+  preview.style.imageRendering = "pixelated";
+
+  setInterval(() => {
+    const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
+    preview.style.backgroundPosition = `-${xOffset}px 0px`;
+    currentFrame = (currentFrame + 1) % sprite.frames;
+  }, sprite.speed || 170);
+
+
+};
+
+</script>
+
