@@ -55,7 +55,11 @@
             <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive;">
               Coins: <%= sprintf("%.3f", item.price / 1000.0) %> 💰
             </span>
-            <%= button_to "Purchase", purchase_store_path(item), method: :post, class: "btn btn-sm btn-primary fw-bold" %>
+            <%= button_to "Purchase", purchase_store_path(item), method: :post,
+                class: "btn btn-sm fw-bold",
+                style: "background-color: #c68642; color: #fff;
+                border: 2px solid #8B5A2B; border-radius: 8px;"
+            %>
           </div>
         </div>
       </div>
@@ -77,13 +81,14 @@ document.addEventListener("turbo:load", () => {
   const gender = "<%= @character.gender.downcase %>";
 
   const spriteData = {
-    "male_warrior": { path: "<%= asset_path('male_warrior.png') %>", frames: 5, frameWidth: 86, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
-    "female_warrior": { path: "<%= asset_path('female_warrior.png') %>", frames: 9, frameWidth: 100, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
-    "male_mage": { path: "<%= asset_path('male_mage.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
-    "female_mage": { path: "<%= asset_path('female_mage.png') %>", frames: 10, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
-    "male_werewolf": { path: "<%= asset_path('male_werewolf.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "female_werewolf": { path: "<%= asset_path('female_werewolf.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "gorgon": { path: "<%= asset_path('gorgon_1.png') %>", frames: 16, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 160 }
+    "male_warrior": { path: "<%= asset_path('male_warrior_idle.png') %>", frames: 4, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+    "female_warrior": { path: "<%= asset_path('female_warrior_idle.png') %>", frames: 4, frameWidth: 100, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
+    "male_mage": { path: "<%= asset_path('male_mage_idle.png') %>", frames: 8, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
+    "female_mage": { path: "<%= asset_path('female_mage_idle.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
+    "male_werewolf": { path: "<%= asset_path('male_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_werewolf": { path: "<%= asset_path('female_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "male_vampire": { path: "<%= asset_path('male_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_vampire": { path: "<%= asset_path('female_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 150 }
   };
 
   const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;

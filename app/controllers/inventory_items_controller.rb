@@ -4,6 +4,7 @@ class InventoryItemsController < ApplicationController
 
   def index
     @inventory_items = current_user.character.inventory_items
+    @equipped_items = equipped_item.item.img
   end
 
   def sell 
