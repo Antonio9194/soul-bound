@@ -1,13 +1,20 @@
-<div class="inventory-item card p-3 rounded d-flex flex-row align-items-center">
-  <div class="item-image me-3">
-    <%= image_tag @inventory_item.item.img, class: "img-thumbnail", alt: @inventory_item.item.name %>
+<div class="inventory-item card p-4 rounded-4 shadow d-flex flex-row align-items-center mb-4"
+     style="background: #fff3e0; border: 4px solid #ffc107; border-radius: 25px; gap: 20px;
+     min-height: 400px; max-width: 800px; position: absolute; left: 50%; top: 50%;
+     transform: translate(-50%, -50%); margin: 25px 0;"
+>
+  
+  <!-- Item Image -->
+  <div class="item-image flex-shrink-0" style="width: 250px; height: 250px; border: 3px solid #8B5A2B; border-radius: 15px; background: #f9f1e7; display:flex; align-items:center; justify-content:center;">
+    <%= image_tag @inventory_item.item.img, class: "img-fluid", style: "image-rendering: pixelated; width: 90%; height: 90%; object-fit: contain;", alt: @inventory_item.item.name %>
   </div>
 
-  <div class="item-details flex-grow-1">
-    <h3><%= @inventory_item.item.name %></h3>
-    <p>Type: <%= @inventory_item.item.item_type %></p>
-    <p>Description: <%= @inventory_item.item.description %></p>
-    <p>Price: <%= @inventory_item.item.price %></p>
-    <p>Status: <%= @inventory_item.equipped? ? "Equipped" : "Unequipped" %></p>
+  <!-- Item Details -->
+  <div class="item-details flex-grow-1" style="font-family: 'Press Start 2P', cursive; color: #3E2E1B; height: 200px;">
+    <h4 class="fw-bold mb-2" style="text-shadow: 1px 1px #a67c52;"><%= @inventory_item.item.name %></h4>
+    <p class="mb-2 fst-italic" style="height: 50px; overflow: hidden;"><%= @inventory_item.item.description %></p>
+    <p class="mb-1 fst-italic">Rarity: : <%= @inventory_item.item.rarity %></p>
+    <p class="mb-1 fw-bold">Price: <%= sprintf("%.3f", @inventory_item.item.price / 1000.0) %> 💰</p>
+    <p class="mb-0 fst-italic">Status: <%= @inventory_item.equipped? ? "Equipped" : "Unequipped" %></p>
   </div>
 </div>
