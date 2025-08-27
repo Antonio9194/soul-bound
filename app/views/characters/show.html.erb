@@ -6,8 +6,13 @@
     <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
 
       <!-- Character Name Header -->
-      <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
-        <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;"><%= @character.name %></h1>
+      <div class="card-header text-center rounded-3 mb-3" 
+           style="border: 1px solid #000;
+           background-color: rgba(255, 193, 7, 0.25);"
+      >
+      <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+        <%= @character.name %>
+      </h1>
       </div>
 
       <!-- Character Info Container -->
@@ -93,9 +98,14 @@
     <!-- Inventory Card -->
     <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
       <!-- Inventory Header -->
-      <div class="card-header text-center bg-light rounded-3 mb-3" style="border: 1px solid #000;">
-        <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Inventory</h4>
-      </div>
+    <div class="card-header text-center rounded-3 mb-3" 
+          style="border: 1px solid #000;
+          background-color: rgba(255, 193, 7, 0.25);"
+      >
+      <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">
+        Inventory
+      </h4>
+    </div>
 
       <!-- Inventory Grid -->
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 3px 10px;">
@@ -175,7 +185,7 @@ document.addEventListener("turbo:load", () => {
   const spriteData = {
     "male_warrior": { path: "<%= asset_path('male_warrior.png') %>", frames: 5, frameWidth: 86, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
     "female_warrior": { path: "<%= asset_path('female_warrior.png') %>", frames: 9, frameWidth: 100, frameHeight: 118, offsetX: [0,0,0,0,0], speed: 170 },
-    "male_mage": { path: "<%= asset_path('male_mage_idle.png') %>", frames: 8, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
+    "male_mage": { path: "<%= asset_path('male_mage_walk.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 150 },
     "female_mage": { path: "<%= asset_path('female_mage.png') %>", frames: 10, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
     "male_werewolf": { path: "<%= asset_path('male_werewolf.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
     "female_werewolf": { path: "<%= asset_path('female_werewolf.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
