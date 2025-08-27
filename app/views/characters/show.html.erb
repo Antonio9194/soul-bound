@@ -113,11 +113,19 @@
               <% end %>
             </div>
               <% if inventory_item %>
+              <%= link_to inventory_item_path(inventory_item),
+                  style: "display: flex; width: 100%;
+                  height: 60%; justify-content: center;
+                  align-items: center;" do
+              %>
                 <%= image_tag inventory_item.item.img,
                     alt: inventory_item.item.name,
                     class: "img-fluid",
-                    style: "width: 100%; height: 60%; object-fit: contain; image-rendering: pixelated; padding: 2px; margin: 4px;"
+                    style: "width: 100%; height: 100%;
+                    object-fit: contain; image-rendering: pixelated;
+                    padding: 2px; margin: 4px;"
                 %>
+              <% end %> 
               <% else %>
                 <span style="color: #aaa; font-size: 1.2rem;">—</span>
               <% end %>

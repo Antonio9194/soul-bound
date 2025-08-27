@@ -1,6 +1,6 @@
 <div class="inventory-item card p-3 rounded d-flex flex-row align-items-center">
   <div class="item-image me-3">
-    <%= image_tag "placeholder.png", class: "img-thumbnail", alt: @inventory_item.item.name %>
+    <%= image_tag @inventory_item.item.img, class: "img-thumbnail", alt: @inventory_item.item.name %>
   </div>
 
   <div class="item-details flex-grow-1">
@@ -8,7 +8,7 @@
     <p>Type: <%= @inventory_item.item.item_type %></p>
     <p>Description: <%= @inventory_item.item.description %></p>
     <p>Price: <%= @inventory_item.item.price %></p>
-    <p>Status: <%= inventory_item.equipped? ? "Equipped" : "Unequipped" %></p>
+    <p>Status: <%= @inventory_item.equipped? ? "Equipped" : "Unequipped" %></p>
   </div>
 
   <div class="item-action ms-3">
