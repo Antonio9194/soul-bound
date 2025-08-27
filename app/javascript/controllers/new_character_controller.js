@@ -121,7 +121,7 @@ export default class extends Controller {
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
-        speed: 140
+        speed: 160
       }
     }
   }
