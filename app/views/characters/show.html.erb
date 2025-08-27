@@ -62,7 +62,9 @@
                 <% end %>
                 <%= button_to "Unequip", unequip_inventory_item_path(equipped_item),
                  method: :patch,
-                 style: " width: 100px; border: 1px solid black; border-radius: 0 0 10px 10px;" %>
+                 style: " width: 100px; border-top: 2px solid black; border-left: 2px solid black;
+                 border-right: 2px solid black; border-bottom: 1px solid black; border-radius: 0 0 10px 10px;" 
+                %>
               <% else %>
                 <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
               <% end %>
@@ -112,7 +114,8 @@
               <% if inventory_item %>
                 <%= button_to "Equip", equip_inventory_item_path(inventory_item),
                  method: :patch,
-                 style: "width: 100px; border: 1px solid black; border-radius: 10px 10px 0 0;" 
+                 style: "width: 100px; border-bottom: 2px solid black; border-left: 2px solid black;
+                 border-right: 2px solid black; border-top: 1px solid black; border-radius: 10px 10px 0 0;" 
                  %>
               <% else %>
                 <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
