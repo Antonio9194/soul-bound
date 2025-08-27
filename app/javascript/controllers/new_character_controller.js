@@ -93,19 +93,19 @@ export default class extends Controller {
       },
       "male_werewolf": {
         path: this.maleWerewolfValue,
-        frames: 7,
+        frames: 5,
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
-        speed: 110
+        speed: 170
       },
       "female_werewolf": {
         path: this.femaleWerewolfValue,
-        frames: 11,
+        frames: 6,
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
-        speed: 110
+        speed: 170
       },
       "female_vampire": {
         path: this.femaleVampireValue,
