@@ -140,7 +140,12 @@
             <!-- Sell Button -->
             <div style="text-align: center;">
               <% if inventory_item %>
-                <%= button_to "Sell", sell_inventory_item_path(inventory_item), method: :delete, data: { confirm: "Are you sure?" } %>
+                <%= button_to "Sell", sell_inventory_item_path(inventory_item),
+                    method: :delete, data: { confirm: "Are you sure?" },
+                    class: "btn btn-sm fw-bold",
+                    style: "background-color: #c68642; color: #fff;
+                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;"
+                %>
               <% end %>
             </div>
 
