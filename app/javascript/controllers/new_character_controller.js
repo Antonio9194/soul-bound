@@ -9,7 +9,8 @@ export default class extends Controller {
     femaleMage: String,
     maleWerewolf: String,
     femaleWerewolf: String,
-    gorgon: String
+    maleVampire: String,
+    femaleVampire: String
   }
 
   connect() {
@@ -106,13 +107,21 @@ export default class extends Controller {
         offsetX: [0, 0, 0, 0, 0],
         speed: 110
       },
-      "gorgon": {
-        path: this.gorgonValue,
-        frames: 16,
+      "female_vampire": {
+        path: this.femaleVampireValue,
+        frames: 6,
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
         speed: 160
+      },
+      "male_vampire": {
+        path: this.maleVampireValue,
+        frames: 5,
+        frameWidth: 128,
+        frameHeight: 128,
+        offsetX: [0, 0, 0, 0, 0],
+        speed: 140
       }
     }
   }

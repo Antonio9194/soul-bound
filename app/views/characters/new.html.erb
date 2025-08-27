@@ -8,7 +8,8 @@
     data-new-character-female-mage-value="<%= image_path('female_mage.png') %>"
     data-new-character-male-werewolf-value="<%= image_path('male_werewolf.png') %>"
     data-new-character-female-werewolf-value="<%= image_path('female_werewolf.png') %>"
-    data-new-character-gorgon-value="<%= image_path('gorgon_1.png') %>">
+    data-new-character-male-vampire-value="<%= image_path('male_vampire.png') %>"
+    data-new-character-female-vampire-value="<%= image_path('female_vampire.png') %>"
   <div class="row d-flex align-items-start">
     <!-- Left Column: Form -->
     <div class="col-md-6">
@@ -17,7 +18,7 @@
 
         <%= c.input :class_name,
                     label: "Class",
-                    collection: [["Mage", "Mage"], ["Warrior", "Warrior"], ["Gorgon", "Gorgon"], ["Werewolf", "Werewolf"]],
+                    collection: [["Mage", "Mage"], ["Warrior", "Warrior"], ["Vampire", "Vampire"], ["Werewolf", "Werewolf"]],
                     as: :radio_buttons,
                     input_html: {
                       class: "form-check-input",
