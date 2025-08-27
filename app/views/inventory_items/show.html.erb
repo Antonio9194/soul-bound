@@ -10,12 +10,4 @@
     <p>Price: <%= @inventory_item.item.price %></p>
     <p>Status: <%= @inventory_item.equipped? ? "Equipped" : "Unequipped" %></p>
   </div>
-
-  <div class="item-action ms-3">
-    <% if @inventory_item.equipped? %>
-      <%= button_to "Unequip", unequip_inventory_item_path(@inventory_item), method: :patch, class: "btn btn-warning" %>
-    <% else %>
-      <%= button_to "Equip", equip_inventory_item_path(@inventory_item), method: :patch, class: "btn btn-success" %>
-    <% end %>
-  </div>
 </div>
