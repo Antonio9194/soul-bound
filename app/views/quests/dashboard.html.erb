@@ -58,9 +58,9 @@
                               </div>
                               <div>
                                 <%# <% if quest.recently_completed? && quest.reward_item.present? %>
-                                  <% if @last_reward %>
-                                    <%= image_tag @last_reward.img %>
-                                  <% end %>
+                                <% if quest.item_reward %>
+                                  <%= image_tag Item.find_by(id: quest.item_reward).img %>
+                                <% end %>
                                 <%# <% end %>
                               </div>
                               <div class="modal-footer">
@@ -128,30 +128,30 @@
                                 data: { complete_target: "button", action: "click->complete#markCompleted" } %>
                         <% end %>
 
-                        <!-- Modal Inside the same Controller div-->
-                        <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
-                          <div class="modal-dialog">
-                            <div class="modal-content" style="border-radius: 20px;">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Quest Completed!</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
-                              </div>
-                              <div>
-                                <%# <% if quest.recently_completed? && quest.reward_item.present? %>
-                                  <% if @last_reward %>
-                                    <%= image_tag @last_reward.img %>
-                                  <% end %>
-                                <%# <% end %>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
-                              </div>
-                            </div>
+                    <!-- Modal Inside the same Controller div-->
+                    <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
+                      <div class="modal-dialog">
+                        <div class="modal-content" style="border-radius: 20px;">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Quest Completed!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
+                          </div>
+                          <div>
+                            <%# <% if quest.recently_completed? && quest.reward_item.present? %>
+                              <% if @last_reward %>
+                                <%= image_tag @last_reward.img %>
+                              <% end %>
+                            <%# <% end %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
                           </div>
                         </div>
+                      </div>
+                    </div>
 
                       </div>
                     </div>
