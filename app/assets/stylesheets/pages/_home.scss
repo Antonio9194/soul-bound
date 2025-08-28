@@ -1,12 +1,24 @@
 // Specific CSS for your home-page
-.homepage {
-  background: url("MainPageBgpix.png") no-repeat center center fixed;
+body.pages-page .homepage {
+  background: url("MainPageBgpix.png") no-repeat center center fixed !important;
+  background-size: cover !important;
+  height: 100vh !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+
+body.pages-page .navbar {
+  background:
+    linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)),
+    url('MainPageBgpix.png') no-repeat center center fixed;
   background-size: cover;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+  background-attachment: fixed;
+}
+
+body.pages-page .navbar .nav-link {
+  color: #fff !important;
 }
 
 .logo-container {

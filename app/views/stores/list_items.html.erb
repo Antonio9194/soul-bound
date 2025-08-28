@@ -1,3 +1,4 @@
+<div class="page-background">
 <div class="d-flex justify-content-between align-items-start" style="margin: 20px 30px 0 30px; gap: 20px;">
 
   <!-- Store Sign -->
@@ -12,14 +13,14 @@
   <div class="card text-center shadow rounded-4 border border-2 border-warning"
        style="postion: absolute; top:120px; right: 260px; background: #fff3e0; height: 100%; width: 220px; display: flex;
        flex-direction: column; justify-content: center; align-items: center;" >
-       
+
        <div class="d-flex flex-column">
         <div class="card-title text-primary fw-bold fs-4 pt-4" style="font-family: 'Press Start 2P', cursive;"><%= @character.name %></div>
         <div id="character-preview"></div>
        </div>
 
     <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
-      <h6 class="card-text text-muted fst-italic mb-4 mt-4">💰 Coins: <%= number_with_delimiter(@character.coin, delimiter: ".")  %> </h6> 
+      <h6 class="card-text text-muted fst-italic mb-4 mt-4">💰 Coins: <%= number_with_delimiter(@character.coin, delimiter: ".")  %> </h6>
     </span>
   </div>
 
@@ -67,6 +68,7 @@
   </div>
 
 </div>
+</div>
 
 <script>
 document.addEventListener("turbo:load", () => {
@@ -113,4 +115,3 @@ document.addEventListener("turbo:load", () => {
 };
 
 </script>
-

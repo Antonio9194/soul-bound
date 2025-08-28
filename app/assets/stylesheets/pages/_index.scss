@@ -1,2 +1,36 @@
 // Import page-specific CSS files here.
 @import "home";
+.characters-page .page-background,
+.quests-page .page-background,
+.stores-page .page-background {
+  background:
+    linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
+    url('page_background2.png') no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+//   background: linear-gradient(
+//     to right,
+//     rgba(233, 119, 5, 0.773),
+//     rgba(255, 142, 37, 0.85),
+//     rgba(255,127,80,0.85),
+//     rgba(255,182,193,0.85)
+//   );
+// backdrop-filter: blur(5px);
+.characters-page .navbar,
+.quests-page .navbar,
+.stores-page .navbar{
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+    url('page_background2.png') no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
