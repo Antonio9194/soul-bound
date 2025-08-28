@@ -44,7 +44,8 @@
 
               <% equipped_item = @character.inventory_items.includes(:item)
                                   .where(equipped: true)
-                                  .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } } %>
+                                  .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } }
+              %>
 
               <% if equipped_item %>
                 <%= link_to inventory_item_path(equipped_item),
