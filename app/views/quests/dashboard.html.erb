@@ -58,9 +58,9 @@
                               </div>
                               <div>
                                 <%# <% if quest.recently_completed? && quest.reward_item.present? %>
-                                  <% if @last_reward %>
-                                    <%= image_tag @last_reward.img %>
-                                  <% end %>
+                                <% if quest.item_reward %>
+                                  <%= image_tag Item.find_by(id: quest.item_reward).img %>
+                                <% end %>
                                 <%# <% end %>
                               </div>
                               <div class="modal-footer">
