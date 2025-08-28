@@ -55,9 +55,14 @@ class CharactersController < ApplicationController
     end
   end
 
-  # def sell_slot
-    
-  # end
+  def sell_slot
+    @character = Character.find(params[:id])
+    if @character.sell_slot
+      redirect_to character_path(@character), notice: "You have sold a slot!"
+    else
+      redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+    end
+  end
 
   private
 

@@ -15,23 +15,21 @@ class Character < ApplicationRecord
 
   def purchase_slot
     slot_price = 5000
+    return false if self.coin < slot_price 
     if self.coin >= slot_price
       self.coin -= slot_price
       self.slots += 1
-      save!
-      true
-    else
-      false
+      save
     end
   end
 
   def sell_slot
     slot_price = 5000
-    return unless self.slots > 0
+    return false if self.slots <= 1
     self.slots -= 1
     sell_slot_price = slot_price / 2
     self.coin += sell_slot_price
-    save!
+    save
   end
 
   def xp_to_next_level
