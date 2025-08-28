@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :characters, only: [:index, :new, :create, :update, :destroy] do
     member do
       patch :purchase_slot
+      patch :sell_slot
     end
   end
 
