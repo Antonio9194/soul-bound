@@ -55,6 +55,10 @@ class CharactersController < ApplicationController
     end
   end
 
+  # def sell_slot
+    
+  # end
+
   private
 
   def new_character_params
