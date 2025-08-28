@@ -11,7 +11,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :characters, only: [:index, :new, :create, :update, :destroy]
+  resources :characters, only: [:index, :new, :create, :update, :destroy] do
+    member do
+      patch :purchase_slot
+      patch :sell_slot
+    end
+  end
 
   resources :inventory_items, only: [:index, :show] do
     member do

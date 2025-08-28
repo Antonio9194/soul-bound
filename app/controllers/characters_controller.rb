@@ -45,6 +45,25 @@ class CharactersController < ApplicationController
     @character.destroy
     redirect_to new_character_path
   end
+
+  def purchase_slot
+    @character = Character.find(params[:id])
+    if @character.purchase_slot
+      redirect_to character_path(@character), notice: "You have purchased a slot!"
+    else
+      redirect_to character_path(@character), alert: "You don't have enough coins!"
+    end
+  end
+
+  def sell_slot
+    @character = Character.find(params[:id])
+    if @character.sell_slot
+      redirect_to character_path(@character), notice: "You have sold a slot!"
+    else
+      redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+    end
+  end
+
   private
 
   def new_character_params

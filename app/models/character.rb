@@ -1,20 +1,35 @@
 class Character < ApplicationRecord
   belongs_to :user
-  has_many :inventory_items
+  has_many :inventory_items, dependent: :destroy
   has_many :items, through: :inventory_items
   has_many :quests
 
   validates :name, presence: true, length: { minimum:1, maximum:100 }
   validates :class_name, presence: true
-  validates :gender, presence: true, unless: -> { class_name&.downcase == "gorgon" }
+  validates :gender, presence: true
 
   def image_path
     return "default.png" if gender.blank? || class_name.blank?
     "#{gender.downcase}_#{class_name.downcase}.png"
   end
 
-  def slots
-    10
+  def purchase_slot
+    slot_price = 5000
+    return false if self.coin < slot_price 
+    if self.coin >= slot_price
+      self.coin -= slot_price
+      self.slots += 1
+      save
+    end
+  end
+
+  def sell_slot
+    slot_price = 5000
+    return false if self.slots <= 1
+    self.slots -= 1
+    sell_slot_price = slot_price / 2
+    self.coin += sell_slot_price
+    save
   end
 
   def xp_to_next_level

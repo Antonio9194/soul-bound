@@ -4,6 +4,7 @@ class InventoryItemsController < ApplicationController
 
   def index
     @inventory_items = current_user.character.inventory_items
+    @equipped_items = equipped_item.item.img
   end
 
   def sell 
@@ -21,11 +22,29 @@ class InventoryItemsController < ApplicationController
   def show
   end
 
-  def equip
-    @inventory_item = InventoryItem.find(params[:id])
-    @inventory_item.update(equipped: true)
-    redirect_to character_path, notice: "#{@inventory_item.item.name} equipped!"
+def equip
+  slot_mapping = {
+    "head" => ["head"],
+    "top" => ["top"],
+    "bottom" => ["bottom"],
+    "weapon" => ["sword", "staff", "book"],
+    "accessory" => ["ring", "amulet", "potion"]
+  }
+
+  slot = slot_mapping.find { |_slot, names| names.any? { |name| @inventory_item.item.img.include?(name) } }&.first
+
+  if slot
+    equipped_item = current_user.character.inventory_items
+                        .includes(:item)
+                        .where(equipped: true)
+                        .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } }
+
+    equipped_item&.update(equipped: false)
   end
+
+  @inventory_item.update(equipped: true)
+  redirect_to character_path, notice: "#{@inventory_item.item.name} equipped#{slot ? " in #{slot}" : ""}!"
+end
 
   def unequip
     @inventory_item = InventoryItem.find(params[:id])
