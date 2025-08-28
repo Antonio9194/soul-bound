@@ -11,7 +11,6 @@ class Quest < ApplicationRecord
   validates :deadline, presence: true, if: -> { quest_type == "main" }
 
   def complete!(character)
-    return if self.completed
     self.completed = true
     save!
   end
@@ -21,10 +20,18 @@ class Quest < ApplicationRecord
     character.gain_coins(self.coin_reward)
   end
 
+  def complete_date!(character)
+    self.complete_date = Date.today
+    save!
+  end
+
   def quest_marked_completed(character)
+    return if self.completed
     complete!(character)
+    complete_date!(character)
     give_rewards(character)
   end
+
 
   def recently_completed?
     @recently_completed ||= false
@@ -42,4 +49,28 @@ class Quest < ApplicationRecord
     @reward_item = item
   end
 
+  def reward_roll
+    item_id = nil
+    rarity = nil
+    roll = rand(1000)
+    case
+    when roll < 300
+      rarity = nil
+    when roll >= 300 && roll < 777
+      rarity = "Common"
+    when roll >= 777 && roll < 888
+      rarity = "Uncommon"
+    when roll >= 888 && roll < 950
+      rarity = "Rare"
+    when roll >= 950 && roll < 995
+      rarity = "Epic"
+    when roll >= 995
+      rarity = "Legendary"
+    end
+    if rarity
+      items = Item.where(rarity: rarity)
+      item_id = items[rand(items.length)].id
+    end
+    return item_id
+  end
 end
