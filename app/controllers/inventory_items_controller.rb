@@ -34,7 +34,6 @@ def equip
   slot = slot_mapping.find { |_slot, names| names.any? { |name| @inventory_item.item.img.include?(name) } }&.first
 
   if slot
-    # unequip currently equipped item in the same slot
     equipped_item = current_user.character.inventory_items
                         .includes(:item)
                         .where(equipped: true)
