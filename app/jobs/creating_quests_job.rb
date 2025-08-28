@@ -69,13 +69,8 @@ PROMPT
       # Create daily quests if present
       if parsed_quests["daily_quests"]
         parsed_quests["daily_quests"].each do |quest|
-          rarity = reward_rarity
-          item_id = nil
-          if rarity
-            items = Item.where(rarity: rarity)
-            item_id = items[rand(items.length)].id
-          end
-          journey.user.quests.create(
+
+          new_quest = journey.user.quests.new(
             title: quest["title"],
             description: quest["description"],
             time: quest["time"],
@@ -83,8 +78,9 @@ PROMPT
             completed: false,
             xp_reward: 100,
             coin_reward: 300,
-            item_reward: item_id
           )
+          new_quest.item_reward = new_quest.reward_roll
+          new_quest.save!
         end
       end
 
@@ -104,23 +100,5 @@ PROMPT
       end
   end
 
-
-  def reward_rarity
-    roll = rand(1000)
-    case
-    when roll < 300
-      return nil
-    when roll >= 300 && roll < 777
-      return "Common"
-    when roll >= 777 && roll < 888
-      return "Uncommon"
-    when roll >= 888 && roll < 950
-      return "Rare"
-    when roll >= 950 && roll < 995
-      return "Epic"
-    when roll >= 995
-      return "Legendary"
-    end
-  end
 
 end

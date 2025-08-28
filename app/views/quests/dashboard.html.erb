@@ -1,3 +1,4 @@
+<%= p Time.now.midnight %>
 <div class="row g-4">
   <div class="d-flex justify-content-between">
       <div class="col-md-6 quest-background">
@@ -40,7 +41,6 @@
                         <% else %>
                           <%= button_to "Complete", quest_path(quest),
                                 method: :patch,
-                                params: { quest: { completed: true } },
                                 class: "link-button text-active",
                                 data: { complete_target: "button", action: "click->complete#markCompleted" } %>
                         <% end %>
@@ -57,11 +57,11 @@
                                 The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
                               </div>
                               <div>
-                                <%# <% if quest.recently_completed? && quest.reward_item.present? %>
+
                                 <% if quest.item_reward %>
                                   <%= image_tag Item.find_by(id: quest.item_reward).img %>
                                 <% end %>
-                                <%# <% end %>
+
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
@@ -140,11 +140,11 @@
                             The Guild awards you <%= quest.xp_reward %> XP and <%= quest.coin_reward %> Coins!
                           </div>
                           <div>
-                            <%# <% if quest.recently_completed? && quest.reward_item.present? %>
-                              <% if @last_reward %>
-                                <%= image_tag @last_reward.img %>
-                              <% end %>
-                            <%# <% end %>
+
+                                <% if quest.item_reward %>
+                                  <%= image_tag Item.find_by(id: quest.item_reward).img %>
+                                <% end %>
+
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius:20px;">Close</button>
