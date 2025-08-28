@@ -41,4 +41,5 @@ class Quest < ApplicationRecord
   def set_reward_item(item)
     @reward_item = item
   end
+
 end

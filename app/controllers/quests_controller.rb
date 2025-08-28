@@ -1,7 +1,6 @@
 class QuestsController < ApplicationController
   def dashboard
     @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
-
   end
 
   def edit

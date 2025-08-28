@@ -104,6 +104,7 @@ PROMPT
       end
   end
 
+
   def reward_rarity
     roll = rand(1000)
     case
