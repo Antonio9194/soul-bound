@@ -154,7 +154,8 @@ character = Character.create!(
   gender: "Male",
   xp: 3000,
   coin: 600000,
-  level: 3
+  level: 3,
+  slots: 10
 )
 
 

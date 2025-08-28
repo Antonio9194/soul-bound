@@ -13,8 +13,17 @@ class Character < ApplicationRecord
     "#{gender.downcase}_#{class_name.downcase}.png"
   end
 
-  def slots
-    10
+  def purchase_slot
+    slot_price = 5000
+    self.slots ||= 10 
+    if self.coin >= slot_price
+      self.coin -= slot_price
+      self.slots += 1
+      save!
+      true
+    else
+      false
+    end
   end
 
   def xp_to_next_level
