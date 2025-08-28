@@ -141,6 +141,12 @@
             style: "background-color: #c68642; color: #fff;
             border: 2px solid #8B5A2B; border-radius: 8px;"
          %>
+         <%= link_to "Sell Slot", sell_slot_character_path(@character),
+            data: { turbo_method: :patch, turbo_confirm: 'Are you sure?' },
+            class: "btn btn-outline-primary fw-bold rounded-4 flex-fill",
+            style: "background-color: #c68642; color: #fff;
+            border: 2px solid #8B5A2B; border-radius: 8px;"
+         %>
       </div>
     </div>
   </div>
