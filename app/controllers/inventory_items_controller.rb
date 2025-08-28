@@ -37,8 +37,7 @@ def equip
     equipped_item = current_user.character.inventory_items
                         .includes(:item)
                         .where(equipped: true)
-                        .find { |inv| slot_mapping[slot].any?
-                        { |name| inv.item.img.include?(name) } }
+                        .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } }
 
     equipped_item&.update(equipped: false)
   end
