@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_28_035547) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_28_122029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_035547) do
     t.datetime "updated_at", null: false
     t.time "time"
     t.integer "item_reward"
+    t.date "complete_date"
     t.index ["user_id"], name: "index_quests_on_user_id"
   end
 
