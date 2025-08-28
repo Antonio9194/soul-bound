@@ -6,7 +6,7 @@ class Character < ApplicationRecord
 
   validates :name, presence: true, length: { minimum:1, maximum:100 }
   validates :class_name, presence: true
-  validates :gender, presence: true, unless: -> { class_name&.downcase == "gorgon" }
+  validates :gender, presence: true
 
   def image_path
     return "default.png" if gender.blank? || class_name.blank?
