@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'tavern/index'
   devise_for :users
 
   resources :journeys, only: [:new, :create, :show]
@@ -36,6 +37,8 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [:index, :show]
+
+  resources :taverns, path: "themysticmug", only: [:index]
 
 
   root to: "pages#home"
