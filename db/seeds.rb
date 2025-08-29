@@ -167,7 +167,7 @@ Item.order("RANDOM()").limit(5).each do |item|
 end
 puts "Alastor created"
 
-500.times do
+100.times do
   user = User.create!(
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.email,
