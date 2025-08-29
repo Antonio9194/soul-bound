@@ -1,4 +1,105 @@
+<% random_chars = @characters.sample(8) %>
+
 <div class="page-background">
-  <h1>Tavern#index</h1>
-  <p>Find me in app/views/tavern/index.html.erb</p>
+  <% random_chars.each_slice(4) do |row| %>
+    <div class="row mb-4">
+      <% row.each do |c| %>
+        <div class="col-md-3">
+          <div class="card h-100 p-3 shadow rounded-4 border border-2 border-warning"
+               style="background: #fff3e0; color: black;">
+
+            <!-- Character Name -->
+            <div class="card-header text-center rounded-3 mb-2"
+                 style="border: 1px solid #000; background-color: rgba(255, 193, 7, 0.25);">
+              <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive;">
+                <%= c.name %>
+              </h5>
+            </div>
+
+            <!-- Character Preview -->
+            <div class="character-preview-container mb-2" style="position: relative; height: 128px;">
+              <div id="character-preview-<%= c.id %>" 
+                   style="width: 128px; height: 128px; margin: 0 auto; image-rendering: pixelated;">
+              </div>
+            </div>
+
+            <!-- Level and Coins -->
+            <div class="mb-2 text-center">
+              <p style="margin:0;">Level: <%= c.level %></p>
+              <p style="margin:0;">Coins: <%= number_with_delimiter(c.coin, delimiter: ".") %> 💰</p>
+            </div>
+
+            <!-- Equipped Items -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+              <% slots = %w[head top bottom weapon accessory] %>
+              <% slot_mapping = {
+                    "head" => ["head"],
+                    "top" => ["top"],
+                    "bottom" => ["bottom"],
+                    "weapon" => ["sword", "staff", "book"],
+                    "accessory" => ["ring", "amulet", "potion"]
+                  } %>
+
+              <% slots.each do |slot| %>
+                <% equipped_item = c.inventory_items.includes(:item)
+                                   .where(equipped: true)
+                                   .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } } %>
+
+                <div style="width: 50px; height: 50px; border: 2px solid black; border-radius: 5px; display: flex; align-items: center; justify-content: center; background-color: white;">
+                  <% if equipped_item %>
+                    <%= image_tag equipped_item.item.img, alt: equipped_item.item.name,
+                        style: "width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated;" %>
+                  <% else %>
+                    <span style="font-size: 0.6rem; color: #aaa;">Empty</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
+
+<script>
+document.addEventListener("turbo:load", () => {
+  <% random_chars.each do |c| %>
+    initSprite(<%= c.id %>, "<%= c.class_name.downcase %>", "<%= c.gender.downcase %>");
+  <% end %>
+});
+
+function initSprite(characterId, klass, gender) {
+  const preview = document.getElementById(`character-preview-${characterId}`);
+  if (!preview) return;
+
+  const spriteData = {
+    "male_warrior": { path: "<%= asset_path('male_warrior_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, speed: 170 },
+    "female_warrior": { path: "<%= asset_path('female_warrior_walk.png') %>", frames: 7, frameWidth: 100, frameHeight: 118, speed: 170 },
+    "male_mage": { path: "<%= asset_path('male_mage_walk.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 150 },
+    "female_mage": { path: "<%= asset_path('female_mage_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 120 },
+    "male_werewolf": { path: "<%= asset_path('male_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 110 },
+    "female_werewolf": { path: "<%= asset_path('female_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 110 },
+    "male_vampire": { path: "<%= asset_path('male_vampire_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, speed: 110 },
+    "female_vampire": { path: "<%= asset_path('female_vampire_walk.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, speed: 110 }
+  };
+
+  const key = `${gender}_${klass}`;
+  const sprite = spriteData[key];
+  if (!sprite) return;
+
+  let currentFrame = 0;
+  preview.style.backgroundImage = `url(${sprite.path})`;
+  preview.style.backgroundRepeat = "no-repeat";
+  preview.style.backgroundPosition = "0 0";
+  preview.style.imageRendering = "pixelated";
+  preview.style.backgroundSize = `${sprite.frameWidth}px ${sprite.frameHeight}px`; // important
+
+  setInterval(() => {
+    const xOffset = sprite.frameWidth * currentFrame;
+    preview.style.backgroundPosition = `-${xOffset}px 0px`;
+    currentFrame = (currentFrame + 1) % sprite.frames;
+  }, sprite.speed);
+}
+</script>

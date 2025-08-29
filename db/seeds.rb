@@ -147,7 +147,7 @@ journey = Journey.create!(
   daily_quests: "I want to learn ruby on rails!"
 )
 
-character = Character.create!(
+alastor = Character.create!(
   user: user,
   name: "Alastor",
   class_name: "Mage",
@@ -158,44 +158,48 @@ character = Character.create!(
   slots: 10
 )
 
+Item.order("RANDOM()").limit(5).each do |item|
+  InventoryItem.create!(
+    character: alastor,
+    item: item,
+    equipped: false
+  )
+end
+puts "Alastor created"
 
-# # --- 500 random users ---
-# 500.times do
-#   u = User.create!(
-#     email: Faker::Internet.unique.email,
-#     password: "password",
-#     username: Faker::Internet.username(specifier: 5..10),
-#     birthday: Faker::Date.birthday(min_age: 18, max_age: 50)
-#   )
+500.times do
+  user = User.create!(
+    username: Faker::Internet.unique.username,
+    email: Faker::Internet.unique.email,
+    birthday: Faker::Date.birthday(min_age: 18, max_age: 60),
+    password: "password",
+    password_confirmation: "password"
+  )
 
-#   # Character for each user
-#   c = Character.create!(
-#     user: u,
-#     name: Faker::Fantasy::Tolkien.character,
-#     class_name: ["Mage", "Warrior"].sample,
-#     gender: ["Male", "Female", "Other"].sample,
-#     xp: rand(0..1000),
-#     coin: rand(0..5000),
-#     apperance: "default",
-#     level: rand(1..10)
-#   )
+  journey = Journey.create!(
+    user: user,
+    purpose: Faker::Lorem.sentence(word_count: 10),
+    daily_quests: Faker::Lorem.sentence(word_count: 5)
+  )
 
-#   # Journey for each user
-#   Journey.create!(
-#     user: u,
-#     purpose: Faker::Lorem.sentence(word_count: 5),
-#     daily_quests: Faker::Lorem.sentence(word_count: 10),
-#     main_quest: Faker::Lorem.sentence(word_count: 7)
-#   )
+  character = Character.create!(
+    user: user,
+    name: Faker::Games::DnD.unique.name,
+    class_name: ["Mage", "Warrior", "Rogue"].sample,
+    gender: ["Male", "Female", "Other"].sample,
+    xp: rand(0..5000),
+    coin: rand(1000..500000),
+    level: rand(1..10),
+    slots: 10
+  )
 
-#   # Assign random items to character
-#   Item.all.sample(rand(3..8)).each do |item|
-#     InventoryItem.create!(
-#       character: c,
-#       item: item,
-#       equipped: [true, false].sample
-#     )
-#   end
-# end
+  Item.order("RANDOM()").limit(5).each do |item|
+    InventoryItem.create!(
+      character: character,
+      item: item,
+      equipped: true
+    )
+  end
+end
 
-# puts "Seeded 500 users with characters, journeys, and items, plus your personal account."
+puts "Users created"
