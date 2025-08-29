@@ -36,3 +36,11 @@
   background-size: cover;
   background-attachment: fixed;
 }
+
+.characters-page .navbar a,
+.quests-page .navbar a,
+.stores-page .navbar a,
+.inventory_items-page .navbar a,
+.pages-page .navbar a {
+  color: white;
+}
