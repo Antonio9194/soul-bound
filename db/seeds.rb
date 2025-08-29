@@ -165,9 +165,10 @@ Item.order("RANDOM()").limit(5).each do |item|
     equipped: false
   )
 end
+CreatingQuestsJob.perform_now(journey)
 puts "Alastor created"
 
-100.times do
+20.times do
   user = User.create!(
     username: Faker::Internet.unique.username,
     email: Faker::Internet.unique.email,
@@ -181,6 +182,8 @@ puts "Alastor created"
     purpose: Faker::Lorem.sentence(word_count: 10),
     daily_quests: Faker::Lorem.sentence(word_count: 5)
   )
+
+  CreatingQuestsJob.perform_now(journey)
 
   character = Character.create!(
     user: user,
