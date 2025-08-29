@@ -2,7 +2,8 @@
 @import "home";
 .characters-page .page-background,
 .quests-page .page-background,
-.stores-page .page-background {
+.stores-page .page-background,
+.inventory_items-page .page-background {
   background:
     linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
     url('page_background2.png') no-repeat center top;
@@ -27,10 +28,19 @@
 // backdrop-filter: blur(5px);
 .characters-page .navbar,
 .quests-page .navbar,
-.stores-page .navbar{
+.stores-page .navbar,
+.inventory_items-page .navbar {
   background:
     linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
     url('page_background2.png') no-repeat center top;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.characters-page .navbar a,
+.quests-page .navbar a,
+.stores-page .navbar a,
+.inventory_items-page .navbar a,
+.pages-page .navbar a {
+  color: white;
 }
