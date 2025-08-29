@@ -54,9 +54,9 @@ class Quest < ApplicationRecord
     rarity = nil
     roll = rand(1000)
     case
-    when roll < 300
+    when roll < 1
       rarity = nil
-    when roll >= 300 && roll < 777
+    when roll >= 1 && roll < 777
       rarity = "Common"
     when roll >= 777 && roll < 888
       rarity = "Uncommon"
