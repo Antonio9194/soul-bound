@@ -4,7 +4,8 @@
 .quests-page .page-background,
 .stores-page .page-background,
 .journeys-page .page-background,
-.inventory_items-page .page-background {
+.inventory_items-page .page-background,
+.taverns-page .page-background {
   background:
     linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
     url('page_background2.png') no-repeat center top;
@@ -31,7 +32,8 @@
 .quests-page .navbar,
 .stores-page .navbar,
 .journeys-page .navbar,
-.inventory_items-page .navbar {
+.inventory_items-page .navbar,
+.taverns-page .navbar {
   background:
     linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
     url('page_background2.png') no-repeat center top;
@@ -44,6 +46,7 @@
 .stores-page .navbar a,
 .inventory_items-page .navbar a,
 .pages-page .navbar a,
-.journeys-page .navbar a {
+.journeys-page .navbar a,
+.taverns-page .navbar a {
   color: white;
 }
