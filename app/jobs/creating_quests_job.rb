@@ -58,7 +58,6 @@ If daily quests are not requested, omit "daily_quests".
 If main quests are not requested, omit "main_quest".
 PROMPT
 
-      sleep 3
       chat = RubyLLM.chat
       response = chat.ask(prompt)
 
