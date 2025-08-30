@@ -1,5 +1,7 @@
 class Quest < ApplicationRecord
   belongs_to :user
+  has_one :quest_item
+  has_one :item, through: :quest_item # this is the reward item
 
   validates :title, presence: true
   validates :description, presence: true
@@ -10,26 +12,26 @@ class Quest < ApplicationRecord
   validates :coin_reward, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :deadline, presence: true, if: -> { quest_type == "main" }
 
-  def complete!(character)
+  def complete!
     self.completed = true
     save!
   end
 
-  def give_rewards(character)
-    character.gain_xp(self.xp_reward)
-    character.gain_coins(self.coin_reward)
+  def give_rewards
+    user.character.gain_xp(xp_reward)
+    user.character.gain_coins(coin_reward)
   end
 
-  def complete_date!(character)
+  def complete_date!
     self.complete_date = Date.today
     save!
   end
 
-  def quest_marked_completed(character)
+  def quest_marked_completed
     return if self.completed
-    complete!(character)
-    complete_date!(character)
-    give_rewards(character)
+    complete!
+    complete_date!
+    give_rewards
   end
 
 

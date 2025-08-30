@@ -15,10 +15,8 @@ export default class extends Controller {
 
 
   checkEnter(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      this.inputTarget.querySelector("form")?.requestSubmit();
-    }
+    event.preventDefault();
+    this.inputTarget.querySelector("form")?.requestSubmit();
   }
   
 

@@ -1,6 +1,6 @@
 <div class="row g-4 page-background">
-<div class="row g-4">
-  <div class="d-flex justify-content-between">
+  <div class="row g-4">
+    <div class="d-flex justify-content-between">
       <div class="col-md-6 quest-background">
         <div class="card h-100 p-3 mt-4 guild-board">
           <div class="card-header quest-container">
@@ -15,51 +15,45 @@
                       <div data-controller="date-edit">
                         <div data-date-edit-target="display"
                             data-action="click->date-edit#showInput"
-                            class="d-flex justify-content-between gap-2">
+                          class="d-flex justify-content-between gap-2">
                           <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
                           <h5 class="text-font" data-date-edit-target="text"></h5>
                         </div>
-
                         <div data-date-edit-target="input" style="display: none;">
-                          <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
-                            <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
-                                            class: "btn btn-sm btn-outline-primary",
-                                            data: { action: "keydown->date-edit#checkEnter" } %>
+                          <%= simple_form_for quest do |f| %>
+                            <%= f.input :time, as: :time, html5: true,
+                            input_html: { class: "btn btn-sm btn-outline-primary",
+                                          data: { action: "keydown.enter->date-edit#checkEnter" } }
+                            %>
                           <% end %>
                         </div>
                       </div>
                     </div>
-
                     <!-- Quest Description & Complete Button -->
                     <div class="quest-box d-flex justify-content-between">
                       <span><%= quest.description %></span>
-
-                       <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
+                      <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
-                          <%= button_to "Complete", quest_path(quest),
+                          <%= button_to "Complete", complete_quest_path(quest),
                                 method: :patch,
                                 class: "link-button text-active",
                                 data: { complete_target: "button", action: "click->complete#markCompleted" } %>
                         <% end %>
-
                         <!-- Modal Inside the same Controller div-->
                         <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
                           <div class="modal-dialog">
                             <div class="modal-content" style="border-radius: 20px; background-color: #fff3e0; border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-
                               <div class="modal-header justify-content-center" style="border-bottom: 2px solid #000; background-color: rgba(255, 193, 7, 0.25);">
                                 <h5 class="modal-title fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Quest Completed!</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(0);"></button>
                               </div>
-
                               <div class="modal-body" style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem; text-align: center;">
                                 The Guild <%= image_tag "guild.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
                                 awards you <%= quest.xp_reward %> <%= image_tag "xp.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
                                 and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>!
                               </div>
-
                               <div class="text-center mb-2 d-flex flex-column align-items-center">
                                 <% if quest.item_reward %>
                                   <%= Item.find_by(id: quest.item_reward).name %>
@@ -69,18 +63,15 @@
                                   <%= Item.find_by(id: quest.item_reward).rarity %>
                                 <% end %>
                               </div>
-
                               <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
                                 <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal"
                                         style="border-radius: 20px; background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; font-family: 'Press Start 2P', cursive;">
                                   Close
                                 </button>
                               </div>
-
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -92,8 +83,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="col-md-6 quest-background">
         <div class="card h-100 p-3 mt-4 guild-board">
           <div class="card-header quest-container">
@@ -102,18 +91,16 @@
               <% if @daily_quests.any? %>
                 <% @daily_quests.each do |quest| %>
                   <div class="mb-0">
-
                     <!-- Quest Title & Time -->
                     <div class="d-flex justify-content-between quest-details">
                       <h5 class="quest-body"><%= quest.title %></h5>
                       <div data-controller="date-edit">
                         <div data-date-edit-target="display"
                             data-action="click->date-edit#showInput"
-                            class="d-flex justify-content-between gap-2">
+                          class="d-flex justify-content-between gap-2">
                           <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
                           <h5 class="text-font" data-date-edit-target="text"></h5>
                         </div>
-
                         <div data-date-edit-target="input" style="display: none;">
                           <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
                             <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
@@ -123,12 +110,10 @@
                         </div>
                       </div>
                     </div>
-
                     <!-- Quest Description & Complete Button -->
                     <div class="quest-box d-flex justify-content-between">
                       <span><%= quest.description %></span>
-
-                       <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
+                      <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
@@ -138,23 +123,19 @@
                                 class: "link-button text-active",
                                 data: { complete_target: "button", action: "click->complete#markCompleted" } %>
                         <% end %>
-
-                    <!-- Modal Inside the same Controller div-->
+                        <!-- Modal Inside the same Controller div-->
                         <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
                           <div class="modal-dialog">
                             <div class="modal-content" style="border-radius: 20px; background-color: #fff3e0; border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-
                               <div class="modal-header justify-content-center" style="border-bottom: 2px solid #000; background-color: rgba(255, 193, 7, 0.25);">
                                 <h5 class="modal-title fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Quest Completed!</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(0);"></button>
                               </div>
-
                               <div class="modal-body" style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem; text-align: center;">
                                 The Guild <%= image_tag "guild.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
                                 awards you <%= quest.xp_reward %> <%= image_tag "xp.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
                                 and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>!
                               </div>
-
                               <div class="text-center mb-2 d-flex flex-column align-items-center">
                                 <% if quest.item_reward %>
                                   <%= Item.find_by(id: quest.item_reward).name %>
@@ -164,14 +145,12 @@
                                   <%= Item.find_by(id: quest.item_reward).rarity %>
                                 <% end %>
                               </div>
-
                               <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
                                 <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal"
                                         style="border-radius: 20px; background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; font-family: 'Press Start 2P', cursive;">
                                   Close
                                 </button>
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -188,8 +167,4 @@
       </div>
     </div>
   </div>
-
-
-
-<%= audio_tag "fanfare.mp3", id: "complete-audio" %>
-
+  <%= audio_tag "fanfare.mp3", id: "complete-audio" %>
