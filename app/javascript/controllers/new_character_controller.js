@@ -65,13 +65,13 @@ export default class extends Controller {
         frameWidth: 128,
         frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
-        speed: 170
+        speed: 190
       },
       "female_warrior": {
         path: this.femaleWarriorValue,
-        frames: 9,
-        frameWidth: 100,
-        frameHeight: 64,
+        frames: 5,
+        frameWidth: 128,
+        frameHeight: 128,
         offsetX: [0, 0, 0, 0, 0],
         speed: 170
       },
