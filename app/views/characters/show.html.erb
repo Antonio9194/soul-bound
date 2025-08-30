@@ -188,7 +188,7 @@ document.addEventListener("turbo:load", () => {
     "female_vampire": { path: "<%= asset_path('female_vampire_walk.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 }
   };
 
-  const key = klass === "gorgon" ? "gorgon" : `${gender}_${klass}`;
+  const key = `${gender}_${klass}`;
   const sprite = spriteData[key];
   if (!sprite) return;
 
