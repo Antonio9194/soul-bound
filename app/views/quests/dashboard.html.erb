@@ -15,8 +15,10 @@
                       <div data-controller="date-edit" data-quest-id="<%= quest.id %>">
                         <div
                             class="d-flex justify-content-between gap-2">
+
                           <h5 class="quest-body" data-date-edit-target="display" data-action="click->date-edit#showInput"><%= quest.time.strftime("%H:%M") %></h5>
                           <h5 data-date-edit-target="text"></h5>
+
                         </div>
 
                         <div data-date-edit-target="input" style="display: none;">
@@ -33,7 +35,7 @@
                     <div class="quest-box d-flex justify-content-between">
                       <span><%= quest.description %></span>
 
-                      <div data-controller="complete" class="quest-desc-box">
+                      <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
@@ -110,7 +112,7 @@
                             data-action="click->date-edit#showInput"
                             class="d-flex justify-content-between gap-2">
                           <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
-                          <h5 data-date-edit-target="text"></h5>
+                          <h5 class="text-font" data-date-edit-target="text"></h5>
                         </div>
 
                         <div data-date-edit-target="input" style="display: none;">
@@ -127,7 +129,7 @@
                     <div class="quest-box d-flex justify-content-between">
                       <span><%= quest.description %></span>
 
-                      <div data-controller="complete" class="quest-desc-box">
+                      <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
