@@ -125,8 +125,6 @@ item_name.each_with_index do |name, i|
   end
 end
 
-CreatingQuestsJob.perform_now(journey)
-puts "Alastor created"
 20.times do
   user = User.create!(
     username: Faker::Internet.unique.username,
