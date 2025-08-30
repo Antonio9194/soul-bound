@@ -25,6 +25,8 @@
 
             <!-- Level and Coins -->
             <div class="mb-2 text-center">
+              <p style="margin:0;">Level: <%= c.class_name %></p>
+              <%= c.gender%>
               <p style="margin:0;">Level: <%= c.level %></p>
               <p style="margin:0;">Coins: <%= number_with_delimiter(c.coin, delimiter: ".") %> 💰</p>
             </div>
@@ -75,26 +77,29 @@ function initSprite(characterId, klass, gender) {
   if (!preview) return;
 
   const spriteData = {
-    "male_warrior": { path: "<%= asset_path('male_warrior_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, speed: 170 },
-    "female_warrior": { path: "<%= asset_path('female_warrior_walk.png') %>", frames: 7, frameWidth: 100, frameHeight: 118, speed: 170 },
-    "male_mage": { path: "<%= asset_path('male_mage_walk.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 150 },
-    "female_mage": { path: "<%= asset_path('female_mage_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 120 },
-    "male_werewolf": { path: "<%= asset_path('male_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 110 },
-    "female_werewolf": { path: "<%= asset_path('female_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, speed: 110 },
-    "male_vampire": { path: "<%= asset_path('male_vampire_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, speed: 110 },
-    "female_vampire": { path: "<%= asset_path('female_vampire_walk.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, speed: 110 }
+    "male_warrior": { path: "<%= asset_path('male_warrior_idle.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+    "female_warrior": { path: "<%= asset_path('female_warrior_idle.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+    "male_mage": { path: "<%= asset_path('male_mage_idle.png') %>", frames: 8, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 190 },
+    "female_mage": { path: "<%= asset_path('female_mage_idle.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
+    "male_werewolf": { path: "<%= asset_path('male_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_werewolf": { path: "<%= asset_path('female_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+    "male_vampire": { path: "<%= asset_path('male_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
+    "female_vampire": { path: "<%= asset_path('female_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 150 }
   };
 
   const key = `${gender}_${klass}`;
+
+  
   const sprite = spriteData[key];
   if (!sprite) return;
 
-  let currentFrame = 0;
+   let currentFrame = 0;
+  preview.style.width = sprite.frameWidth + "px";
+  preview.style.height = sprite.frameHeight + "px";
   preview.style.backgroundImage = `url(${sprite.path})`;
   preview.style.backgroundRepeat = "no-repeat";
   preview.style.backgroundPosition = "0 0";
   preview.style.imageRendering = "pixelated";
-  preview.style.backgroundSize = `${sprite.frameWidth}px ${sprite.frameHeight}px`; // important
 
   setInterval(() => {
     const xOffset = sprite.frameWidth * currentFrame;
