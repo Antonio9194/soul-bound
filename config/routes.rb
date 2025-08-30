@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     collection do
       get :dashboard
     end
+    member do
+      patch :complete
+    end
   end
 
   resources :characters, only: [:index, :new, :create, :update, :destroy] do

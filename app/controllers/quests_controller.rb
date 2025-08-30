@@ -17,30 +17,28 @@ class QuestsController < ApplicationController
 
   def update
     @quest = Quest.find(params[:id])
-    was_incomplete = !@quest.completed?
+    if @quest.update(quest_params)
+      redirect_to dashboard_quests_path
+    else
+      redirect_to dashboard_quests_path, flash[:alert] = "Failed to save!"
+    end
+  end
 
-    # if @quest.update(quest_params)
-      if was_incomplete
-        @quest.quest_marked_completed(current_user.character)
-        @reward_id = @quest.item_reward
-        @item_reward = Item.find_by(id: @reward_id)
-        if @item_reward
-          current_user.character.inventory_items.create!(item: @item_reward, equipped: false)
-        end
-        @quest.mark_recently_completed!
-        # @quest.set_reward_item(@reward)
-      end
-      # redirect_to dashboard_quests_path unless quest_params[:completed]
-    # else
-    #   flash[:alert] = "Failed to complete the quest."
-    #   render :edit, status: :unprocessable_entity
-    # end
+  def complete
+    @quest = Quest.find(params[:id])
+    if @quest.quest_marked_completed
+      flash[:notice] = "Quest completed!"
+      render turbo_stream: turbo_stream.replace(@quest, partial: "quests/quest", locals: { quest: @quest })
+    else
+      flash[:alert] = "Failed to complete the quest!"
+      redirect_to dashboard_quests_path
+    end
   end
 
   private
 
   def quest_params
-    params.require(:quest).permit(:title, :description, :time, :xp_reward, :coin_reward)
+    params.require(:quest).permit(:time)
   end
 end
 

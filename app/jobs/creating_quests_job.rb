@@ -80,7 +80,6 @@ PROMPT
             xp_reward: 100,
             coin_reward: 300,
           )
-          new_quest.item_reward = new_quest.reward_roll
           new_quest.save!
         end
       end

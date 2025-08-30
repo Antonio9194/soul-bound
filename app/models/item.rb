@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_many :inventory_items
+  has_many :inventory_items, dependent: :destroy
   has_many :characters, through: :inventory_items
   
   validates :name, presence: true
