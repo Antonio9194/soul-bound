@@ -17,30 +17,24 @@ class QuestsController < ApplicationController
 
   def update
     @quest = Quest.find(params[:id])
-    old_time = @quest.time
     was_incomplete = !@quest.completed?
 
     # if @quest.update(quest_params)
-    if was_incomplete
-      @quest.quest_marked_completed(current_user.character)
-      @reward_id = @quest.item_reward
-      @item_reward = Item.find_by(id: @reward_id)
-      if @item_reward
-        current_user.character.inventory_items.create!(item: @item_reward, equipped: false)
-      end
+      if was_incomplete
+        @quest.quest_marked_completed(current_user.character)
+        @reward_id = @quest.item_reward
+        @item_reward = Item.find_by(id: @reward_id)
+        if @item_reward
+          current_user.character.inventory_items.create!(item: @item_reward, equipped: false)
+        end
         @quest.mark_recently_completed!
         # @quest.set_reward_item(@reward)
-    end
+      end
       # redirect_to dashboard_quests_path unless quest_params[:completed]
     # else
     #   flash[:alert] = "Failed to complete the quest."
     #   render :edit, status: :unprocessable_entity
     # end
-    if @quest.update(quest_params)
-      if @quest.time != old_time
-        redirect_to dashboard_quests_path
-      end
-    end
   end
 
   private
@@ -48,8 +42,5 @@ class QuestsController < ApplicationController
   def quest_params
     params.require(:quest).permit(:title, :description, :time, :xp_reward, :coin_reward)
   end
-
-  def quest_time
-    params.require(:quest).permit(:time)
-  end
 end
+
