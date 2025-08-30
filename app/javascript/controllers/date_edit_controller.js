@@ -2,14 +2,12 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["display", "input", "text"];
-  static values = { questId: Number };
 
   connect() {
     this.typeAndVanish(this.textTarget, "Click me to change the threads of time!", 60, 2000);
   }
 
   showInput() {
-    console.log(this.questIdValues);
     this.displayTarget.style.display = "none";
     this.inputTarget.style.display = "block";
     this.inputTarget.querySelector("input").focus();
@@ -18,12 +16,11 @@ export default class extends Controller {
 
   checkEnter(event) {
     if (event.key === "Enter") {
-      console.log("enter pressed")
       event.preventDefault();
       this.inputTarget.querySelector("form")?.requestSubmit();
     }
   }
-
+  
 
   //vanish text for timec hange
 

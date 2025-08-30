@@ -12,13 +12,12 @@
                     <!-- Quest Title & Time -->
                     <div class="d-flex justify-content-between quest-details">
                       <h5 class="quest-body"><%= quest.title %></h5>
-                      <div data-controller="date-edit" data-quest-id="<%= quest.id %>">
-                        <div
+                      <div data-controller="date-edit">
+                        <div data-date-edit-target="display"
+                            data-action="click->date-edit#showInput"
                             class="d-flex justify-content-between gap-2">
-
-                          <h5 class="quest-body" data-date-edit-target="display" data-action="click->date-edit#showInput"><%= quest.time.strftime("%H:%M") %></h5>
+                          <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
                           <h5 data-date-edit-target="text"></h5>
-
                         </div>
 
                         <div data-date-edit-target="input" style="display: none;">
@@ -35,7 +34,7 @@
                     <div class="quest-box d-flex justify-content-between">
                       <span><%= quest.description %></span>
 
-                      <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
+                      <div data-controller="complete" class="quest-desc-box">
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
@@ -111,9 +110,11 @@
                         <%= quest[0].title %>
                       </h5>
                       <div data-controller="date-edit">
+
                         <div>
                           <h5 class="quest-body"><%= quest[0].time.strftime("%H:%M") %></h5>
                           <h5 class="text-font" data-date-edit-target="text"></h5>
+
                         </div>
 
 
@@ -122,7 +123,9 @@
 
                     <!-- Quest Description & Complete Button -->
                     <div class="quest-box d-flex justify-content-between">
+
                       <span><%= quest[0].description %></span>
+
 
                       </div>
                     </div>
@@ -142,3 +145,4 @@
 
 
 <%= audio_tag "rick.mp3", id: "complete-audio" %>
+
