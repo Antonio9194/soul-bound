@@ -4,7 +4,7 @@
   min-height: 80vh;
   display: flex;
   justify-content: center;
-  padding: 20px 0;
+  padding: 24px 0;
   margin-left: 10px;
   padding-bottom: 100px;
 }
@@ -16,7 +16,6 @@
 }
 
 .guild-board {
-  // background-image: url('dashboard_scroll.png');
   background-color: transparent !important;
   border: none;
   padding: 0;
@@ -31,6 +30,7 @@
   font-style: normal;
   font-size: 2.0rem;
   color: #9b6b11;
+  padding-left: 16px;
 }
 
 .quest-body {
@@ -60,6 +60,31 @@
   padding: 5px 10px;
 }
 
+.quest-desc-box.completed {
+  background: #f2e6c9dd url('quest_subtle_paper_texture.png') no-repeat;
+  background-size: auto;
+}
+
+.quest-desc-box form.button_to {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.quest-desc-box form.button_to button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100%;
+  height: 100%;   /* match form height */
+  line-height: normal;
+  padding: 0 12px;
+  border: none;
+}
+
 .text-active {
    color: #6f4e0f
 }
@@ -69,12 +94,12 @@
   border: 0 !important;
   padding: 0 !important;
   box-shadow: none !important;
-  font: inherit;                /* keeps your Press Start font */
+  font: inherit;
   cursor: pointer;
 }
 
 .text-completed {
-  color:#b4914f
+  color:#c8a86d
 }
 
 form.button_to {
@@ -86,10 +111,16 @@ form.button_to button {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 40px; /* adjust to your desired height */
+  height: 40px;
   line-height: normal;
   padding: 0 12px;
   border: none;
+}
+
+.text-font {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.0rem;
+  color: #6c4908
 }
 // .guild-board {
 //   max-height: 0;
