@@ -27,9 +27,11 @@ class QuestsController < ApplicationController
   def complete
     @quest = Quest.find(params[:id])
     if @quest.quest_marked_completed
-      redirect_to dashboard_quests_path, flash[:notice] = "Quest completed!"
+      flash[:notice] = "Quest completed!"
+      redirect_to dashboard_quests_path
     else
-      redirect_to dashboard_quests_path, flash[:alert] = "Failed to complete the quest!"
+      flash[:alert] = "Failed to complete the quest!"
+      redirect_to dashboard_quests_path
     end
   end
 

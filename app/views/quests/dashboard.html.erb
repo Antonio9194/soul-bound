@@ -36,10 +36,12 @@
                         <% if quest.completed? %>
                           <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
                         <% else %>
-                          <%= button_to "Complete", complete_quest_path(quest),
-                                method: :patch,
+                          <%= link_to "Complete", complete_quest_path(quest),
                                 class: "link-button text-active",
-                                data: { complete_target: "button", action: "click->complete#markCompleted" } %>
+                                data: { complete_target: "button",
+                                action: "click->complete#markCompleted",
+                                turbo_method: :patch } 
+                          %>
                         <% end %>
                         <!-- Modal Inside the same Controller div-->
                         <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">

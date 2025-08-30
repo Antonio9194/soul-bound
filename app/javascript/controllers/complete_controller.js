@@ -7,8 +7,6 @@ export default class extends Controller {
     // Submit the form to Rails
     const audio = document.getElementById("complete-audio")
 
-
-
     // Change button text
     if (this.hasButtonTarget) this.buttonTarget.textContent = "Completed"
 
