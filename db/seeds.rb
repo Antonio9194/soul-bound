@@ -197,7 +197,7 @@ end
   character = Character.create!(
     user: user,
     name: rpg_names[i],
-    class_name: ["Mage", "Warrior", "Vampire", "Wereweolf"][i % 4],
+    class_name: ["Mage", "Warrior", "Vampire", "Werewolf"][i % 4],
     gender: ["Male", "Female"][i % 2],
     xp: xp,
     coin: coin,
