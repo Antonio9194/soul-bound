@@ -9,6 +9,13 @@ class QuestsController < ApplicationController
           quest.save!
         end
     end
+    @users = User.all
+    @tavern = @users.sample(7)
+    @tavern_quest = []
+    @tavern.each do |t|
+      quest = t.quests.where(quest_type: 'daily').sample(1)
+      @tavern_quest.push(quest)
+    end
   end
 
   def edit

@@ -18,11 +18,11 @@ item_img = [
   "accessories/shadowmeld_draught_potion.png", "accessories/phoenix_embers_potion.png",
   "accessories/potion_of_minor_healing_potion.png", "accessories/elixir_of_energy_potion.png",
   "accessories/draught_of_clarity_potion.png", "accessories/tonic_of_vitality_potion.png",
-  "accessories/brew_of_swiftness_potion.png", "accessories/moonlit_dreams_potion.png", 
-  "accessories/emberglow_resolve_potion.png", "accessories/frostbloom_essence_potion.png", 
+  "accessories/brew_of_swiftness_potion.png", "accessories/moonlit_dreams_potion.png",
+  "accessories/emberglow_resolve_potion.png", "accessories/frostbloom_essence_potion.png",
   "accessories/mystic_waters_potion.png", "accessories/potion_of_arcane_fortitude.png",
   "accessories/elixir_of_celestial_insight_potion.png", "accessories/eclipse_draught_potion.png",
-  "accessories/dragonheart_elixir_potion.png", "staves/unearthed_chaos_staff.png", 
+  "accessories/dragonheart_elixir_potion.png", "staves/unearthed_chaos_staff.png",
   "top/crystalline_armor_top.png", "head/golden_helmet_head.png", "head/crystalline_helmet_head.png",
   "head/winged_helmet_head.png", "head/obsidian_helmet_head.png", "top/winged_armor_top.png",
   "top/golden_armor_top.png", "bottom/golden_bottom.png"
@@ -97,9 +97,9 @@ item_description = [
 ]
 
 item_type = [
-  "Book", "Accessory", "Potion", "Accessory", "Accessory", 
-  "Staff", "Staff", "Staff", "Sword", "Sword", 
-  "Sword", "Sword", "Staff", "Staff", "Sword", 
+  "Book", "Accessory", "Potion", "Accessory", "Accessory",
+  "Staff", "Staff", "Staff", "Sword", "Sword",
+  "Sword", "Sword", "Staff", "Staff", "Sword",
   "Potion", "Potion", "Potion", "Potion", "Potion",
   "Potion", "Potion", "Potion", "Potion", "Potion",
   "Potion", "Potion", "Potion", "Potion", "Potion",
@@ -178,11 +178,14 @@ end
     password_confirmation: "password"
   )
 
-  journey = Journey.create!(
-    user: user,
-    purpose: "Purpose of user #{i + 1}",
-    daily_quests: "Daily quest for user #{i + 1}"
-  )
+  quests = 6.times.map do |q|
+        {      title: "Quest #{q + 1} for user #{i + 1}",
+              time: "Time slot #{q + 1}",
+                    description: "Description of quest #{q + 1} for user #{i + 1}"
+                        }
+                        end
+
+                        journey = Journey.create!(    user: user,    purpose: "Purpose of user #{i + 1}",    daily_quests: quests)
 
   level = 1 + i # or any formula you want for levels
   xp = (level - 1) * 100
