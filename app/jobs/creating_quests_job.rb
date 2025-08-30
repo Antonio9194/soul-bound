@@ -57,8 +57,9 @@ Output format:
 If daily quests are not requested, omit "daily_quests".
 If main quests are not requested, omit "main_quest".
 PROMPT
-
-      chat = RubyLLM.chat
+      
+      chat = RubyLLM.chat(assume_model_exists: true, provider: :openai)
+      # chat = RubyLLM.chat
       response = chat.ask(prompt)
 
       quests_text = response.content

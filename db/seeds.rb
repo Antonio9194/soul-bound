@@ -201,20 +201,6 @@ puts "Alastor created"
       equipped: true
     )
   end
-
-  3.times do
-    Quest.create!(
-      user: user,
-      title: Faker::Lorem.sentence(word_count: 3),
-      description: Faker::Lorem.sentence(word_count: 8),
-      quest_type: "Daily",
-      completed: false,
-      deadline: Date.today + rand(1..7), # optional deadline within a week
-      time: Time.now + rand(0..12).hours, # random time today + up to 12 hours
-      xp_reward: 100,
-      coin_reward: 300
-    )
-  end
 end
 
-puts "20 users with characters and daily quests created"
+puts "Users created"
