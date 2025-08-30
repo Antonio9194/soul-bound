@@ -56,6 +56,6 @@ end
   private
 
   def set_inventory_item
-    @inventory_item = current_user.character.inventory_items.find(params[:id])
+    @inventory_item = InventoryItem.find(params[:id])
   end
 end
