@@ -30,7 +30,7 @@ class QuestsController < ApplicationController
         @quest.mark_recently_completed!
         # @quest.set_reward_item(@reward)
       end
-      redirect_to dashboard_quests_path unless quest_params[:completed]
+      # redirect_to dashboard_quests_path unless quest_params[:completed]
     # else
     #   flash[:alert] = "Failed to complete the quest."
     #   render :edit, status: :unprocessable_entity
