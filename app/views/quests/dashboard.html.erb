@@ -12,11 +12,10 @@
                     <!-- Quest Title & Time -->
                     <div class="d-flex justify-content-between quest-details">
                       <h5 class="quest-body"><%= quest.title %></h5>
-                      <div data-controller="date-edit">
-                        <div data-date-edit-target="display"
-                            data-action="click->date-edit#showInput"
+                      <div data-controller="date-edit" data-quest-id="<%= quest.id %>">
+                        <div
                             class="d-flex justify-content-between gap-2">
-                          <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
+                          <h5 class="quest-body" data-date-edit-target="display" data-action="click->date-edit#showInput"><%= quest.time.strftime("%H:%M") %></h5>
                           <h5 data-date-edit-target="text"></h5>
                         </div>
 
