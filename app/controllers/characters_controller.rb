@@ -16,7 +16,7 @@ class CharactersController < ApplicationController
     @character.user_id = current_user.id
     @character.level = 1
     @character.xp = 0
-    @character.coin = 2000
+    @character.coin = 500000
     @character.slots = 10
     if @character.save
       @items = Item.where(rarity: "Common", item_type: ["Book","Sword", "Staff"])

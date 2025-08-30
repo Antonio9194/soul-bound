@@ -1,12 +1,10 @@
 require 'faker'
-
 InventoryItem.destroy_all
 Item.destroy_all
 Quest.destroy_all
 Character.destroy_all
 Journey.destroy_all
 User.destroy_all
-
 item_img = [
   "books/book.png", "accessories/feather_amulet.png", "accessories/potion.png",
   "accessories/ring1.png", "accessories/ring2.png", "staves/staff1.png",
@@ -18,16 +16,15 @@ item_img = [
   "accessories/shadowmeld_draught_potion.png", "accessories/phoenix_embers_potion.png",
   "accessories/potion_of_minor_healing_potion.png", "accessories/elixir_of_energy_potion.png",
   "accessories/draught_of_clarity_potion.png", "accessories/tonic_of_vitality_potion.png",
-  "accessories/brew_of_swiftness_potion.png", "accessories/moonlit_dreams_potion.png", 
-  "accessories/emberglow_resolve_potion.png", "accessories/frostbloom_essence_potion.png", 
+  "accessories/brew_of_swiftness_potion.png", "accessories/moonlit_dreams_potion.png",
+  "accessories/emberglow_resolve_potion.png", "accessories/frostbloom_essence_potion.png",
   "accessories/mystic_waters_potion.png", "accessories/potion_of_arcane_fortitude.png",
   "accessories/elixir_of_celestial_insight_potion.png", "accessories/eclipse_draught_potion.png",
-  "accessories/dragonheart_elixir_potion.png", "staves/unearthed_chaos_staff.png", 
+  "accessories/dragonheart_elixir_potion.png", "staves/unearthed_chaos_staff.png",
   "top/crystalline_armor_top.png", "head/golden_helmet_head.png", "head/crystalline_helmet_head.png",
   "head/winged_helmet_head.png", "head/obsidian_helmet_head.png", "top/winged_armor_top.png",
   "top/golden_armor_top.png", "bottom/golden_bottom.png"
 ]
-
 item_name = [
   "Book Of Knowledge", "Magic Feather",
   "Healing Potion", "Power Ring",
@@ -50,7 +47,6 @@ item_name = [
   "Winged Helmet", "Obsidian Helmet", "Winged Armor",
   "Golden Armor", "Golden Leggings"
 ]
-
 item_description = [
   "An old book containing valuable wisdom and spells.",
   "A feather with mystical properties, often used in spellcasting.",
@@ -95,11 +91,10 @@ item_description = [
   "A radiant golden armor, offering unmatched protection and regal presence.",
   "A radiant golden leggings, offering unmatched protection and regal presence."
 ]
-
 item_type = [
-  "Book", "Accessory", "Potion", "Accessory", "Accessory", 
-  "Staff", "Staff", "Staff", "Sword", "Sword", 
-  "Sword", "Sword", "Staff", "Staff", "Sword", 
+  "Book", "Accessory", "Potion", "Accessory", "Accessory",
+  "Staff", "Staff", "Staff", "Sword", "Sword",
+  "Sword", "Sword", "Staff", "Staff", "Sword",
   "Potion", "Potion", "Potion", "Potion", "Potion",
   "Potion", "Potion", "Potion", "Potion", "Potion",
   "Potion", "Potion", "Potion", "Potion", "Potion",
@@ -107,7 +102,6 @@ item_type = [
   "Top", "Head", "Head", "Head", "Head", "Top", "Top",
   "Bottom"
 ]
-
 item_prices = [
   18000, 12000, 5000, 14000, 20000, 6000, 25000, 15000, 4000, 10000,
   35000, 60000, 65000, 55000, 40000, 80000, 85000, 90000, 95000, 100000,
@@ -115,14 +109,12 @@ item_prices = [
   13000, 28000, 30000, 40000, 50000, 36000, 29000, 47000, 8000, 70000,
   46000, 39000
 ]
-
 item_rarity = [
   "Rare", "Uncommon", "Common", "Uncommon", "Rare", "Common", "Rare", "Uncommon", "Common", "Uncommon",
   "Epic", "Legendary", "Legendary", "Legendary", "Epic", "Legendary", "Legendary", "Legendary", "Legendary", "Legendary",
   "Common", "Common", "Common", "Common", "Common", "Uncommon", "Uncommon", "Uncommon", "Uncommon", "Uncommon",
   "Rare", "Rare", "Epic", "Epic", "Epic", "Epic", "Epic", "Legendary", "Uncommon", "Legendary", "Epic", "Epic"
 ]
-
 item_name.each_with_index do |name, i|
   Item.find_or_create_by!(name: name) do |item|
     item.description = item_description[i]
@@ -133,41 +125,8 @@ item_name.each_with_index do |name, i|
   end
 end
 
-user = User.create!(
-  username: "GayLord",
-  email: "anto.vinciguerra@hotmail.com",
-  birthday: Date.new(1991, 9, 14),
-  password: "password",
-  password_confirmation: "password"
-)
-
-journey = Journey.create!(
-  user: user,
-  purpose: "To create and stick to a daily routine, because I struggle to stay consistent.",
-  daily_quests: "I want to learn ruby on rails!"
-)
-
-alastor = Character.create!(
-  user: user,
-  name: "Alastor",
-  class_name: "Mage",
-  gender: "Male",
-  xp: 3000,
-  coin: 600000,
-  level: 3,
-  slots: 10
-)
-
-Item.order("RANDOM()").limit(5).each do |item|
-  InventoryItem.create!(
-    character: alastor,
-    item: item,
-    equipped: false
-  )
-end
 CreatingQuestsJob.perform_now(journey)
 puts "Alastor created"
-
 20.times do
   user = User.create!(
     username: Faker::Internet.unique.username,
@@ -176,13 +135,11 @@ puts "Alastor created"
     password: "password",
     password_confirmation: "password"
   )
-
   journey = Journey.create!(
     user: user,
     purpose: Faker::Lorem.sentence(word_count: 10),
     daily_quests: Faker::Lorem.sentence(word_count: 5)
   )
-
   character = Character.create!(
     user: user,
     name: Faker::Games::DnD.unique.name,
@@ -193,7 +150,6 @@ puts "Alastor created"
     level: rand(1..10),
     slots: 10
   )
-
   Item.order("RANDOM()").limit(5).each do |item|
     InventoryItem.create!(
       character: character,
@@ -202,5 +158,4 @@ puts "Alastor created"
     )
   end
 end
-
 puts "Users created"
