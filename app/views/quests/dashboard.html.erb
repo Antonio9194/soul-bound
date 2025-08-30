@@ -57,12 +57,12 @@
                                 and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>!
                               </div>
                               <div class="text-center mb-2 d-flex flex-column align-items-center">
-                                <% if quest.item_reward %>
-                                  <%= Item.find_by(id: quest.item_reward).name %>
-                                  <%= image_tag Item.find_by(id: quest.item_reward).img,
+                                <% if quest.item %>
+                                  <%=  quest.item.name %>
+                                  <%= image_tag quest.item.img,
                                       style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;"
                                   %>
-                                  <%= Item.find_by(id: quest.item_reward).rarity %>
+                                  <%= quest.item.rarity %>
                                 <% end %>
                               </div>
                               <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
@@ -139,12 +139,12 @@
                                 and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>!
                               </div>
                               <div class="text-center mb-2 d-flex flex-column align-items-center">
-                                <% if quest.item_reward %>
-                                  <%= Item.find_by(id: quest.item_reward).name %>
-                                  <%= image_tag Item.find_by(id: quest.item_reward).img,
+                                <% if quest.item %>
+                                  <%= quest.item.name %>
+                                  <%= image_tag quest.item.img,
                                       style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;"
                                   %>
-                                  <%= Item.find_by(id: quest.item_reward).rarity %>
+                                  <%= quest.item.rarity %>
                                 <% end %>
                               </div>
                               <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
