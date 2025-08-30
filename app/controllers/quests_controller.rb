@@ -28,7 +28,7 @@ class QuestsController < ApplicationController
     @quest = Quest.find(params[:id])
     if @quest.quest_marked_completed
       flash[:notice] = "Quest completed!"
-      redirect_to dashboard_quests_path
+      render turbo_stream: turbo_stream.replace(@quest, partial: "quests/quest", locals: { quest: @quest })
     else
       flash[:alert] = "Failed to complete the quest!"
       redirect_to dashboard_quests_path
