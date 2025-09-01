@@ -47,9 +47,17 @@ class Quest < ApplicationRecord
     save!
   end
 
+  def triple_xp
+    xp_reward * 3
+  end
+
+  def triple_coin
+    coin_reward * 3
+  end
+  
   def give_rewards_accepted(to_character)
-    to_character.gain_xp(xp_reward)
-    to_character.gain_coins(coin_reward)
+    to_character.gain_xp(xp_reward * 3)
+    to_character.gain_coins(coin_reward * 3)
   end
 
   def give_reward_item_accepted(to_character)

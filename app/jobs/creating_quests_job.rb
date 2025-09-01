@@ -29,7 +29,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
 
 Always ensure that:
 - Titles never include the words "daily" or "main" or similar labels.
-- All quests feel like magical, vivid RPG adventures that relate clearly to the user's real-life tasks.
+- All quests feel like magical, vivid RPG adventures that relate clearly to the user's real-life tasks, make it as short and clear as possible.
 - Output ONLY the quests relevant to the user’s choice in JSON format as specified, with no extra text or explanations.
 
 The user's choice is "#{journey.purpose}".

@@ -49,6 +49,14 @@ class Character < ApplicationRecord
     save!
   end
 
+  def triple_xp
+    xp_reward * 4
+  end
+
+  def triple_coin
+    coin_reward * 4
+  end
+
   def gain_coins(amount)
     self.coin += amount
     save!

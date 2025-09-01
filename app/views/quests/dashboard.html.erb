@@ -54,24 +54,9 @@
               <% if @side_quests.any? %>
                 <% @side_quests.each do |quest| %>
                   <div class="mb-0">
-                    <!-- Quest Title & Time -->
+                    <!-- Quest Title -->
                     <div class="d-flex justify-content-between quest-details">
                       <h5 class="quest-body"><%= quest.title %></h5>
-                      <div data-controller="date-edit">
-                        <div data-date-edit-target="display"
-                            data-action="click->date-edit#showInput"
-                          class="d-flex justify-content-between gap-2">
-                          <h5 class="quest-body"><%= quest.time.strftime("%H:%M") %></h5>
-                          <h5 class="text-font" data-date-edit-target="text"></h5>
-                        </div>
-                        <div data-date-edit-target="input" style="display: none;">
-                          <%= form_with model: quest, url: quest_path(quest), method: :patch, local: true do |f| %>
-                            <%= f.time_field :time, value: quest.time.strftime("%H:%M"),
-                                            class: "btn btn-sm btn-outline-primary",
-                                            data: { action: "keydown->date-edit#checkEnter" } %>
-                          <% end %>
-                        </div>
-                      </div>
                     </div>
 
                     <!-- Quest Description & Complete Button -->
