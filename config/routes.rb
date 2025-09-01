@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     member do
       patch :complete
+      patch :accept
     end
   end
 

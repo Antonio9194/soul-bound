@@ -1,0 +1,50 @@
+<div class="quest-box d-flex justify-content-between">
+  <span><%= quest.description %></span>
+  <div data-controller="complete" class="quest-desc-box <%= 'completed' if quest.completed? %>">
+    <% if quest.completed? %>
+      <%= button_to "Completed", "#", disabled: true, class: "link-button text-completed", data: { complete_target: "button" } %>
+    <% else %>
+      <%= link_to "Complete", complete_quest_path(quest),
+                                class: "link-button text-active",
+                                data: { complete_target: "button",
+                                action: "click->complete#markCompleted",
+                                turbo_method: :patch } 
+                          %>
+    <% end %>
+    <!-- Modal Inside the same Controller div-->
+    <div class="modal fade" id="questModal-<%= quest.id %>" tabindex="-1" aria-hidden="true" data-complete-target="popup">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; background-color: #fff3e0; border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <div class="modal-header justify-content-center" style="border-bottom: 2px solid #000; background-color: rgba(255, 193, 7, 0.25);">
+            <h5 class="modal-title fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Quest Completed!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(0);"></button>
+          </div>
+          <div class="modal-body" style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem; text-align: center;">
+            The Guild <%= image_tag "guild.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
+            awards you <%= quest.xp_reward %> <%= image_tag "xp.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
+            and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>!
+          </div>
+          <div class="text-center mb-2 d-flex flex-column align-items-center">
+            <% if quest.item %>
+             <% if current_user.character.inventory_items.size >= current_user.character.slots%>
+                <h5>Your inventory is full!</h5>
+             <% else %>
+              <%=  quest.item.name %>
+              <%= image_tag quest.item.img,
+                  style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;"
+              %>
+              <%= quest.item.rarity %>
+             <% end %>
+            <% end %>
+          </div>
+          <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
+            <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal"
+                                        style="border-radius: 20px; background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; font-family: 'Press Start 2P', cursive;">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

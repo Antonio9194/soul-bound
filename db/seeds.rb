@@ -1,8 +1,8 @@
 require 'faker'
 
+Quest.destroy_all
 InventoryItem.destroy_all
 Item.destroy_all
-Quest.destroy_all
 Character.destroy_all
 Journey.destroy_all
 User.destroy_all
@@ -169,6 +169,41 @@ items_for_character.each_with_index do |item, index|
   )
 end
 
+puts "User Created"
+
+daily_quests = [
+  "I want to learn Ruby on Rails",
+  "I want to learn piano",
+  "I want to learn guitar",
+  "I want to learn Korean",
+  "I want to learn drawing",
+  "I want to learn photography",
+  "I want to learn cooking",
+  "I want to learn meditation",
+  "I want to learn public speaking",
+  "I want to learn yoga",
+  "I want to learn JavaScript",
+  "I want to learn chess",
+  "I want to learn calligraphy",
+  "I want to learn video editing",
+  "I want to learn sewing",
+  "I want to go for a morning walk",
+  "I want to drink 2 liters of water",
+  "I want to make my bed",
+  "I want to clean my room",
+  "I want to write in my journal",
+  "I want to prepare a healthy breakfast",
+  "I want to plan my day",
+  "I want to do a 20-minute workout",
+  "I want to practice mindfulness",
+  "I want to read a book for 30 minutes",
+  "I want to learn a new word in English",
+  "I want to stretch for 10 minutes",
+  "I want to review my notes",
+  "I want to organize my workspace",
+  "I want to practice a hobby for 1 hour"
+]
+
 20.times do |i|
   user = User.create!(
     username: "User#{i + 1}",
@@ -180,8 +215,8 @@ end
 
   journey = Journey.create!(
     user: user,
-    purpose: "Purpose of user #{i + 1}",
-    daily_quests: "Daily quest for user #{i + 1}"
+    purpose: "To create and stick to a daily routine, because I struggle to stay consistent.",
+    daily_quests: daily_quests.sample
   )
 
   level = 1 + i # or any formula you want for levels
@@ -217,3 +252,5 @@ end
     )
   end
 end
+
+puts "All characters created!"

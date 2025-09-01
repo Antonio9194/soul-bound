@@ -19,13 +19,16 @@ class Quest < ApplicationRecord
     save!
   end
 
-  def give_rewards
+  def give_rewards_completed
     user.character.gain_xp(xp_reward)
     user.character.gain_coins(coin_reward)
   end
 
-  def give_reward_item
-    InventoryItem.create(character: user.character, item: item)
+  def give_reward_item_completed
+    character = user.character
+    if character.inventory_items.size < character.slots
+      InventoryItem.create(character: user.character, item: item)
+    end
   end
 
   def complete_date!
@@ -37,8 +40,40 @@ class Quest < ApplicationRecord
     return false if self.completed
     complete!
     complete_date!
-    give_rewards
-    give_reward_item
+    give_rewards_completed
+    give_reward_item_completed
+    return true
+  end
+
+  def accept!
+    self.accepted = true
+    save!
+  end
+
+  def triple_xp
+    xp_reward * 3
+  end
+
+  def triple_coin
+    coin_reward * 3
+  end
+  
+  def give_rewards_accepted(to_character)
+    to_character.gain_xp(xp_reward * 3)
+    to_character.gain_coins(coin_reward * 3)
+  end
+
+  def give_reward_item_accepted(to_character)
+    if to_character.inventory_items.size < to_character.slots
+      InventoryItem.create(character: to_character, item: item)
+    end 
+  end
+
+  def quest_mark_accepted(by_character)
+    return false if self.accepted
+    accept!
+    give_rewards_accepted(by_character)
+    give_reward_item_accepted(by_character)
     return true
   end
 
