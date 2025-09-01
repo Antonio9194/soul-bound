@@ -25,7 +25,10 @@ class Quest < ApplicationRecord
   end
 
   def give_reward_item_completed
-    InventoryItem.create(character: user.character, item: item)
+    character = user.character
+    if character.inventory_items.size < character.slots
+      InventoryItem.create(character: user.character, item: item)
+    end
   end
 
   def complete_date!
@@ -61,7 +64,9 @@ class Quest < ApplicationRecord
   end
 
   def give_reward_item_accepted(to_character)
-    InventoryItem.create(character: to_character, item: item)
+    if to_character.inventory_items.size < to_character.slots
+      InventoryItem.create(character: to_character, item: item)
+    end 
   end
 
   def quest_mark_accepted(by_character)

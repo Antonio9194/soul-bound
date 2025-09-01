@@ -13,7 +13,7 @@ class StoresController < ApplicationController
   end
 
   def purchase
-    if current_user.character.inventory_items.size == current_user.character.slots
+    if current_user.character.inventory_items.size >= current_user.character.slots
       flash[:alert] = "You cannot have more than #{current_user.character.slots}!"
     else
       if current_user.character.inventory_items.exists?(item_id: @item.id)
