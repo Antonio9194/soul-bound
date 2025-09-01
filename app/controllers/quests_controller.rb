@@ -13,6 +13,7 @@ class QuestsController < ApplicationController
 
     @side_quests = Quest.where(quest_type: 'daily')
                         .where.not(user: current_user)
+                        .or(Quest.where(id: current_user.quests.where(accepted: true).select(:id)))
                         .to_a.sample(6)
                         .sort_by(&:time)
   end
@@ -34,9 +35,20 @@ class QuestsController < ApplicationController
     @quest = Quest.find(params[:id])
     if @quest.quest_marked_completed
       flash[:notice] = "Quest completed!"
-      render turbo_stream: turbo_stream.replace(@quest, partial: "quests/quest", locals: { quest: @quest })
+      render turbo_stream: turbo_stream.replace(@quest, partial: "quests/daily_quests", locals: { quest: @quest })
     else
       flash[:alert] = "Failed to complete the quest!"
+      redirect_to dashboard_quests_path
+    end
+  end
+
+  def accept
+    @quest = Quest.find(params[:id])
+    if @quest.quest_mark_accepted(current_user.character)
+      flash[:notice] = "Side quest accepted!"
+      render turbo_stream: turbo_stream.replace(@quest, partial: "quests/side_quests", locals: { quest: @quest })
+    else
+      flash[:alert] = "Failed to accept the side quest!"
       redirect_to dashboard_quests_path
     end
   end
