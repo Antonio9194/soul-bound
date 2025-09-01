@@ -1,14 +1,20 @@
 class QuestsController < ApplicationController
   def dashboard
     @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
+
     @daily_quests.each do |quest|
       next unless quest.complete_date
-        if quest.complete_date < Date.today
-          quest.item_reward = quest.reward_roll
-          quest.completed = false
-          quest.save!
-        end
+      if quest.complete_date < Date.today
+        quest.item_reward = quest.reward_roll
+        quest.completed = false
+        quest.save!
+      end
     end
+
+    @side_quests = Quest.where(quest_type: 'daily')
+                        .where.not(user: current_user)
+                        .to_a.sample(6)
+                        .sort_by(&:time)
   end
 
   def edit
@@ -41,4 +47,3 @@ class QuestsController < ApplicationController
     params.require(:quest).permit(:time)
   end
 end
-
