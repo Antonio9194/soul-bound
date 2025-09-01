@@ -26,11 +26,15 @@
           </div>
           <div class="text-center mb-2 d-flex flex-column align-items-center">
             <% if quest.item %>
+             <% if current_user.character.inventory_items.size >= current_user.character.slots%>
+                <h5>Your inventory is full!</h5>
+             <% else %>
               <%=  quest.item.name %>
               <%= image_tag quest.item.img,
-                                      style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;"
-                                  %>
+                  style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;"
+              %>
               <%= quest.item.rarity %>
+             <% end %>
             <% end %>
           </div>
           <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
