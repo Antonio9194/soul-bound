@@ -1,6 +1,6 @@
 <div class="quest-box d-flex justify-content-between">
   <span><%= quest.description %></span>
-  <div data-controller="accept" class="quest-desc-box <%= 'accepted' if quest.accepted? %>">
+  <div class="quest-desc-box <%= 'accepted' if quest.accepted? %>">
     <% if quest.accepted? %>
       <%= button_to "Accepted", "#", disabled: true, class: "link-button text-completed", data: { accept_target: "button" } %>
     <% else %>
