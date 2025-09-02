@@ -1,7 +1,6 @@
 <div class="row g-4 page-background">
   <div class="row g-4">
     <div class="d-flex justify-content-between">
-      
       <!-- Daily Quests -->
       <div class="col-md-6 quest-background">
         <div class="card h-100 p-3 mt-4 guild-board">
@@ -32,9 +31,12 @@
                       </div>
                     </div>
                     <!-- Quest Description & Complete Button -->
-                    <%= turbo_frame_tag quest do %>
-                      <%= render partial: "daily_quests", locals: { quest: quest }%>
-                    <% end %>
+                    <div data-controller="complete">
+                      <%= turbo_frame_tag quest do %>
+                        <%= render partial: "daily_quests", locals: { quest: quest }%>
+                      <% end %>
+                      <%= render partial: "daily_modal", locals: { quest: quest }%>
+                    </div>
                   </div>
                 <% end %>
               <% else %>
@@ -44,7 +46,6 @@
           </div>
         </div>
       </div>
-
       <!-- Side Quests -->
       <div class="col-md-6 quest-background">
         <div class="card h-100 p-3 mt-4 guild-board">
@@ -58,7 +59,6 @@
                     <div class="d-flex justify-content-between quest-details">
                       <h5 class="quest-body"><%= quest.title %></h5>
                     </div>
-
                     <!-- Quest Description & Complete Button -->
                     <%= turbo_frame_tag quest do %>
                       <%= render partial: "side_quests", locals: { quest: quest } %>
@@ -72,9 +72,7 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
-
   <%= audio_tag "fanfare.mp3", id: "complete-audio" %>
 </div>
