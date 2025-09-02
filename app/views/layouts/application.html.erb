@@ -3,6 +3,8 @@
   <head>
     <title>SoulBound</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -15,7 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <%# <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Press+Start+2P&family=Roboto+Slab:wght@100..900&family=VT323&display=swap" rel="stylesheet"> %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+    <link rel="manifest" href="<%= asset_path 'manifest.json' %>">
+     <%= render 'shared/ios_pwa_links' %>
   </head>
 
   <body class="<%= body_class %>">
