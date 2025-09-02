@@ -146,7 +146,7 @@
       </div>
       <div class="d-flex justify-content-between mt-3 gap-2">
         <%= link_to "Purchase Slot", purchase_slot_character_path(@character),
-            data: { turbo_method: :patch, turbo_confirm: 'Are you sure?' },
+            data: { turbo_method: :patch, turbo_confirm: "One additional slot costs #{@character.call_slot_price} Are you sure?" },
             class: "btn btn-outline-primary fw-bold rounded-4 w-50",
             style: "background-color: #c68642; color: #fff;
             border: 2px solid #8B5A2B; border-radius: 8px;"

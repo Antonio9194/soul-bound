@@ -13,11 +13,19 @@ class Character < ApplicationRecord
     "#{gender.downcase}_#{class_name.downcase}.png"
   end
 
+  def call_slot_price
+    if slots <= 10
+     5000
+    else
+      slots * slots * 100
+    end 
+  end
+
   def purchase_slot
     if slots <= 10
      slot_price = 5000
     else
-      slot_price = slot * slot * 100
+      slot_price = slots * slots * 100
     end 
     return false if self.coin < slot_price 
     if self.coin >= slot_price
