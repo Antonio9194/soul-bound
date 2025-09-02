@@ -7,7 +7,7 @@
       <%= link_to "Accept", accept_quest_path(quest),
           class: "link-button text-active",
           data: { accept_target: "button",
-          action: "click->accept#markAccepted",        
+          action: "click->accept#markAccepted",
           turbo_method: :patch }
       %>
     <% end %>
