@@ -14,7 +14,7 @@ class Character < ApplicationRecord
   end
 
   def purchase_slot
-    if slot <= 10
+    if slots <= 10
      slot_price = 5000
     else
       slot_price = slot * slot * 100
