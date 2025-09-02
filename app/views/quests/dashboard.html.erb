@@ -60,9 +60,12 @@
                       <h5 class="quest-body"><%= quest.title %></h5>
                     </div>
                     <!-- Quest Description & Complete Button -->
-                    <%= turbo_frame_tag quest do %>
-                      <%= render partial: "side_quests", locals: { quest: quest } %>
-                    <% end %>
+                    <div data-controller="accept">
+                      <%= turbo_frame_tag quest do %>
+                        <%= render partial: "daily_quests", locals: { quest: quest }%>
+                      <% end %>
+                      <%= render partial: "side_modal", locals: { quest: quest }%>
+                    </div>
                   </div>
                 <% end %>
               <% else %>
