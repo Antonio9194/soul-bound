@@ -1,4 +1,4 @@
-class CharacterPolicy < ApplicationPolicy
+class JourneyPolicy < ApplicationPolicy
   # NOTE: Up to Pundit v2.3.1, the inheritance was declared as
   # `Scope < Scope` rather than `Scope < ApplicationPolicy::Scope`.
   # In most cases the behavior will be identical, but if updating existing
@@ -12,35 +12,11 @@ class CharacterPolicy < ApplicationPolicy
     # end
   end
 
-  def show?
-    return record.user == user
-  end
-
   def new?
-    return create?
-  end
-
-  def create?
     return true
   end
 
-  def update?
-    return show?
-  end
-
-  def destroy?
-    return show?
-  end
-
-  def purchase_slot?
-    return show?
-  end
-
-  def sell_slot?
-    return show?
-  end
-
-  def index?
+  def create?
     return true
   end
 end
