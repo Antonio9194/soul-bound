@@ -62,7 +62,7 @@
                     <!-- Quest Description & Complete Button -->
                     <div data-controller="accept">
                       <%= turbo_frame_tag quest do %>
-                        <%= render partial: "daily_quests", locals: { quest: quest }%>
+                        <%= render partial: "side_quests", locals: { quest: quest }%>
                       <% end %>
                       <%= render partial: "side_modal", locals: { quest: quest }%>
                     </div>
