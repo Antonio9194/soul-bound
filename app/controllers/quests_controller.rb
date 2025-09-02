@@ -2,6 +2,8 @@ class QuestsController < ApplicationController
   def dashboard
     @daily_quests = current_user.quests.where(quest_type: 'daily').order(time: :asc)
 
+    authorize @daily_quests
+
     @daily_quests.each do |quest|
       next unless quest.complete_date
       if quest.complete_date < Date.today
@@ -20,10 +22,16 @@ class QuestsController < ApplicationController
 
   def edit
     @quest = Quest.find(params[:id])
+
+    authorize @quest
+
   end
 
   def update
     @quest = Quest.find(params[:id])
+
+    authorize @quest
+
     if @quest.update(quest_params)
       redirect_to dashboard_quests_path
     else
@@ -33,6 +41,9 @@ class QuestsController < ApplicationController
 
   def complete
     @quest = Quest.find(params[:id])
+
+    authorize @quest
+
     if @quest.quest_marked_completed
       flash[:notice] = "Quest completed!"
       render turbo_stream: turbo_stream.replace(@quest, partial: "quests/daily_quests", locals: { quest: @quest })
@@ -44,6 +55,9 @@ class QuestsController < ApplicationController
 
   def accept
     @quest = Quest.find(params[:id])
+
+    authorize @quest
+
     if @quest.quest_mark_accepted(current_user.character)
       flash[:notice] = "Side quest accepted!"
       render turbo_stream: turbo_stream.replace(@quest, partial: "quests/side_quests", locals: { quest: @quest })

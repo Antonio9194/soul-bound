@@ -2,18 +2,24 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
+    authorize @character
     @inventory_items = @character.items
     @equipped_items = @character.inventory_items.where(equipped: true).map(&:item)
+
   end
 
   def new
       @character = Character.new
+      authorize @character
   end
 
   def create
     @character = Character.new(new_character_params)
 
     @character.user_id = current_user.id
+
+    authorize @character
+
     @character.level = 1
     @character.xp = 0
     @character.coin = 12000
@@ -30,10 +36,12 @@ class CharactersController < ApplicationController
 
   def edit
     @character = Character.find(params[:id])
+    authorize @character
   end
 
   def update
     @character = Character.find(params[:id])
+    authorize @character
     if @character.update(update_character_params)
       redirect_to character_path(@character), notice: "Your character was successfully updated!"
     else
@@ -42,12 +50,14 @@ class CharactersController < ApplicationController
   end
   def destroy
     @character = Character.find(params[:id])
+    authorize @character
     @character.destroy
     redirect_to new_character_path
   end
 
   def purchase_slot
     @character = Character.find(params[:id])
+    authorize @character
     if @character.purchase_slot
       redirect_to character_path(@character), notice: "You have purchased a slot!"
     else
@@ -57,6 +67,7 @@ class CharactersController < ApplicationController
 
   def sell_slot
     @character = Character.find(params[:id])
+    authorize @character
     if @character.sell_slot
       redirect_to character_path(@character), notice: "You have sold a slot!"
     else
