@@ -7,7 +7,7 @@
       <%= link_to "Accept", accept_quest_path(quest),
           class: "link-button text-active",
           data: { accept_target: "button",
-          action: "click->accept#markAccepted",        
+          action: "click->accept#markAccepted",
           turbo_method: :patch }
       %>
     <% end %>
@@ -29,7 +29,7 @@
          <div class="text-center mb-2 d-flex flex-column align-items-center">
             <% if quest.item %>
              <% if current_user.character.inventory_items.size >= current_user.character.slots%>
-                <h5>Your inventory is full!</h5>
+                <h5 class="inventory-full-text">Your inventory is full!</h5>
              <% else %>
               <%=  quest.item.name %>
               <%= image_tag quest.item.img,

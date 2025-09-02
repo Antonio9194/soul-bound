@@ -8,7 +8,7 @@
                                 class: "link-button text-active",
                                 data: { complete_target: "button",
                                 action: "click->complete#markCompleted",
-                                turbo_method: :patch } 
+                                turbo_method: :patch }
                           %>
     <% end %>
     <!-- Modal Inside the same Controller div-->
@@ -27,7 +27,7 @@
           <div class="text-center mb-2 d-flex flex-column align-items-center">
             <% if quest.item %>
              <% if current_user.character.inventory_items.size >= current_user.character.slots%>
-                <h5>Your inventory is full!</h5>
+                <h5 class="inventory-full-text">Your inventory is full!</h5>
              <% else %>
               <%=  quest.item.name %>
               <%= image_tag quest.item.img,
