@@ -67,10 +67,10 @@ class CharactersController < ApplicationController
   private
 
   def new_character_params
-    params.require(:character).permit(:name, :class_name, :gender, :apperance)
+    params.require(:character).permit(:name, :class_name, :gender)
   end
 
   def update_character_params
-    params.require(:character).permit(:gender, :apperance)
+    params.require(:character).permit(:name, :class_name, :gender)
   end
 end
