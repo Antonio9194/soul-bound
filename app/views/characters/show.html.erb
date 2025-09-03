@@ -125,12 +125,17 @@
               <% end %>
             </div>
             <div style="text-align: center;">
+              <!--Link to sell inventory items modal -->
               <% if inventory_item %>
-                <%= button_to "Sell", sell_inventory_item_path(inventory_item),
-                    method: :delete, data: { confirm: "Are you sure?" },
+                <%= link_to "#",
+                    data: { bs_toggle: "modal", bs_target: "#sellInventoryItem-#{inventory_item.id}" },
                     class: "btn btn-sm fw-bold",
                     style: "background-color: #c68642; color: #fff;
-                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" %>
+                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" do %>
+                  Sell 
+                <% end %>
+                <!-- Renders Modal -->
+                <%= render partial: "sell_inventory_item", locals: { character: @character, inventory_item: inventory_item } %>
               <% end %>
             </div>
           </div>
