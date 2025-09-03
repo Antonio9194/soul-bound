@@ -71,89 +71,94 @@
             style: "background-color: #c68642; color: #fff;
             border: 2px solid #8B5A2B; border-radius: 8px;"
         %>
-          <%= link_to "Delete", @character,
-            data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' },
+          <!-- Link to delete char modal -->
+          <%= link_to "#",
+            data: { bs_toggle: "modal", bs_target: "#deleteCharModal" },
             class: "btn btn-outline-danger fw-bold rounded-4 w-50",
             style: "background-color: #c68642; color: #fff;
-            border: 2px solid #8B5A2B; border-radius: 8px;"
+            border: 2px solid #8B5A2B; border-radius: 8px;" do
         %>
-        </div>
+          Delete 
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "delete_char", locals: { character: @character } %>
       </div>
     </div>
-    <div class="col-md-6 col-lg-5">
-      <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
-        <div class="card-header text-center rounded-3 mb-3"
+  </div>
+  <div class="col-md-6 col-lg-5">
+    <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
+      <div class="card-header text-center rounded-3 mb-3"
            style="border: 1px solid #000;
            background-color: rgba(255, 193, 7, 0.25);">
-          <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
-            Inventory
-          </h4>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 3px 10px;">
-          <% slots_count = @character.slots || 10 %>
-          <% inventory_items = @character.inventory_items.includes(:item).where(equipped: false).to_a %>
-          <% slots_count.times do |i| %>
-            <% inventory_item = inventory_items[i] %>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-              <div style="width: 100px; height: 100px; border: 2px solid black; border-radius: 10px; background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <div style="text-align: center;">
-                  <% if inventory_item %>
-                    <%= button_to "Equip", equip_inventory_item_path(inventory_item),
+        <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+          Inventory
+        </h4>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 3px 10px;">
+        <% slots_count = @character.slots || 10 %>
+        <% inventory_items = @character.inventory_items.includes(:item).where(equipped: false).to_a %>
+        <% slots_count.times do |i| %>
+          <% inventory_item = inventory_items[i] %>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <div style="width: 100px; height: 100px; border: 2px solid black; border-radius: 10px; background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div style="text-align: center;">
+                <% if inventory_item %>
+                  <%= button_to "Equip", equip_inventory_item_path(inventory_item),
                        method: :patch,
                        style: "width: 100px; border-bottom: 2px solid black; border-left: 2px solid black;
                        border-right: 2px solid black; border-top: 1px solid black; border-radius: 10px 10px 0 0;"
                   %>
-                  <% else %>
-                    <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
-                  <% end %>
-                </div>
-                <% if inventory_item %>
-                  <%= link_to inventory_item_path(inventory_item),
+                <% else %>
+                  <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
+                <% end %>
+              </div>
+              <% if inventory_item %>
+                <%= link_to inventory_item_path(inventory_item),
                     style: "display: flex; width: 100%; height: 60%; justify-content: center; align-items: center;" do %>
-                    <%= image_tag inventory_item.item.img,
+                  <%= image_tag inventory_item.item.img,
                       alt: inventory_item.item.name,
                       class: "img-fluid",
                       style: "width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; padding: 2px; margin: 4px;" %>
-                  <% end %>
-                <% else %>
-                  <span style="color: #aaa; font-size: 1.2rem;">—</span>
                 <% end %>
-              </div>
-              <div style="text-align: center;">
-                <% if inventory_item %>
-                  <%= button_to "Sell", sell_inventory_item_path(inventory_item),
+              <% else %>
+                <span style="color: #aaa; font-size: 1.2rem;">—</span>
+              <% end %>
+            </div>
+            <div style="text-align: center;">
+              <% if inventory_item %>
+                <%= button_to "Sell", sell_inventory_item_path(inventory_item),
                     method: :delete, data: { confirm: "Are you sure?" },
                     class: "btn btn-sm fw-bold",
                     style: "background-color: #c68642; color: #fff;
                     border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" %>
-                <% end %>
-              </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-        <!-- Link to purchase modal -->
-        <div class="d-flex justify-content-between mt-3 gap-2">
-          <%= link_to "#", 
+          </div>
+        <% end %>
+      </div>
+      <!-- Link to purchase modal -->
+      <div class="d-flex justify-content-between mt-3 gap-2">
+        <%= link_to "#", 
     class: "btn btn-outline-primary fw-bold rounded-4 w-50",
     data: { bs_toggle: "modal", bs_target: "#slotPurchaseModal" },
     style: "background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; border-radius: 8px;" do %>
-            Purchase Slot
-          <% end %>
-          <!-- Renders Modal -->
-          <%= render partial: "purchase_modal", locals: { character: @character } %>
-          <!-- Link to sell modal -->
-          <%= link_to "#", 
+          Purchase Slot
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "purchase_modal", locals: { character: @character } %>
+        <!-- Link to sell modal -->
+        <%= link_to "#", 
     class: "btn btn-outline-primary fw-bold rounded-4 w-50",
     data: { bs_toggle: "modal", bs_target: "#slotSellModal" },
     style: "background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; border-radius: 8px;" do %>
-            Sell Slot
-          <% end %>
-          <!-- Renders Modal -->
-          <%= render partial: "sell_modal", locals: { character: @character } %>
-        </div>
+          Sell Slot
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "sell_modal", locals: { character: @character } %>
       </div>
     </div>
   </div>
+</div>
 </div>
 <!-- Character Sprite Animation Script -->
 <script>
