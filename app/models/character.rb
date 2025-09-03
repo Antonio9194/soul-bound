@@ -51,6 +51,7 @@ class Character < ApplicationRecord
       slot_price = slots * slots * 100
     end 
     return false if self.slots <= 1
+    return false if self.inventory_items.count >= slots
     self.slots -= 1
     sell_slot_price = slot_price / 2
     self.coin += sell_slot_price

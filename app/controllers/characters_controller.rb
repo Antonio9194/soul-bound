@@ -60,7 +60,11 @@ class CharactersController < ApplicationController
     if @character.sell_slot
       redirect_to character_path(@character), notice: "You have sold a slot!"
     else
-      redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+      if @character.slots <= 1
+        redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+      elsif @character.inventory_items.count >= @character.slots
+        redirect_to character_path(@character), notice: "You can't have less slots than your inventory items!"
+      end
     end
   end
 
