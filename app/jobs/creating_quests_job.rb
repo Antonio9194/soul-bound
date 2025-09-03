@@ -19,6 +19,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
     - NEVER omit the "time" field.
       Even if the user does not explicitly provide times, assign logical fixed times or windows based on common sense.
   - Do NOT include any deadlines for daily quests.
+  - Keep all text no longer than 3 lines.
 
 - If the choice is "main":
   - Generate ONLY the main quest as a narrative with tasks, each having titles and deadlines.
@@ -29,7 +30,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
 
 Always ensure that:
 - Titles never include the words "daily" or "main" or similar labels.
-- All quests feel like magical, vivid RPG adventures that relate clearly to the user's real-life tasks, make it as short and clear as possible.
+- All quests feel like magical, vivid RPG adventures that relate clearly to the user's real-life tasks.
 - Output ONLY the quests relevant to the user’s choice in JSON format as specified, with no extra text or explanations.
 
 The user's choice is "#{journey.purpose}".

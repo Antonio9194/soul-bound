@@ -71,17 +71,21 @@ class CharactersController < ApplicationController
     if @character.sell_slot
       redirect_to character_path(@character), notice: "You have sold a slot!"
     else
-      redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+      if @character.slots <= 1
+        redirect_to character_path(@character), notice: "You can't have less than 1 slot!"
+      elsif @character.inventory_items.count >= @character.slots
+        redirect_to character_path(@character), notice: "You can't have less slots than your inventory items!"
+      end
     end
   end
 
   private
 
   def new_character_params
-    params.require(:character).permit(:name, :class_name, :gender, :apperance)
+    params.require(:character).permit(:name, :class_name, :gender)
   end
 
   def update_character_params
-    params.require(:character).permit(:gender, :apperance)
+    params.require(:character).permit(:name, :class_name, :gender)
   end
 end

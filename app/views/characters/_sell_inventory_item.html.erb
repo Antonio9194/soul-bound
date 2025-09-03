@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="sellInventoryItem-<%= inventory_item.id %>" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 20px; background-color: #fff3e0; border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <div class="modal-header justify-content-center" style="border-bottom: 2px solid #000; background-color: rgba(255, 193, 7, 0.25);">
+        <%= image_tag "store.png", class: "me-1 nav-icon", alt: "Store icon" %>
+        <h5 class="modal-title fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">The Wandering Satchel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <div class="modal-body d-flex flex-column align-items-center" style="font-family: 'Press Start 2P', cursive; font-size: 0.95rem;">
+  <div>Are you sure you want to sell the <%= inventory_item.item.name %>?</div>
+  <div>
+    <%= image_tag inventory_item.item.img,
+          style: "width: 80px; height: 80px; image-rendering: pixelated; border: 2px solid #000; border-radius: 12px; object-fit: contain; margin: 2px 0;" %>
+  </div>
+  <div><%= inventory_item.item.rarity %></div>
+  <div><%= number_with_delimiter(inventory_item.item.price / 2, delimiter: ".") %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %></div>
+</div>
+      <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
+        <%= link_to "Sell", sell_inventory_item_path(inventory_item),
+                    data: { turbo_method: :delete, turbo_frame: "_top" },
+                    class: "btn btn-sm fw-bold",
+                    style: "background-color: #c68642; color: #fff;
+                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" %>
+      </div>
+    </div>
+  </div>
+</div>

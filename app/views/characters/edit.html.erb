@@ -1,15 +1,129 @@
-<div class="container">
-<div class="card">
-<%= simple_form_for @character do |c| %>
-  <div class="col-4">
-    <%= c.input :gender, label:"Gender", input_html: { class: "form-check-input" }, collection:[["Male", "Male"], ["Female", "Female"]], as: :radio_buttons%>
-    <%= c.input :apperance, label:"Appearance", input_html: { class: "form-check-input" }, collection:[["1", "1"],["2", "2"],["3", "3"]], as: :radio_buttons %>
-    <%= c.button :submit, "Update Character", class: "btn btn-primary" %>
+<div class="page-background">
+  <div class="d-flex justify-content-center my-5">
+    <div class="card p-4 shadow rounded-4 border border-2"
+         style="background-color: #fff3e0; border-color: #000; width: 700px; max-width: 95%;"
+         data-controller="new-character"
+         data-new-character-male-warrior-value="<%= image_path('male_warrior.png') %>"
+         data-new-character-female-warrior-value="<%= image_path('female_warrior.png') %>"
+         data-new-character-male-mage-value="<%= image_path('male_mage.png') %>"
+         data-new-character-female-mage-value="<%= image_path('female_mage.png') %>"
+         data-new-character-male-werewolf-value="<%= image_path('male_werewolf.png') %>"
+         data-new-character-female-werewolf-value="<%= image_path('female_werewolf.png') %>"
+         data-new-character-male-vampire-value="<%= image_path('male_vampire.png') %>"
+         data-new-character-female-vampire-value="<%= image_path('female_vampire.png') %>">
+
+      <!-- Card Header -->
+      <div class="card-header text-center rounded-3 mb-3 rounded-4 border border-2 border-warning"
+           style="background-color: rgba(255, 193, 7, 0.25);">
+        <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+          Edit Character
+        </h1>
+      </div>
+
+      <div class="row">
+        <!-- Left Column: Form -->
+        <div class="col-md-6">
+          <div class="card p-4 shadow rounded-4 border border-2"
+               style="background-color: #fff3e0; border-color: #000;">
+
+            <%= simple_form_for @character do |c| %>
+
+              <!-- Character Name -->
+              <%= c.input :name,
+                          label: "Character Name",
+                          input_html: { 
+                            class: "form-control border-2 shadow-sm",
+                            style: "font-family: 'Press Start 2P', cursive; color: black; background-color: #f9f1e7;"
+                          },
+                          wrapper_html: { class: "mb-3 fw-bold", 
+                                          style: "font-family: 'Press Start 2P', cursive;" } %>
+
+              <!-- Class Selection -->
+              <div class="mb-4">
+                <label class="fw-bold d-block mb-2" style="font-family: 'Press Start 2P', cursive;">Class</label>
+                <div class="d-flex flex-wrap gap-2">
+                  <% [["Mage", "Mage"], ["Warrior", "Warrior"], ["Vampire", "Vampire"], ["Werewolf", "Werewolf"]].each do |label, value| %>
+                    <div class="form-check text-center">
+                      <input type="radio" 
+                             name="character[class_name]" 
+                             id="class_<%= value.downcase %>" 
+                             value="<%= value %>" 
+                             class="btn-check"
+                             data-action="change->new-character#render"
+                             autocomplete="off"
+                             <%= "checked" if @character.class_name == value %>>
+                      <label class="btn shadow-sm border border-2 fw-bold rounded-3"
+                             for="class_<%= value.downcase %>"
+                             style="background-color: #f9f1e7; font-family: 'Press Start 2P', cursive; 
+                                    width: 90px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                        <%= label %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Gender Selection -->
+              <div class="mb-4">
+                <label class="fw-bold d-block mb-2" style="font-family: 'Press Start 2P', cursive;">Gender</label>
+                <div class="d-flex gap-2">
+                  <% [["Male", "Male"], ["Female", "Female"]].each do |label, value| %>
+                    <div class="form-check text-center">
+                      <input type="radio" 
+                             name="character[gender]" 
+                             id="gender_<%= value.downcase %>" 
+                             value="<%= value %>" 
+                             class="btn-check"
+                             data-action="change->new-character#render"
+                             data-new-character-target="gender"
+                             autocomplete="off"
+                             <%= "checked" if @character.gender == value %>>
+                      <label class="btn shadow-sm border border-2 fw-bold rounded-3"
+                             for="gender_<%= value.downcase %>"
+                             style="background-color: #f9f1e7; font-family: 'Press Start 2P', cursive; 
+                                    width: 90px; height: 60px; display: flex; align-items: center; justify-content: center;">
+                        <%= label %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="d-flex justify-content-center mt-4">
+                <%= c.button :submit, "Update Character",
+                            class: "btn shadow rounded-4 fw-bold border-2",
+                            style: "background-color: #c68642; color: #fff; border: 2px solid #8B5A2B;
+                                    font-family: 'Press Start 2P', cursive; width: 220px; height: 55px;" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Right Column: Character Preview -->
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+          <div style="width: 220px; height: 220px; background-color: #fff3e0; border-color: #000; position: relative;">
+            <div id="npc-preview"
+                 data-new-character-target="preview"
+                 style="
+                   position: absolute;
+                   top: 53%;
+                   left: 48%;
+                   transform: translate(-50%, -50%) scale(2);
+                   transform-origin: center;
+                   width: 106px;
+                   height: 128px;
+                   background-repeat: no-repeat;
+                   background-position: 0 0;
+                   image-rendering: pixelated;
+                   pointer-events: none;
+                   display: block;">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
-<% end %>
-</div>
-
-<div class="card">
-
-</div>
 </div>

@@ -1,109 +1,102 @@
 <div class="page-background">
-<div class="row justify-content-center g-5" style="margin: 15px 0;;">
-  <div class="col-md-6 col-lg-5">
-    <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
-      <div class="card-header text-center rounded-3 mb-3"
+  <div class="row justify-content-center g-5" style="margin: 15px 0;;">
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
+        <div class="card-header text-center rounded-3 mb-3"
            style="border: 1px solid #000;
            background-color: rgba(255, 193, 7, 0.25);">
-        <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
-          <%= @character.name %>
-        </h1>
-      </div>
-
-      <div class="d-flex flex-column align-items-center"
+          <h1 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+            <%= @character.name %>
+          </h1>
+        </div>
+        <div class="d-flex flex-column align-items-center"
            style="border: 2px solid #000; border-radius: 20px; padding: 40px; background-color: #f9f1e7; position: relative;">
-
-        <div class="card position-relative mb-3" style="width: 80%; height: 260px; background: transparent; border: none;">
-          <div id="character-preview"
+          <div class="card position-relative mb-3" style="width: 80%; height: 260px; background: transparent; border: none;">
+            <div id="character-preview"
                style="width: 80px; height: 140px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); image-rendering: pixelated;">
-          </div>
-
-          <% slots = %w[head top bottom weapon accessory] %>
-          <% slot_positions = {
+            </div>
+            <% slots = %w[head top bottom weapon accessory] %>
+            <% slot_positions = {
                 "head" => "bottom: 180px; left: 50%; transform: translateX(-50%);",
                 "top" => "bottom: 120px; left: -40px;",
                 "bottom" => "bottom: 120px; right: -40px;",
                 "weapon" => "bottom: 0; left: -40px;",
                 "accessory" => "bottom: 0; right: -40px;"
               } %>
-
-          <% slot_mapping = {
+            <% slot_mapping = {
                 "head" => ["head"],
                 "top" => ["top"],
                 "bottom" => ["bottom"],
                 "weapon" => ["sword", "staff", "book"],
                 "accessory" => ["ring", "amulet", "potion"]
               } %>
-
-          <% slots.each do |slot| %>
-            <div id="slot-<%= slot %>" data-equipment-manager-target="slot"
+            <% slots.each do |slot| %>
+              <div id="slot-<%= slot %>" data-equipment-manager-target="slot"
                  data-slot="<%= slot %>"
                  style="position: absolute; <%= slot_positions[slot] %>;
                  width: 100px; height: 100px; border: 2px solid black;
                  border-radius: 10px; background-color: white; display: flex;
                  flex-direction: column; align-items: center; justify-content: center;">
-
-              <% equipped_item = @character.inventory_items.includes(:item)
+                <% equipped_item = @character.inventory_items.includes(:item)
                                   .where(equipped: true)
                                   .find { |inv| slot_mapping[slot].any? { |name| inv.item.img.include?(name) } }
               %>
-
-              <% if equipped_item %>
-                <%= link_to inventory_item_path(equipped_item),
+                <% if equipped_item %>
+                  <%= link_to inventory_item_path(equipped_item),
                     style: "display: flex; width: 100%; height: 60%; justify-content: center; align-items: center;" do %>
-                  <%= image_tag asset_path(equipped_item.item.img),
+                    <%= image_tag asset_path(equipped_item.item.img),
                       alt: equipped_item.item.name,
                       class: "img-fluid",
                       style: "width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; padding: 2px; margin: 4px;" %>
-                <% end %>
-                <%= button_to "Unequip", unequip_inventory_item_path(equipped_item),
+                  <% end %>
+                  <%= button_to "Unequip", unequip_inventory_item_path(equipped_item),
                      method: :patch,
                      style: "width: 100px; border-top: 2px solid black; border-left: 2px solid black;
                      border-right: 2px solid black; border-bottom: 1px solid black; border-radius: 0 0 10px 10px;" %>
-              <% else %>
-                <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
-              <% end %>
-            </div>
-          <% end %>
+                <% else %>
+                  <span style="font-size: 0.7rem; color: #aaa;">Empty</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <h5 class="fw-bold mb-2" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Level: <%= @character.level %></h5>
+          <div class="d-flex justify-content-between w-100" style="margin-top: 10px;">
+            <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Exp: <%= @character.xp %></h5>
+            <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Coins: <%= number_with_delimiter(@character.coin, delimiter: ".") %> 💰</h5>
+          </div>
         </div>
-
-        <h5 class="fw-bold mb-2" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Level: <%= @character.level %></h5>
-        <div class="d-flex justify-content-between w-100" style="margin-top: 10px;">
-          <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Exp: <%= @character.xp %></h5>
-          <h5 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 0.9rem;">Coins: <%= number_with_delimiter(@character.coin, delimiter: ".") %> 💰</h5>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center mt-3 gap-2">
-        <%= link_to "Edit", edit_character_path(@character),
+        <div class="d-flex justify-content-center mt-3 gap-2">
+          <%= link_to "Edit", edit_character_path(@character),
             class: "btn btn-outline-primary fw-bold rounded-4 w-50",
             style: "background-color: #c68642; color: #fff;
             border: 2px solid #8B5A2B; border-radius: 8px;"
         %>
-        <%= link_to "Delete", @character,
-            data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' },
+          <!-- Link to delete char modal -->
+          <%= link_to "#",
+            data: { bs_toggle: "modal", bs_target: "#deleteCharModal" },
             class: "btn btn-outline-danger fw-bold rounded-4 w-50",
             style: "background-color: #c68642; color: #fff;
-            border: 2px solid #8B5A2B; border-radius: 8px;"
+            border: 2px solid #8B5A2B; border-radius: 8px;" do
         %>
+          Delete 
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "delete_char", locals: { character: @character } %>
       </div>
     </div>
   </div>
-
   <div class="col-md-6 col-lg-5">
     <div class="card h-100 p-3 mt-3 shadow rounded-4 border border-2 border-warning" style="background: #fff3e0; color: black;">
       <div class="card-header text-center rounded-3 mb-3"
            style="border: 1px solid #000;
            background-color: rgba(255, 193, 7, 0.25);">
-        <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">
+        <h4 class="fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
           Inventory
         </h4>
       </div>
-
       <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; background-color: #f9f1e7; border: 2px solid #000; border-radius: 20px; margin: 3px 10px;">
         <% slots_count = @character.slots || 10 %>
         <% inventory_items = @character.inventory_items.includes(:item).where(equipped: false).to_a %>
-
         <% slots_count.times do |i| %>
           <% inventory_item = inventory_items[i] %>
           <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
@@ -131,82 +124,89 @@
                 <span style="color: #aaa; font-size: 1.2rem;">—</span>
               <% end %>
             </div>
-
             <div style="text-align: center;">
+              <!--Link to sell inventory items modal -->
               <% if inventory_item %>
-                <%= button_to "Sell", sell_inventory_item_path(inventory_item),
-                    method: :delete, data: { confirm: "Are you sure?" },
+                <%= link_to "#",
+                    data: { bs_toggle: "modal", bs_target: "#sellInventoryItem-#{inventory_item.id}" },
                     class: "btn btn-sm fw-bold",
                     style: "background-color: #c68642; color: #fff;
-                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" %>
+                    border: 2px solid #8B5A2B; border-radius: 8px; width: 100px;" do %>
+                  Sell 
+                <% end %>
+                <!-- Renders Modal -->
+                <%= render partial: "sell_inventory_item", locals: { character: @character, inventory_item: inventory_item } %>
               <% end %>
             </div>
           </div>
         <% end %>
       </div>
+      <!-- Link to purchase modal -->
       <div class="d-flex justify-content-between mt-3 gap-2">
-        <%= link_to "Purchase Slot", purchase_slot_character_path(@character),
-            data: { turbo_method: :patch, turbo_confirm: "One additional slot costs #{@character.call_slot_price} Are you sure?" },
-            class: "btn btn-outline-primary fw-bold rounded-4 w-50",
-            style: "background-color: #c68642; color: #fff;
-            border: 2px solid #8B5A2B; border-radius: 8px;"
-         %>
-         <%= link_to "Sell Slot", sell_slot_character_path(@character),
-            data: { turbo_method: :patch, turbo_confirm: 'Are you sure?' },
-            class: "btn btn-outline-primary fw-bold rounded-4 w-50",
-            style: "background-color: #c68642; color: #fff;
-            border: 2px solid #8B5A2B; border-radius: 8px;"
-         %>
+        <%= link_to "#", 
+    class: "btn btn-outline-primary fw-bold rounded-4 w-50",
+    data: { bs_toggle: "modal", bs_target: "#slotPurchaseModal" },
+    style: "background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; border-radius: 8px;" do %>
+          Purchase Slot
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "purchase_modal", locals: { character: @character } %>
+        <!-- Link to sell modal -->
+        <%= link_to "#", 
+    class: "btn btn-outline-primary fw-bold rounded-4 w-50",
+    data: { bs_toggle: "modal", bs_target: "#slotSellModal" },
+    style: "background-color: #c68642; color: #fff; border: 2px solid #8B5A2B; border-radius: 8px;" do %>
+          Sell Slot
+        <% end %>
+        <!-- Renders Modal -->
+        <%= render partial: "sell_modal", locals: { character: @character } %>
       </div>
     </div>
   </div>
 </div>
 </div>
-
-
 <!-- Character Sprite Animation Script -->
 <script>
-document.addEventListener("turbo:load", () => {
-  initSprite();
-  });
+  document.addEventListener("turbo:load", () => {
+    initSprite();
+    });
 
-  function initSprite() {
+    function initSprite() {
 
 
-  const preview = document.getElementById("character-preview");
-  const klass = "<%= @character.class_name.downcase %>";
-  const gender = "<%= @character.gender.downcase %>";
+    const preview = document.getElementById("character-preview");
+    const klass = "<%= @character.class_name.downcase %>";
+    const gender = "<%= @character.gender.downcase %>";
 
-  const spriteData = {
-    "male_warrior": { path: "<%= asset_path('male_warrior_walk.png') %>", frames: 9, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
-    "female_warrior": { path: "<%= asset_path('female_warrior_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
-    "male_mage": { path: "<%= asset_path('male_mage_walk.png') %>", frames: 7, frameWidth: 128, fra10eHeight: 128, offsetX: [0,0,0,0,0], speed: 150 },
-    "female_mage": { path: "<%= asset_path('female_mage_run.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 120 },
-    "male_werewolf": { path: "<%= asset_path('male_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "female_werewolf": { path: "<%= asset_path('female_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "male_vampire": { path: "<%= asset_path('male_vampire_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
-    "female_vampire": { path: "<%= asset_path('female_vampire_walk.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 }
+    const spriteData = {
+      "male_warrior": { path: "<%= asset_path('male_warrior_walk.png') %>", frames: 9, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+      "female_warrior": { path: "<%= asset_path('female_warrior_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+      "male_mage": { path: "<%= asset_path('male_mage_walk.png') %>", frames: 7, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 150 },
+      "female_mage": { path: "<%= asset_path('female_mage_run.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 120 },
+      "male_werewolf": { path: "<%= asset_path('male_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+      "female_werewolf": { path: "<%= asset_path('female_werewolf_run.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+      "male_vampire": { path: "<%= asset_path('male_vampire_walk.png') %>", frames: 8, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
+      "female_vampire": { path: "<%= asset_path('female_vampire_walk.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 }
+    };
+
+    const key = `${gender}_${klass}`;
+    const sprite = spriteData[key];
+    if (!sprite) return;
+
+      let currentFrame = 0;
+    preview.style.width = sprite.frameWidth + "px";
+    preview.style.height = sprite.frameHeight + "px";
+    preview.style.backgroundImage = `url(${sprite.path})`;
+    preview.style.backgroundRepeat = "no-repeat";
+    preview.style.backgroundPosition = "0 0";
+    preview.style.imageRendering = "pixelated";
+
+    setInterval(() => {
+      const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
+      preview.style.backgroundPosition = `-${xOffset}px 0px`;
+      currentFrame = (currentFrame + 1) % sprite.frames;
+    }, sprite.speed || 170);
+
+
   };
-
-  const key = `${gender}_${klass}`;
-  const sprite = spriteData[key];
-  if (!sprite) return;
-
-    let currentFrame = 0;
-  preview.style.width = sprite.frameWidth + "px";
-  preview.style.height = sprite.frameHeight + "px";
-  preview.style.backgroundImage = `url(${sprite.path})`;
-  preview.style.backgroundRepeat = "no-repeat";
-  preview.style.backgroundPosition = "0 0";
-  preview.style.imageRendering = "pixelated";
-
-  setInterval(() => {
-    const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
-    preview.style.backgroundPosition = `-${xOffset}px 0px`;
-    currentFrame = (currentFrame + 1) % sprite.frames;
-  }, sprite.speed || 170);
-
-
-};
-
 </script>

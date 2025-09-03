@@ -21,6 +21,15 @@ class Character < ApplicationRecord
     end 
   end
 
+  def call_sell_slot_price
+    if slots <= 10
+      slot_price = 5000
+    else
+      slot_price = slots * slots * 100
+    end 
+    slot_price / 2
+  end
+
   def purchase_slot
     if slots <= 10
      slot_price = 5000
@@ -36,8 +45,13 @@ class Character < ApplicationRecord
   end
 
   def sell_slot
-    slot_price = 5000
+    if slots <= 10
+     slot_price = 5000
+    else
+      slot_price = slots * slots * 100
+    end 
     return false if self.slots <= 1
+    return false if self.inventory_items.count >= slots
     self.slots -= 1
     sell_slot_price = slot_price / 2
     self.coin += sell_slot_price
