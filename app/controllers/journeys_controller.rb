@@ -1,10 +1,16 @@
 class JourneysController < ApplicationController
   def new
     @journey = Journey.new
+
+    authorize @journey
+
   end
 
   def create
     @journey = Journey.new(journey_params)
+
+    authorize @journey
+
     @journey.user_id = current_user.id
     if @journey.save
       redirect_to new_character_path

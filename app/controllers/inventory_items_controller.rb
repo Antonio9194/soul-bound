@@ -4,11 +4,17 @@ class InventoryItemsController < ApplicationController
 
   def index
     @inventory_items = current_user.character.inventory_items
+
+    authorize @inventory_items
+
     @equipped_items = equipped_item.item.img
   end
 
-  def sell 
+  def sell
     @inventory_item = current_user.character.inventory_items.find(params[:id])
+
+    authorize @inventory_item
+
     item = @inventory_item.item
     sell_price = item.price / 2
     current_user.character.coin += sell_price
@@ -20,9 +26,16 @@ class InventoryItemsController < ApplicationController
   end
 
   def show
+    @inventory_items = current_user.character.inventory_items
+
+    authorize @inventory_items
   end
 
 def equip
+  @inventory_items = current_user.character.inventory_items
+
+  authorize @inventory_items
+
   slot_mapping = {
     "head" => ["head"],
     "top" => ["top"],
@@ -47,6 +60,10 @@ def equip
 end
 
   def unequip
+    @inventory_items = current_user.character.inventory_items
+
+    authorize @inventory_items
+
     @inventory_item = InventoryItem.find(params[:id])
     @inventory_item.update(equipped: false)
     redirect_to character_path, notice: "#{@inventory_item.item.name} unequipped!"

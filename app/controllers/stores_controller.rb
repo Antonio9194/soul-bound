@@ -4,15 +4,26 @@ class StoresController < ApplicationController
 
   def list_items
     @items = Item.all
+
+    authorize @items
+
     @rotating_items = @items.sample(8)
     @character = Character.find_by(user_id: current_user.id)
   end
 
   def show
-    @item
+    @items = Item.all
+
+    authorize @items
+
   end
 
   def purchase
+
+    @items = Item.all
+
+    authorize @items
+
     if current_user.character.inventory_items.size >= current_user.character.slots
       flash[:alert] = "You cannot have more than #{current_user.character.slots}!"
     else
