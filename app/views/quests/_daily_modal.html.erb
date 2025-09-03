@@ -14,7 +14,7 @@
       <div class="text-center mb-2 d-flex flex-column align-items-center">
         <% if quest.item %>
           <% if current_user.character.inventory_items.size >= current_user.character.slots%>
-            <h5>Your inventory is full!</h5>
+            <h5 style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem; text-align: center;">Your inventory is full!</h5>
           <% else %>
             <%=  quest.item.name %>
             <%= image_tag quest.item.img,
