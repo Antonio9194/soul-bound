@@ -4,7 +4,7 @@
     <% if user_signed_in? %>
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-       <%= link_to (current_user.quests.present? ? dashboard_quests_path : new_journey_path), class: "nav-link" do %>
+       <%= link_to (current_user.quests.present? && current_user.character.present? ? dashboard_quests_path : new_character_path), class: "nav-link" do %>
           <%= image_tag "guild.png", class: "me-1 nav-icon", alt: "Guild icon" %>
           Guild
         <% end %>
@@ -35,13 +35,13 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to (current_user.quests.present? ? taverns_path : new_journey_path), class: "nav-link" do %>
+            <%= link_to (current_user.quests.present? && current_user.character.present? ? taverns_path : new_character_path), class: "nav-link" do %>
               <%= image_tag "tavern.png", class: "me-1 nav-icon", alt: "Tavern icon" %>
               Tavern
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to (current_user.quests.present? ? list_items_stores_path : new_journey_path), class: "nav-link" do %>
+            <%= link_to (current_user.quests.present? && current_user.character.present? ? list_items_stores_path : new_character_path), class: "nav-link" do %>
               <%= image_tag "store.png", class: "me-1 nav-icon", alt: "Store icon" %>
               Store
             <% end %>
