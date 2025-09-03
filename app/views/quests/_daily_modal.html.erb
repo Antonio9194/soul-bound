@@ -9,7 +9,7 @@
       <div class="modal-body" style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem; text-align: center;">
         The Guild <%= image_tag "guild.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
         awards you <%= quest.xp_reward %> <%= image_tag "xp.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
-        and <%= quest.coin_reward %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
+        and <%= number_with_delimiter(quest.coin_reward, delimiter: ".") %> <%= image_tag "coins.png", style: "width: 24px; height: 24px; vertical-align: middle; image-rendering: pixelated;" %>
       </div>
       <div class="text-center mb-2 d-flex flex-column align-items-center">
         <% if quest.item %>
