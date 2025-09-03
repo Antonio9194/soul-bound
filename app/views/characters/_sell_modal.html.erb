@@ -1,0 +1,22 @@
+ <!-- Modal -->
+<div class="modal fade" id="slotSellModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 20px; background-color: #fff3e0; border: 2px solid #000; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      <div class="modal-header justify-content-center" style="border-bottom: 2px solid #000; background-color: rgba(255, 193, 7, 0.25);">
+        <h5 class="modal-title fw-bold" style="font-family: 'Press Start 2P', cursive; font-size: 1rem;">Sell Slot</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center" style="font-family: 'Press Start 2P', cursive; font-size: 0.85rem;">
+        Sell one slot for  <%= @character.call_sell_slot_price %>!
+      </div>
+      <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
+        <%= link_to "Confirm", sell_slot_character_path(@character),
+            data: { turbo_method: :patch, turbo_frame: "_top" },
+            class: "btn btn-outline-primary fw-bold rounded-4 w-50",
+            style: "background-color: #c68642; color: #fff;
+            border: 2px solid #8B5A2B; border-radius: 8px;"
+         %>
+      </div>
+    </div>
+  </div>
+</div>
