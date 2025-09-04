@@ -10,7 +10,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
 
 - If the choice is "daily":
   - Generate ONLY daily quests. Do NOT generate main quests.
-  - Create 6 daily quests, no more than 6.
+  - Create 6 daily quests, only 6 quests,no more than 6, not less than 6.
   - Each daily quest must have:
     - a "title" with NO labels such as "daily" or "main" included.
     - a "description" written in vivid RPG/fantasy style: it should feel like a magical quest, adventure, or heroic challenge, but must clearly reflect the real-life task the user needs to complete, so the user can understand what action to take.
@@ -28,7 +28,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
     - NEVER omit the "time" field.
       Even if the user does not explicitly provide times, assign logical fixed times or windows based on common sense.
   - Do NOT include any deadlines for daily quests.
-  - Keep all text no longer than 4 lines!
+  - Keep all text no longer than 3 lines!
 
 - If the choice is "main":
   - Generate ONLY the main quest as a narrative with tasks, each having titles and deadlines.
