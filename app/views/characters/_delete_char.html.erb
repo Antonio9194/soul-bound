@@ -11,7 +11,7 @@
         Are you sure you want to delete <%= current_user.character.name %>?
       </div>
       <div class="modal-footer" style="border-top: 2px solid #000; justify-content: center;">
-        <%= link_to "Delete", @character,
+        <%= link_to "Confirm", @character,
             data: { turbo_method: :delete, turbo_frame: "_top" },
             class: "btn btn-outline-danger fw-bold rounded-4 w-50",
             style: "background-color: #c68642; color: #fff;

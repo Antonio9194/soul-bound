@@ -19,7 +19,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
     - NEVER omit the "time" field.
       Even if the user does not explicitly provide times, assign logical fixed times or windows based on common sense.
   - Do NOT include any deadlines for daily quests.
-  - Keep all text no longer than 3 lines but still RPG like!!!
+  - Keep all text no longer than 4 lines!
 
 - If the choice is "main":
   - Generate ONLY the main quest as a narrative with tasks, each having titles and deadlines.

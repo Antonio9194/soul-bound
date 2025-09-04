@@ -1,117 +1,114 @@
 <div class="page-background">
-<div class="d-flex justify-content-between align-items-start" style="margin: 20px 30px 0 30px; gap: 20px;">
-
-  <!-- Store Sign -->
-  <div>
-    <%= image_tag "thewanderingsatchel.png",
+  <div class="d-flex justify-content-between align-items-start" style="margin: 20px 30px 0 30px; gap: 20px;">
+    <!-- Store Sign -->
+    <div>
+      <%= image_tag "thewanderingsatchel.png",
       alt: "store sign",
       style: "position: relative; top: 20px; left: 130px;height: 480px; width: 620px; margin: 0; padding: 0; display: block;"
     %>
-  </div>
-
-  <!-- Player Gold Card -->
-  <div class="card text-center shadow rounded-4 border border-2 border-warning"
+    </div>
+    <!-- Player Gold Card -->
+    <div class="card text-center shadow rounded-4 border border-2 border-warning"
        style="postion: absolute; top:120px; right: 260px; background: #fff3e0; height: 100%; width: 220px; display: flex;
        flex-direction: column; justify-content: center; align-items: center;" >
-
-       <div class="d-flex flex-column">
+      <div class="d-flex flex-column">
         <div class="card-title text-primary fw-bold fs-4 pt-4" style="font-family: 'Press Start 2P', cursive;"><%= @character.name %></div>
         <div id="character-preview"></div>
-       </div>
-
-    <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
-      <h6 class="card-text text-muted fst-italic mb-4 mt-4">💰 Coins: <%= number_with_delimiter(@character.coin, delimiter: ".")  %> </h6>
-    </span>
+      </div>
+      <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive; font-size: 1.2rem;">
+        <h6 class="card-text text-muted fst-italic mb-4 mt-4">💰 Coins: <%= number_with_delimiter(@character.coin, delimiter: ".")  %> </h6>
+      </span>
+    </div>
   </div>
-
-</div>
-
-<div class="container">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5" style="margin-top: 0px;">
-    <% @rotating_items.each do |item| %>
-      <div class="col">
-        <div class="card h-100 text-center shadow rounded-4 border border-3 border-warning" style="background: #fff3e0;">
-          <div class="card-img-top p-3" style="height: 150px; background-color: #f9f1e7; border-radius: 15px;">
-            <%= image_tag item.img, alt: item.name, class: "img-fluid", style: "image-rendering: pixelated; width: 100%; max-height: 100%; object-fit: contain;" %>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-primary fw-bold" style="font-family: 'Press Start 2P', cursive;">
-              <%= item.name %>
-            </h5>
-            <p class="card-text text-muted fst-italic" style="height: 80px;"><%= item.description %></p>
-            <h5>
-              <% rarity_class = case item.rarity&.downcase
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mb-5" style="margin-top: 0px;">
+      <% @rotating_items.each do |item| %>
+        <div class="col">
+          <div class="card h-100 text-center shadow rounded-4 border border-3 border-warning" style="background: #fff3e0;">
+            <div class="card-img-top p-3" style="height: 150px; background-color: #f9f1e7; border-radius: 15px;">
+              <%= image_tag item.img, alt: item.name, class: "img-fluid", style: "image-rendering: pixelated; width: 100%; max-height: 100%; object-fit: contain;" %>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-primary fw-bold" style="font-family: 'Press Start 2P', cursive;">
+                <%= item.name %>
+              </h5>
+              <p class="card-text text-muted fst-italic" style="height: 80px;"><%= item.description %></p>
+              <h5>
+                <% rarity_class = case item.rarity&.downcase
                 when "legendary" then "text-warning"      # golden
                 when "epic"      then "text-primary"      # blue
                 when "rare"      then "text-success"      # green
                 when "uncommon"  then "text-info"         # teal
                 else "text-secondary"                     # default gray
                 end %>
-              <span class="<%= rarity_class %> fw-bold shadow-sm">
-                <%= item.rarity&.upcase %>
+                <span class="<%= rarity_class %> fw-bold shadow-sm">
+                  <%= item.rarity&.upcase %>
+                </span>
+              </h5>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center bg-warning bg-opacity-25 rounded-bottom">
+              <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive;">
+                Coins: <%= sprintf("%.3f", item.price / 1000.0) %> 💰
               </span>
-            </h5>
-          </div>
-          <div class="card-footer d-flex justify-content-between align-items-center bg-warning bg-opacity-25 rounded-bottom">
-            <span class="fw-bold text-dark" style="font-family: 'Press Start 2P', cursive;">
-              Coins: <%= sprintf("%.3f", item.price / 1000.0) %> 💰
-            </span>
-            <%= button_to "Purchase", purchase_store_path(item), method: :post,
-                class: "btn btn-sm fw-bold",
-                style: "background-color: #c68642; color: #fff;
-                border: 2px solid #8B5A2B; border-radius: 8px;"
-            %>
+              <!-- Link to purchase item modal -->
+              <%= link_to "#",
+            data: { bs_toggle: "modal", bs_target: "#itemPurchaseModal-#{item.id}" },
+            class: "btn btn-outline-danger fw-bold rounded-4 w-50",
+            style: "background-color: #c68642; color: #fff;
+            border: 2px solid #8B5A2B; border-radius: 8px;" do
+        %>
+              Purchase 
+            <% end %>
+            <!-- Renders Modal -->
+            <%= render partial: "purchase_items", locals: { item: item, character: @character } %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
-
 </div>
 </div>
-
 <script>
-document.addEventListener("turbo:load", () => {
-  initSprite();
-  });
+  document.addEventListener("turbo:load", () => {
+    initSprite();
+    });
 
-  function initSprite() {
+    function initSprite() {
 
 
-  const preview = document.getElementById("character-preview");
-  const klass = "<%= @character.class_name.downcase %>";
-  const gender = "<%= @character.gender.downcase %>";
+    const preview = document.getElementById("character-preview");
+    const klass = "<%= @character.class_name.downcase %>";
+    const gender = "<%= @character.gender.downcase %>";
 
-  const spriteData = {
-    "male_warrior": { path: "<%= asset_path('male_warrior_idle.png') %>", frames: 4, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
-    "female_warrior": { path: "<%= asset_path('female_warrior_idle.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
-    "male_mage": { path: "<%= asset_path('male_mage_idle.png') %>", frames: 8, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 190 },
-    "female_mage": { path: "<%= asset_path('female_mage_idle.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
-    "male_werewolf": { path: "<%= asset_path('male_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "female_werewolf": { path: "<%= asset_path('female_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
-    "male_vampire": { path: "<%= asset_path('male_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
-    "female_vampire": { path: "<%= asset_path('female_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 150 }
+    const spriteData = {
+      "male_warrior": { path: "<%= asset_path('male_warrior_idle.png') %>", frames: 4, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+      "female_warrior": { path: "<%= asset_path('female_warrior_idle.png') %>", frames: 6, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 170 },
+      "male_mage": { path: "<%= asset_path('male_mage_idle.png') %>", frames: 8, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 190 },
+      "female_mage": { path: "<%= asset_path('female_mage_idle.png') %>", frames: 7, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 120 },
+      "male_werewolf": { path: "<%= asset_path('male_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+      "female_werewolf": { path: "<%= asset_path('female_werewolf_walk.png') %>", frames: 11, frameWidth: 128, frameHeight: 138, offsetX: [0,0,0,0,0], speed: 110 },
+      "male_vampire": { path: "<%= asset_path('male_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 110 },
+      "female_vampire": { path: "<%= asset_path('female_vampire_idle.png') %>", frames: 5, frameWidth: 128, frameHeight: 128, offsetX: [0,0,0,0,0], speed: 150 }
+    };
+
+    const key = `${gender}_${klass}`;
+    const sprite = spriteData[key];
+    if (!sprite) return;
+
+      let currentFrame = 0;
+    preview.style.width = sprite.frameWidth + "px";
+    preview.style.height = sprite.frameHeight + "px";
+    preview.style.backgroundImage = `url(${sprite.path})`;
+    preview.style.backgroundRepeat = "no-repeat";
+    preview.style.backgroundPosition = "0 0";
+    preview.style.imageRendering = "pixelated";
+
+    setInterval(() => {
+      const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
+      preview.style.backgroundPosition = `-${xOffset}px 0px`;
+      currentFrame = (currentFrame + 1) % sprite.frames;
+    }, sprite.speed || 170);
+
+
   };
-
-  const key = `${gender}_${klass}`;
-  const sprite = spriteData[key];
-  if (!sprite) return;
-
-    let currentFrame = 0;
-  preview.style.width = sprite.frameWidth + "px";
-  preview.style.height = sprite.frameHeight + "px";
-  preview.style.backgroundImage = `url(${sprite.path})`;
-  preview.style.backgroundRepeat = "no-repeat";
-  preview.style.backgroundPosition = "0 0";
-  preview.style.imageRendering = "pixelated";
-
-  setInterval(() => {
-    const xOffset = (sprite.frameWidth * currentFrame) - (sprite.offsetX?.[currentFrame] || 0);
-    preview.style.backgroundPosition = `-${xOffset}px 0px`;
-    currentFrame = (currentFrame + 1) % sprite.frames;
-  }, sprite.speed || 170);
-
-
-};
-
 </script>
