@@ -12,7 +12,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
   - Generate ONLY daily quests. Do NOT generate main quests.
   - Create at least 6 daily quests (or more if appropriate).
   - Each daily quest must have:
-    - a "title" with NO labels such as "daily" or "main" included.
+    - a "title" with NO labels such as "daily" or "main" included, NO MORE than 5 words.
     - a vivid "description" that inspires the user.
       - a **specific "time" or "time range"** that you MUST assign even if the user does NOT explicitly mention it.
     You must always assign a specific time or time range to each quest.
