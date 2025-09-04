@@ -13,7 +13,7 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
   - Create 6 daily quests, no more than 6.
   - Each daily quest must have:
     - a "title" with NO labels such as "daily" or "main" included.
-    - a vivid "description" RPG style based that inspires the user.
+    - a "description" written in vivid RPG/fantasy style: it should feel like a magical quest, adventure, or heroic challenge, but must clearly reflect the real-life task the user needs to complete, so the user can understand what action to take.
     - Always assign a realistic time or time range based on the task description.
 - Use context words to infer the time:
   - Breakfast → 7:00–9:00
