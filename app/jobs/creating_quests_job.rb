@@ -15,6 +15,15 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
     - a "title" with NO labels such as "daily" or "main" included.
     - a vivid "description" that inspires the user.
       - a **specific "time" or "time range"** that you MUST assign even if the user does NOT explicitly mention it.
+    You must always assign a specific time or time range to each quest.
+	•	Use RPG-fantasy inspired text, but time must still follow realistic daily logic.
+	•	Infer time based on context words:
+	•	Breakfast → 7:00–9:00
+	•	Lunch → 12:00–13:00
+	•	Dinner → 18:00–20:00
+	•	Morning → 6:00–12:00
+	•	Afternoon → 13:00–16:00
+	•	Evening → 17:00–21:00
       Use common sense and daily logic to infer fixed times or windows.
     - NEVER omit the "time" field.
       Even if the user does not explicitly provide times, assign logical fixed times or windows based on common sense.
@@ -59,8 +68,7 @@ If daily quests are not requested, omit "daily_quests".
 If main quests are not requested, omit "main_quest".
 PROMPT
       
-      chat = RubyLLM.chat(assume_model_exists: true, provider: :openai)
-      # chat = RubyLLM.chat
+      chat = RubyLLM.chat
       response = chat.ask(prompt)
 
       quests_text = response.content
