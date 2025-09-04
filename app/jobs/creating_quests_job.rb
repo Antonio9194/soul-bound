@@ -10,10 +10,19 @@ Based on the user's choice ("daily", "main", or "both"), do the following:
 
 - If the choice is "daily":
   - Generate ONLY daily quests. Do NOT generate main quests.
-  - Create at least 6 daily quests (or more if appropriate).
+  - Create 6 daily quests, no more than 6.
   - Each daily quest must have:
     - a "title" with NO labels such as "daily" or "main" included.
-    - a vivid "description" that inspires the user.
+    - a vivid "description" RPG style based that inspires the user.
+    - Always assign a realistic time or time range based on the task description.
+- Use context words to infer the time:
+  - Breakfast → 7:00–9:00
+  - Lunch → 12:00–13:00
+  - Dinner → 18:00–20:00
+  - Morning → 6:00–12:00
+  - Afternoon → 13:00–16:00
+  - Evening → 17:00–21:00
+- If no context exists, assign a reasonable default 2–3 hour window based on common daily logic.
       - a **specific "time" or "time range"** that you MUST assign even if the user does NOT explicitly mention it.
       Use common sense and daily logic to infer fixed times or windows.
     - NEVER omit the "time" field.

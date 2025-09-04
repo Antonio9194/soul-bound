@@ -201,8 +201,8 @@ daily_quests = [
 "I want to learn note-taking and organization skills",
 "I want to learn time management",
 "I want to learn financial management",
-"I want to learn digital design"
-"I want to be a pokemon master"
+"I want to learn digital design",
+"I want to be a pokemon master",
 "I want to be just like Raj"
 ]
 
