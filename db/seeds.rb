@@ -158,14 +158,14 @@ character = Character.create!(
   slots: 10
 )
 # Pick 10 random items from existing items
-items_for_character = Item.order("RANDOM()").limit(10)
+items_for_character = Item.order("RANDOM()").limit(5)
 
 # Assign to character via InventoryItem and equip first 5
 items_for_character.each_with_index do |item, index|
   InventoryItem.create!(
     character: character,
     item: item,
-    equipped: index < 5 # first 5 equipped
+    equipped: index < 3 
   )
 end
 
@@ -197,11 +197,13 @@ daily_quests = [
 "I want to learn mindfulness practices",
 "I want to learn stretching and flexibility exercises",
 "I want to learn reading and comprehension skills",
-"I want to learn new English vocabulary",
+"I want to learn new language",
 "I want to learn note-taking and organization skills",
 "I want to learn time management",
 "I want to learn financial management",
 "I want to learn digital design"
+"I want to be a pokemon master"
+"I want to be just like Raj"
 ]
 
 20.times do |i|

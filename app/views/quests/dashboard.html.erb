@@ -6,7 +6,8 @@
         <div class="card h-100 p-3 mt-4 guild-board">
           <div class="card-header quest-container">
             <h4 class="mt-4 quest-header">Daily Quests</h4>
-            <h6 class="quest-body px-3">Take on fresh quests each day to build your routine and grow stronger. <br> Earn XP, coins, and items as rewards.</h6>
+            <h6 class="quest-body px-3" style="font-size: 0.90rem;">Take on fresh quests each day to build your routine and grow stronger. <br>
+               Earn XP, coins, and items as rewards.</h6>
             <div class="card-body">
               <% if @daily_quests.any? %>
                 <% @daily_quests.each do |quest| %>
@@ -52,7 +53,8 @@
         <div class="card h-100 p-3 mt-4 guild-board">
           <div class="card-header quest-container">
             <h4 class="mt-4 quest-header">Side Quests</h4>
-            <h6 class="quest-body px-3">Want some extra adventure? <br> Take on quests from fellow adventurers for bonus rewards!</h6>
+            <h6 class="quest-body px-3" style="font-size: 0.90rem;" >Want some extra adventure? <br>
+               Take on quests from fellow adventurers for bonus rewards!</h6>
             <div class="card-body">
               <% if @side_quests.any? %>
                 <% @side_quests.each do |quest| %>
