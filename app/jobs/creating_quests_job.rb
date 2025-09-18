@@ -68,13 +68,24 @@ If daily quests are not requested, omit "daily_quests".
 If main quests are not requested, omit "main_quest".
 PROMPT
       
-      chat = RubyLLM.chat
-      response = chat.ask(prompt)
+      # chat = RubyLLM.chat
+      # response = chat.ask(prompt)
+      # quests_text = response.content
+      # puts quests_text
+      # parsed_quests = JSON.parse(quests_text)
 
-      quests_text = response.content
-      puts quests_text
+      client = OpenAI::Client.new
+       response = client.chat(
+      parameters: {
+        model: "gpt-4o-mini", # or "gpt-4.1", depending on what you want
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.7
+      }
+    )
 
-      parsed_quests = JSON.parse(quests_text)
+    quests_text = response.dig("choices", 0, "message", "content")
+    puts quests_text
+    parsed_quests = JSON.parse(quests_text)
 
       # Create daily quests if present
       if parsed_quests["daily_quests"]
